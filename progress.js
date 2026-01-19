@@ -256,163 +256,276 @@ class ProgressManager {
             <head>
                 <title>Math Progress Report</title>
                 <style>
-                    body { font-family: Arial, sans-serif; padding: 20px; max-width: 800px; margin: 0 auto; }
-                    h1 { color: #4facfe; text-align: center; }
-                    h2 { color: #333; border-bottom: 2px solid #4facfe; padding-bottom: 10px; }
-                    .section { margin: 20px 0; padding: 15px; background: #f5f5f5; border-radius: 10px; }
-                    .stat-row { display: flex; justify-content: space-between; margin: 10px 0; }
-                    .stat-label { font-weight: bold; }
-                    .stat-value { color: #4facfe; }
-                    .achievements { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px; }
-                    .achievement { background: #ffd700; padding: 5px 10px; border-radius: 15px; font-size: 14px; }
-                    .footer { text-align: center; margin-top: 30px; color: #666; font-size: 12px; }
+                    body { 
+                        font-family: 'Comic Sans MS', 'Arial Rounded MT Bold', Arial, sans-serif; 
+                        padding: 20px; 
+                        max-width: 800px; 
+                        margin: 0 auto; 
+                        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                        min-height: 100vh;
+                    }
+                    .report-container {
+                        background: white;
+                        border-radius: 30px;
+                        padding: 30px;
+                        box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+                    }
+                    h1 { 
+                        color: #ff6b6b; 
+                        text-align: center; 
+                        font-size: 2.5rem;
+                        text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+                        margin-bottom: 10px;
+                    }
+                    .report-date {
+                        text-align: center;
+                        color: #636e72;
+                        margin-bottom: 30px;
+                    }
+                    h2 { 
+                        color: #2d3436; 
+                        border-bottom: 3px solid; 
+                        padding-bottom: 10px; 
+                        margin-top: 25px;
+                    }
+                    .section { 
+                        margin: 20px 0; 
+                        padding: 20px; 
+                        border-radius: 20px; 
+                        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+                    }
+                    .overall-section {
+                        background: linear-gradient(135deg, #ffeaa7 0%, #fdcb6e 100%);
+                        border: 3px solid #f39c12;
+                    }
+                    .overall-section h2 { border-color: #f39c12; color: #d35400; }
+                    
+                    .addition-section {
+                        background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+                        border: 3px solid #4facfe;
+                    }
+                    .addition-section h2 { border-color: #4facfe; color: #0984e3; }
+                    
+                    .subtraction-section {
+                        background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+                        border: 3px solid #fa709a;
+                    }
+                    .subtraction-section h2 { border-color: #fa709a; color: #e84393; }
+                    
+                    .multiplication-section {
+                        background: linear-gradient(135deg, #d299c2 0%, #fef9d7 100%);
+                        border: 3px solid #fd79a8;
+                    }
+                    .multiplication-section h2 { border-color: #fd79a8; color: #e84393; }
+                    
+                    .division-section {
+                        background: linear-gradient(135deg, #89f7fe 0%, #66a6ff 100%);
+                        border: 3px solid #0984e3;
+                    }
+                    .division-section h2 { border-color: #0984e3; color: #0056b3; }
+                    
+                    .fun-section {
+                        background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+                        border: 3px solid #e17055;
+                    }
+                    .fun-section h2 { border-color: #e17055; color: #d35400; }
+                    
+                    .achievements-section {
+                        background: linear-gradient(135deg, #d4fc79 0%, #96e6a1 100%);
+                        border: 3px solid #00b894;
+                    }
+                    .achievements-section h2 { border-color: #00b894; color: #00b894; }
+                    
+                    .stat-row { 
+                        display: flex; 
+                        justify-content: space-between; 
+                        margin: 12px 0; 
+                        font-size: 1.1rem;
+                    }
+                    .stat-label { font-weight: bold; color: #2d3436; }
+                    .stat-value { 
+                        color: #2d3436; 
+                        font-weight: bold;
+                        background: rgba(255,255,255,0.5);
+                        padding: 5px 15px;
+                        border-radius: 20px;
+                    }
+                    .achievements { 
+                        display: flex; 
+                        flex-wrap: wrap; 
+                        gap: 10px; 
+                        margin-top: 15px; 
+                    }
+                    .achievement { 
+                        background: linear-gradient(135deg, #fff9c4 0%, #ffe082 100%);
+                        padding: 8px 15px; 
+                        border-radius: 25px; 
+                        font-size: 14px;
+                        border: 2px solid #ffca28;
+                        box-shadow: 0 2px 8px rgba(255,202,40,0.4);
+                    }
+                    .footer { 
+                        text-align: center; 
+                        margin-top: 30px; 
+                        color: #636e72; 
+                        font-size: 14px;
+                        padding-top: 20px;
+                        border-top: 2px dashed #b2bec3;
+                    }
+                    .footer-message {
+                        font-size: 1.2rem;
+                        color: #ff6b6b;
+                        margin-top: 10px;
+                    }
                 </style>
             </head>
             <body>
-                <h1>🌟 Math Progress Report 🌟</h1>
-                
-                <div class="section">
-                    <h2>Overall Stats</h2>
-                    <div class="stat-row">
-                        <span class="stat-label">Total Stars:</span>
-                        <span class="stat-value">⭐ ${getVal(s.totalStars)}</span>
+                <div class="report-container">
+                    <h1>🌟 Math Progress Report 🌟</h1>
+                    <p class="report-date">Generated on ${new Date().toLocaleDateString()} at ${new Date().toLocaleTimeString()}</p>
+                    
+                    <div class="section overall-section">
+                        <h2>🏆 Overall Stats</h2>
+                        <div class="stat-row">
+                            <span class="stat-label">Total Stars:</span>
+                            <span class="stat-value">⭐ ${getVal(s.totalStars)}</span>
+                        </div>
+                        <div class="stat-row">
+                            <span class="stat-label">Best Streak:</span>
+                            <span class="stat-value">🔥 ${getVal(s.bestStreak)}</span>
+                        </div>
+                        <div class="stat-row">
+                            <span class="stat-label">Problems Solved:</span>
+                            <span class="stat-value">📊 ${getVal(s.totalProblems)}</span>
+                        </div>
+                        <div class="stat-row">
+                            <span class="stat-label">Last Played:</span>
+                            <span class="stat-value">🕐 ${s.lastPlayed ? new Date(s.lastPlayed).toLocaleDateString() : 'Never'}</span>
+                        </div>
                     </div>
-                    <div class="stat-row">
-                        <span class="stat-label">Best Streak:</span>
-                        <span class="stat-value">🔥 ${getVal(s.bestStreak)}</span>
-                    </div>
-                    <div class="stat-row">
-                        <span class="stat-label">Total Problems Solved:</span>
-                        <span class="stat-value">${getVal(s.totalProblems)}</span>
-                    </div>
-                    <div class="stat-row">
-                        <span class="stat-label">Last Played:</span>
-                        <span class="stat-value">${s.lastPlayed ? new Date(s.lastPlayed).toLocaleDateString() : 'Never'}</span>
-                    </div>
-                </div>
 
-                <div class="section">
-                    <h2>Addition</h2>
-                    <div class="stat-row">
-                        <span class="stat-label">Stars:</span>
-                        <span class="stat-value">⭐ ${getVal(s.additionStars)}</span>
+                    <div class="section addition-section">
+                        <h2>➕ Addition</h2>
+                        <div class="stat-row">
+                            <span class="stat-label">Stars:</span>
+                            <span class="stat-value">⭐ ${getVal(s.additionStars)}</span>
+                        </div>
+                        <div class="stat-row">
+                            <span class="stat-label">Level:</span>
+                            <span class="stat-value">📈 ${getVal(s.additionLevel)}</span>
+                        </div>
+                        <div class="stat-row">
+                            <span class="stat-label">Best Streak:</span>
+                            <span class="stat-value">🔥 ${getVal(s.additionBest)}</span>
+                        </div>
+                        <div class="stat-row">
+                            <span class="stat-label">Problems Solved:</span>
+                            <span class="stat-value">📝 ${getVal(s.additionProblems)}</span>
+                        </div>
                     </div>
-                    <div class="stat-row">
-                        <span class="stat-label">Level:</span>
-                        <span class="stat-value">${getVal(s.additionLevel)}</span>
-                    </div>
-                    <div class="stat-row">
-                        <span class="stat-label">Best Streak:</span>
-                        <span class="stat-value">🔥 ${getVal(s.additionBest)}</span>
-                    </div>
-                    <div class="stat-row">
-                        <span class="stat-label">Problems Solved:</span>
-                        <span class="stat-value">${getVal(s.additionProblems)}</span>
-                    </div>
-                </div>
 
-                <div class="section">
-                    <h2>Subtraction</h2>
-                    <div class="stat-row">
-                        <span class="stat-label">Stars:</span>
-                        <span class="stat-value">⭐ ${getVal(s.subtractionStars)}</span>
+                    <div class="section subtraction-section">
+                        <h2>➖ Subtraction</h2>
+                        <div class="stat-row">
+                            <span class="stat-label">Stars:</span>
+                            <span class="stat-value">⭐ ${getVal(s.subtractionStars)}</span>
+                        </div>
+                        <div class="stat-row">
+                            <span class="stat-label">Level:</span>
+                            <span class="stat-value">📈 ${getVal(s.subtractionLevel)}</span>
+                        </div>
+                        <div class="stat-row">
+                            <span class="stat-label">Best Streak:</span>
+                            <span class="stat-value">🔥 ${getVal(s.subtractionBest)}</span>
+                        </div>
+                        <div class="stat-row">
+                            <span class="stat-label">Problems Solved:</span>
+                            <span class="stat-value">📝 ${getVal(s.subtractionProblems)}</span>
+                        </div>
                     </div>
-                    <div class="stat-row">
-                        <span class="stat-label">Level:</span>
-                        <span class="stat-value">${getVal(s.subtractionLevel)}</span>
-                    </div>
-                    <div class="stat-row">
-                        <span class="stat-label">Best Streak:</span>
-                        <span class="stat-value">🔥 ${getVal(s.subtractionBest)}</span>
-                    </div>
-                    <div class="stat-row">
-                        <span class="stat-label">Problems Solved:</span>
-                        <span class="stat-value">${getVal(s.subtractionProblems)}</span>
-                    </div>
-                </div>
 
-                <div class="section">
-                    <h2>Multiplication</h2>
-                    <div class="stat-row">
-                        <span class="stat-label">Stars:</span>
-                        <span class="stat-value">⭐ ${getVal(s.multiplicationStars)}</span>
+                    <div class="section multiplication-section">
+                        <h2>✖️ Multiplication</h2>
+                        <div class="stat-row">
+                            <span class="stat-label">Stars:</span>
+                            <span class="stat-value">⭐ ${getVal(s.multiplicationStars)}</span>
+                        </div>
+                        <div class="stat-row">
+                            <span class="stat-label">Level:</span>
+                            <span class="stat-value">📈 ${getVal(s.multiplicationLevel)}</span>
+                        </div>
+                        <div class="stat-row">
+                            <span class="stat-label">Best Streak:</span>
+                            <span class="stat-value">🔥 ${getVal(s.multiplicationBest)}</span>
+                        </div>
+                        <div class="stat-row">
+                            <span class="stat-label">Problems Solved:</span>
+                            <span class="stat-value">📝 ${getVal(s.multiplicationProblems)}</span>
+                        </div>
                     </div>
-                    <div class="stat-row">
-                        <span class="stat-label">Level:</span>
-                        <span class="stat-value">${getVal(s.multiplicationLevel)}</span>
-                    </div>
-                    <div class="stat-row">
-                        <span class="stat-label">Best Streak:</span>
-                        <span class="stat-value">🔥 ${getVal(s.multiplicationBest)}</span>
-                    </div>
-                    <div class="stat-row">
-                        <span class="stat-label">Problems Solved:</span>
-                        <span class="stat-value">${getVal(s.multiplicationProblems)}</span>
-                    </div>
-                </div>
 
-                <div class="section">
-                    <h2>Division</h2>
-                    <div class="stat-row">
-                        <span class="stat-label">Stars:</span>
-                        <span class="stat-value">⭐ ${getVal(s.divisionStars)}</span>
+                    <div class="section division-section">
+                        <h2>➗ Division</h2>
+                        <div class="stat-row">
+                            <span class="stat-label">Stars:</span>
+                            <span class="stat-value">⭐ ${getVal(s.divisionStars)}</span>
+                        </div>
+                        <div class="stat-row">
+                            <span class="stat-label">Level:</span>
+                            <span class="stat-value">📈 ${getVal(s.divisionLevel)}</span>
+                        </div>
+                        <div class="stat-row">
+                            <span class="stat-label">Best Streak:</span>
+                            <span class="stat-value">🔥 ${getVal(s.divisionBest)}</span>
+                        </div>
+                        <div class="stat-row">
+                            <span class="stat-label">Problems Solved:</span>
+                            <span class="stat-value">📝 ${getVal(s.divisionProblems)}</span>
+                        </div>
                     </div>
-                    <div class="stat-row">
-                        <span class="stat-label">Level:</span>
-                        <span class="stat-value">${getVal(s.divisionLevel)}</span>
-                    </div>
-                    <div class="stat-row">
-                        <span class="stat-label">Best Streak:</span>
-                        <span class="stat-value">🔥 ${getVal(s.divisionBest)}</span>
-                    </div>
-                    <div class="stat-row">
-                        <span class="stat-label">Problems Solved:</span>
-                        <span class="stat-value">${getVal(s.divisionProblems)}</span>
-                    </div>
-                </div>
 
-                <div class="section">
-                    <h2>Fun Math</h2>
-                    <div class="stat-row">
-                        <span class="stat-label">Stars:</span>
-                        <span class="stat-value">⭐ ${getVal(s.funMathStars)}</span>
+                    <div class="section fun-section">
+                        <h2>🎲 Fun Math</h2>
+                        <div class="stat-row">
+                            <span class="stat-label">Stars:</span>
+                            <span class="stat-value">⭐ ${getVal(s.funMathStars)}</span>
+                        </div>
+                        <div class="stat-row">
+                            <span class="stat-label">Level:</span>
+                            <span class="stat-value">📈 ${getVal(s.funMathLevel)}</span>
+                        </div>
+                        <div class="stat-row">
+                            <span class="stat-label">Best Streak:</span>
+                            <span class="stat-value">🔥 ${getVal(s.funMathBest)}</span>
+                        </div>
+                        <div class="stat-row">
+                            <span class="stat-label">Problems Solved:</span>
+                            <span class="stat-value">📝 ${getVal(s.funMathProblems)}</span>
+                        </div>
                     </div>
-                    <div class="stat-row">
-                        <span class="stat-label">Level:</span>
-                        <span class="stat-value">${getVal(s.funMathLevel)}</span>
-                    </div>
-                    <div class="stat-row">
-                        <span class="stat-label">Best Streak:</span>
-                        <span class="stat-value">🔥 ${getVal(s.funMathBest)}</span>
-                    </div>
-                    <div class="stat-row">
-                        <span class="stat-label">Problems Solved:</span>
-                        <span class="stat-value">${getVal(s.funMathProblems)}</span>
-                    </div>
-                </div>
 
-                <div class="section">
-                    <h2>Achievements Unlocked (${getVal(s.achievements) ? s.achievements.length : 0})</h2>
-                    <div class="achievements">
-                        ${s.achievements && s.achievements.includes('first_star') ? '<span class="achievement">⭐ First Star</span>' : ''}
-                        ${s.achievements && s.achievements.includes('star_10') ? '<span class="achievement">🌟 Star Collector</span>' : ''}
-                        ${s.achievements && s.achievements.includes('star_50') ? '<span class="achievement">✨ Star Master</span>' : ''}
-                        ${s.achievements && s.achievements.includes('streak_5') ? '<span class="achievement">🔥 On Fire!</span>' : ''}
-                        ${s.achievements && s.achievements.includes('streak_10') ? '<span class="achievement">💥 Unstoppable!</span>' : ''}
-                        ${s.achievements && s.achievements.includes('addition_expert') ? '<span class="achievement">➕ Addition Expert</span>' : ''}
-                        ${s.achievements && s.achievements.includes('subtraction_expert') ? '<span class="achievement">➖ Subtraction Expert</span>' : ''}
-                        ${s.achievements && s.achievements.includes('multiplication_expert') ? '<span class="achievement">✖️ Multiplication Expert</span>' : ''}
-                        ${s.achievements && s.achievements.includes('division_expert') ? '<span class="achievement">➗ Division Expert</span>' : ''}
-                        ${s.achievements && s.achievements.includes('fun_math_master') ? '<span class="achievement">🎲 Fun Math Master</span>' : ''}
-                        ${s.achievements && s.achievements.includes('math_ninja') ? '<span class="achievement">🥷 Math Ninja</span>' : ''}
-                        ${s.achievements && s.achievements.includes('dedicated_learner') ? '<span class="achievement">📚 Dedicated Learner</span>' : ''}
-                        ${s.achievements && s.achievements.includes('perfect_score') ? '<span class="achievement">💯 Perfect Score</span>' : ''}
+                    <div class="section achievements-section">
+                        <h2>🏆 Achievements (${getVal(s.achievements) ? s.achievements.length : 0})</h2>
+                        <div class="achievements">
+                            ${s.achievements && s.achievements.includes('first_star') ? '<span class="achievement">⭐ First Star</span>' : ''}
+                            ${s.achievements && s.achievements.includes('star_10') ? '<span class="achievement">🌟 Star Collector</span>' : ''}
+                            ${s.achievements && s.achievements.includes('star_50') ? '<span class="achievement">✨ Star Master</span>' : ''}
+                            ${s.achievements && s.achievements.includes('streak_5') ? '<span class="achievement">🔥 On Fire!</span>' : ''}
+                            ${s.achievements && s.achievements.includes('streak_10') ? '<span class="achievement">💥 Unstoppable!</span>' : ''}
+                            ${s.achievements && s.achievements.includes('addition_expert') ? '<span class="achievement">➕ Addition Expert</span>' : ''}
+                            ${s.achievements && s.achievements.includes('subtraction_expert') ? '<span class="achievement">➖ Subtraction Expert</span>' : ''}
+                            ${s.achievements && s.achievements.includes('multiplication_expert') ? '<span class="achievement">✖️ Multiplication Expert</span>' : ''}
+                            ${s.achievements && s.achievements.includes('division_expert') ? '<span class="achievement">➗ Division Expert</span>' : ''}
+                            ${s.achievements && s.achievements.includes('fun_math_master') ? '<span class="achievement">🎲 Fun Math Master</span>' : ''}
+                            ${s.achievements && s.achievements.includes('math_ninja') ? '<span class="achievement">🥷 Math Ninja</span>' : ''}
+                            ${s.achievements && s.achievements.includes('dedicated_learner') ? '<span class="achievement">📚 Dedicated Learner</span>' : ''}
+                            ${s.achievements && s.achievements.includes('perfect_score') ? '<span class="achievement">💯 Perfect Score</span>' : ''}
+                        </div>
                     </div>
-                </div>
 
-                <div class="footer">
-                    <p>Generated on ${new Date().toLocaleDateString()} at ${new Date().toLocaleTimeString()}</p>
-                    <p>🌟 Keep up the great work! 🌟</p>
+                    <div class="footer">
+                        <p class="footer-message">🌟 Keep up the great work! 🌟</p>
+                    </div>
                 </div>
             </body>
             </html>
