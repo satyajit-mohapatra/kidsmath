@@ -1,12 +1,15 @@
 class MenuManager {
     constructor() {
         this.loadStats();
+        this.loadProfile();
         this.init();
     }
 
     init() {
         this.displayStats();
+        this.displaySalutation();
         this.setupMascot();
+        this.setupProfile();
     }
 
     loadStats() {
@@ -22,6 +25,81 @@ class MenuManager {
             socialSkillsStars: 0,
             achievements: []
         };
+    }
+
+    loadProfile() {
+        const savedProfile = localStorage.getItem('mathGameProfile');
+        this.profile = savedProfile ? JSON.parse(savedProfile) : {
+            name: '',
+            avatar: '🦊',
+            createdAt: null
+        };
+    }
+
+    saveProfile() {
+        localStorage.setItem('mathGameProfile', JSON.stringify(this.profile));
+    }
+
+    displaySalutation() {
+        const salutation = document.getElementById('salutation');
+        const hour = new Date().getHours();
+        
+        let greeting, emoji;
+        if (hour < 12) {
+            greeting = 'Good morning';
+            emoji = '🌅';
+        } else if (hour < 17) {
+            greeting = 'Good afternoon';
+            emoji = '☀️';
+        } else {
+            greeting = 'Good evening';
+            emoji = '🌙';
+        }
+
+        if (this.profile.name) {
+            salutation.textContent = `${emoji} ${greeting}, ${this.profile.name}!`;
+        } else {
+            salutation.textContent = `${emoji} ${greeting}, friend!`;
+        }
+    }
+
+    setupProfile() {
+        const profileBtn = document.getElementById('profileBtn');
+        const profileModal = document.getElementById('profileModal');
+        const closeProfile = document.getElementById('closeProfile');
+        const saveProfile = document.getElementById('saveProfile');
+        const profileAvatar = document.getElementById('profileAvatar');
+        const avatarOptions = document.querySelectorAll('.avatar-option');
+
+        profileBtn.addEventListener('click', () => {
+            document.getElementById('profileName').value = this.profile.name || '';
+            profileAvatar.textContent = this.profile.avatar || '🦊';
+            profileModal.classList.add('show');
+        });
+
+        closeProfile.addEventListener('click', () => {
+            profileModal.classList.remove('show');
+        });
+
+        avatarOptions.forEach(option => {
+            option.addEventListener('click', () => {
+                profileAvatar.textContent = option.textContent;
+            });
+        });
+
+        saveProfile.addEventListener('click', () => {
+            const name = document.getElementById('profileName').value.trim();
+            this.profile.name = name;
+            this.profile.avatar = profileAvatar.textContent;
+            if (!this.profile.createdAt) {
+                this.profile.createdAt = new Date().toISOString();
+            }
+            this.saveProfile();
+            this.displaySalutation();
+            profileModal.classList.remove('show');
+            this.playTone(800, 0.1);
+            setTimeout(() => this.playTone(1000, 0.1), 100);
+        });
     }
 
     displayStats() {

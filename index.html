@@ -29,7 +29,8 @@
     <div class="container menu-container">
         <header class="header">
             <h1 class="title">🌟 Fun Math Adventure! 🌟</h1>
-            <p class="subtitle">Choose your adventure!</p>
+            <p class="subtitle" id="salutation">👋 Hello, friend!</p>
+            <button class="profile-btn" id="profileBtn">👤 Profile</button>
         </header>
 
         <div class="stats-summary">
@@ -97,6 +98,28 @@
         <div class="mascot-area">
             <div class="mascot" id="menuMascot">🦊</div>
             <p class="mascot-message" id="mascotMessage">Click a card to start learning!</p>
+        </div>
+    </div>
+
+    <div class="modal" id="profileModal">
+        <div class="modal-content">
+            <h2>👤 Your Profile</h2>
+            <div class="profile-avatar" id="profileAvatar">🦊</div>
+            <div class="avatar-options">
+                <div class="avatar-option">🦊</div>
+                <div class="avatar-option">🐻</div>
+                <div class="avatar-option">🐰</div>
+                <div class="avatar-option">🐼</div>
+                <div class="avatar-option">🦁</div>
+                <div class="avatar-option">🐸</div>
+                <div class="avatar-option">🐯</div>
+                <div class="avatar-option">🐙</div>
+            </div>
+            <input type="text" id="profileName" placeholder="Enter your name" maxlength="20">
+            <div class="modal-buttons">
+                <button class="modal-btn cancel-btn" id="closeProfile">Cancel</button>
+                <button class="modal-btn save-btn" id="saveProfile">Save</button>
+            </div>
         </div>
     </div>
 

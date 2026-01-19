@@ -250,6 +250,10 @@ class ProgressManager {
         const s = this.stats;
         const getVal = (val) => val || 0;
         
+        const savedProfile = localStorage.getItem('mathGameProfile');
+        const profile = savedProfile ? JSON.parse(savedProfile) : { name: '', avatar: '🦊' };
+        const playerName = profile.name || 'Math Learner';
+        
         reportWindow.document.write(`
             <!DOCTYPE html>
             <html>
@@ -269,6 +273,25 @@ class ProgressManager {
                         border-radius: 30px;
                         padding: 30px;
                         box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+                    }
+                    .report-header {
+                        text-align: center;
+                        margin-bottom: 20px;
+                    }
+                    .report-avatar {
+                        font-size: 4rem;
+                        margin-bottom: 10px;
+                        animation: bounce 2s infinite;
+                    }
+                    @keyframes bounce {
+                        0%, 100% { transform: translateY(0); }
+                        50% { transform: translateY(-10px); }
+                    }
+                    .player-name {
+                        font-size: 1.5rem;
+                        color: #ff6b6b;
+                        font-weight: bold;
+                        margin-top: 5px;
                     }
                     h1 { 
                         color: #ff6b6b; 
@@ -381,7 +404,11 @@ class ProgressManager {
             </head>
             <body>
                 <div class="report-container">
-                    <h1>🌟 Math Progress Report 🌟</h1>
+                    <div class="report-header">
+                        <div class="report-avatar">${profile.avatar || '🦊'}</div>
+                        <h1>🌟 Math Progress Report 🌟</h1>
+                        <p class="player-name">${playerName}</p>
+                    </div>
                     <p class="report-date">Generated on ${new Date().toLocaleDateString()} at ${new Date().toLocaleTimeString()}</p>
                     
                     <div class="section overall-section">
