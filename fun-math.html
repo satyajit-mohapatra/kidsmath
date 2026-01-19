@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Kids Math">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="theme-color" content="#fd79a8">
+    <meta name="description" content="Fun Math! Number matching, comparing, patterns, and skip counting activities!">
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="icons/icon-192.png">
+    <link rel="icon" type="image/png" href="icons/icon-192.png">
+    <title>Fun Math - Fun Math Adventure!</title>
+    <link rel="stylesheet" href="shared-styles.css">
+    <link rel="stylesheet" href="fun-math-styles.css">
+</head>
+<body>
+    <div class="container">
+        <nav class="nav-header">
+            <a href="index.html" class="back-btn">← Back to Menu</a>
+        </nav>
+        <header class="header">
+            <h1 class="title">🎲 Fun Math!</h1>
+            <div class="stats">
+                <div class="stat-item">
+                    <span class="stat-label">Stars:</span>
+                    <span class="stat-value" id="stars">⭐ 0</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Streak:</span>
+                    <span class="stat-value" id="streak">🔥 0</span>
+                </div>
+            </div>
+        </header>
+
+        <div class="activity-selector">
+            <button class="activity-btn active" data-activity="matching">🔢 Number Matching</button>
+            <button class="activity-btn" data-activity="comparing">🔍 Comparing Numbers</button>
+            <button class="activity-btn" data-activity="patterns">🔮 Patterns</button>
+            <button class="activity-btn" data-activity="skip-count">🐰 Skip Counting</button>
+        </div>
+
+        <div class="game-area">
+            <div class="activity-display" id="activityDisplay"></div>
+
+            <div class="feedback-area" id="feedbackArea"></div>
+
+            <div class="hint-area">
+                <div class="mascot" id="mascot">🦄</div>
+                <div class="hint-buttons">
+                    <button class="hint-btn" id="hintBtn">
+                        💡 Need a hint?
+                        <span class="hint-counter" id="hintCounter">0/3</span>
+                    </button>
+                </div>
+                <div class="hint-content" id="hintContent"></div>
+            </div>
+        </div>
+
+        <div class="celebration-container" id="celebration"></div>
+    </div>
+
+    <script src="base-game.js"></script>
+    <script src="fun-math.js"></script>
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js').catch(() => {});
+            });
+        }
+    </script>
+</body>
+</html>

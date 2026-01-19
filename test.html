@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Page</title>
+</head>
+<body>
+    <h1>Testing JavaScript Click Handlers</h1>
+    <button id="testBtn">Click Me</button>
+    <div id="output"></div>
+
+    <script>
+        const btn = document.getElementById('testBtn');
+        const output = document.getElementById('output');
+        
+        btn.addEventListener('click', () => {
+            output.textContent = 'Click worked! Event listeners are functioning.';
+            output.style.color = 'green';
+        });
+        
+        output.textContent = 'Page loaded. Click the button to test.';
+    </script>
+</body>
+</html>

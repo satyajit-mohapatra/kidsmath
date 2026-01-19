@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Kids Math">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="theme-color" content="#55efc4">
+    <meta name="description" content="Progress - Track your math learning journey!">
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="icons/icon-192.png">
+    <link rel="icon" type="image/png" href="icons/icon-192.png">
+    <title>Progress - Fun Math Adventure!</title>
+    <link rel="stylesheet" href="shared-styles.css">
+    <link rel="stylesheet" href="progress-styles.css">
+</head>
+<body>
+    <div class="container">
+        <nav class="nav-header">
+            <a href="index.html" class="back-btn">← Back to Menu</a>
+        </nav>
+        <header class="header">
+            <h1 class="title">📊 Your Progress!</h1>
+        </header>
+
+        <div class="stats-overview">
+            <div class="stat-card total-stars">
+                <div class="stat-icon">⭐</div>
+                <div class="stat-label">Total Stars</div>
+                <div class="stat-value" id="totalStars">0</div>
+            </div>
+            <div class="stat-card best-streak">
+                <div class="stat-icon">🔥</div>
+                <div class="stat-label">Best Streak</div>
+                <div class="stat-value" id="bestStreak">0</div>
+            </div>
+            <div class="stat-card total-problems">
+                <div class="stat-icon">📊</div>
+                <div class="stat-label">Problems Solved</div>
+                <div class="stat-value" id="totalProblems">0</div>
+            </div>
+            <div class="stat-card achievements">
+                <div class="stat-icon">🏆</div>
+                <div class="stat-label">Achievements</div>
+                <div class="stat-value" id="achievementCount">0</div>
+            </div>
+        </div>
+
+        <div class="progress-sections">
+            <div class="progress-section">
+                <h2 class="section-title">➕ Addition Progress</h2>
+                <div class="progress-bar">
+                    <div class="progress-fill addition-fill" id="additionFill"></div>
+                </div>
+                <div class="progress-stats">
+                    <div class="progress-detail">
+                        <span>⭐ <span id="additionStars">0</span></span>
+                        <span class="detail-label">Level <span id="additionLevel">1</span></span>
+                    </div>
+                    <div class="progress-detail">
+                        <span>🔥 Best: <span id="additionBest">0</span></span>
+                        <span class="detail-label"><span id="additionProblems">0</span> problems</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="progress-section">
+                <h2 class="section-title">➖ Subtraction Progress</h2>
+                <div class="progress-bar">
+                    <div class="progress-fill subtraction-fill" id="subtractionFill"></div>
+                </div>
+                <div class="progress-stats">
+                    <div class="progress-detail">
+                        <span>⭐ <span id="subtractionStars">0</span></span>
+                        <span class="detail-label">Level <span id="subtractionLevel">1</span></span>
+                    </div>
+                    <div class="progress-detail">
+                        <span>🔥 Best: <span id="subtractionBest">0</span></span>
+                        <span class="detail-label"><span id="subtractionProblems">0</span> problems</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="progress-section">
+                <h2 class="section-title">✖️ Multiplication Progress</h2>
+                <div class="progress-bar">
+                    <div class="progress-fill multiplication-fill" id="multiplicationFill"></div>
+                </div>
+                <div class="progress-stats">
+                    <div class="progress-detail">
+                        <span>⭐ <span id="multiplicationStars">0</span></span>
+                        <span class="detail-label">Level <span id="multiplicationLevel">1</span></span>
+                    </div>
+                    <div class="progress-detail">
+                        <span>🔥 Best: <span id="multiplicationBest">0</span></span>
+                        <span class="detail-label"><span id="multiplicationProblems">0</span> problems</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="progress-section">
+                <h2 class="section-title">➗ Division Progress</h2>
+                <div class="progress-bar">
+                    <div class="progress-fill division-fill" id="divisionFill"></div>
+                </div>
+                <div class="progress-stats">
+                    <div class="progress-detail">
+                        <span>⭐ <span id="divisionStars">0</span></span>
+                        <span class="detail-label">Level <span id="divisionLevel">1</span></span>
+                    </div>
+                    <div class="progress-detail">
+                        <span>🔥 Best: <span id="divisionBest">0</span></span>
+                        <span class="detail-label"><span id="divisionProblems">0</span> problems</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="progress-section">
+                <h2 class="section-title">🎲 Fun Math Progress</h2>
+                <div class="progress-bar">
+                    <div class="progress-fill fun-fill" id="funMathFill"></div>
+                </div>
+                <div class="progress-stats">
+                    <div class="progress-detail">
+                        <span>⭐ <span id="funMathStars">0</span></span>
+                        <span class="detail-label">Level <span id="funMathLevel">1</span></span>
+                    </div>
+                    <div class="progress-detail">
+                        <span>🔥 Best: <span id="funMathBest">0</span></span>
+                        <span class="detail-label"><span id="funMathProblems">0</span> problems</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="last-played-section">
+            <div class="last-played-card">
+                <div class="last-played-icon">🕐</div>
+                <div class="last-played-content">
+                    <div class="last-played-label">Last Played</div>
+                    <div class="last-played-time" id="lastPlayed">Never</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="achievements-section">
+            <h2 class="section-title">🏆 Achievements</h2>
+            <div class="achievements-grid" id="achievementsGrid"></div>
+        </div>
+
+        <div class="reset-section">
+            <button class="reset-btn" id="resetProgress">🔄 Reset Progress</button>
+        </div>
+    </div>
+
+    <script src="progress.js"></script>
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js').catch(() => {});
+            });
+        }
+    </script>
+</body>
+</html>
