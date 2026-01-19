@@ -192,6 +192,11 @@ body {
     border: 3px solid #e17055;
 }
 
+.social-card {
+    background: linear-gradient(135deg, #a8e6cf 0%, #dcedc1 100%);
+    border: 3px solid #4caf50;
+}
+
 .progress-card {
     background: linear-gradient(135deg, #d4fc79 0%, #96e6a1 100%);
     border: 3px solid #00b894;

@@ -25,6 +25,15 @@ node -c filename.js
 open -a "Google Chrome" --args --auto-open-devtools-for-tabs addition.html
 ```
 
+## Task Management
+
+Always create a todo list before making any changes to the codebase:
+- Use `todowrite` tool to plan all required steps
+- Break complex tasks into smaller, actionable items
+- Update todo status in real-time as you work
+- Mark tasks complete immediately after finishing
+- Only have ONE task in_progress at a time
+
 ## Code Style Guidelines
 
 ### JavaScript Conventions

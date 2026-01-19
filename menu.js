@@ -19,6 +19,7 @@ class MenuManager {
             multiplicationStars: 0,
             divisionStars: 0,
             funMathStars: 0,
+            socialSkillsStars: 0,
             achievements: []
         };
     }
@@ -31,6 +32,7 @@ class MenuManager {
         document.getElementById('multiplicationStars').textContent = `⭐ ${this.stats.multiplicationStars}`;
         document.getElementById('divisionStars').textContent = `⭐ ${this.stats.divisionStars}`;
         document.getElementById('funMathStars').textContent = `⭐ ${this.stats.funMathStars}`;
+        document.getElementById('socialSkillsStars').textContent = `⭐ ${this.stats.socialSkillsStars || 0}`;
         document.getElementById('progressStars').textContent = `🏆 ${this.stats.achievements.length}`;
     }
 

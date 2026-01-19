@@ -239,6 +239,186 @@ class ProgressManager {
                 this.resetProgress();
             }
         });
+
+        document.getElementById('printReport').addEventListener('click', () => {
+            this.printReport();
+        });
+    }
+
+    printReport() {
+        const reportWindow = window.open('', '_blank');
+        const s = this.stats;
+        const getVal = (val) => val || 0;
+        
+        reportWindow.document.write(`
+            <!DOCTYPE html>
+            <html>
+            <head>
+                <title>Math Progress Report</title>
+                <style>
+                    body { font-family: Arial, sans-serif; padding: 20px; max-width: 800px; margin: 0 auto; }
+                    h1 { color: #4facfe; text-align: center; }
+                    h2 { color: #333; border-bottom: 2px solid #4facfe; padding-bottom: 10px; }
+                    .section { margin: 20px 0; padding: 15px; background: #f5f5f5; border-radius: 10px; }
+                    .stat-row { display: flex; justify-content: space-between; margin: 10px 0; }
+                    .stat-label { font-weight: bold; }
+                    .stat-value { color: #4facfe; }
+                    .achievements { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px; }
+                    .achievement { background: #ffd700; padding: 5px 10px; border-radius: 15px; font-size: 14px; }
+                    .footer { text-align: center; margin-top: 30px; color: #666; font-size: 12px; }
+                </style>
+            </head>
+            <body>
+                <h1>🌟 Math Progress Report 🌟</h1>
+                
+                <div class="section">
+                    <h2>Overall Stats</h2>
+                    <div class="stat-row">
+                        <span class="stat-label">Total Stars:</span>
+                        <span class="stat-value">⭐ ${getVal(s.totalStars)}</span>
+                    </div>
+                    <div class="stat-row">
+                        <span class="stat-label">Best Streak:</span>
+                        <span class="stat-value">🔥 ${getVal(s.bestStreak)}</span>
+                    </div>
+                    <div class="stat-row">
+                        <span class="stat-label">Total Problems Solved:</span>
+                        <span class="stat-value">${getVal(s.totalProblems)}</span>
+                    </div>
+                    <div class="stat-row">
+                        <span class="stat-label">Last Played:</span>
+                        <span class="stat-value">${s.lastPlayed ? new Date(s.lastPlayed).toLocaleDateString() : 'Never'}</span>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h2>Addition</h2>
+                    <div class="stat-row">
+                        <span class="stat-label">Stars:</span>
+                        <span class="stat-value">⭐ ${getVal(s.additionStars)}</span>
+                    </div>
+                    <div class="stat-row">
+                        <span class="stat-label">Level:</span>
+                        <span class="stat-value">${getVal(s.additionLevel)}</span>
+                    </div>
+                    <div class="stat-row">
+                        <span class="stat-label">Best Streak:</span>
+                        <span class="stat-value">🔥 ${getVal(s.additionBest)}</span>
+                    </div>
+                    <div class="stat-row">
+                        <span class="stat-label">Problems Solved:</span>
+                        <span class="stat-value">${getVal(s.additionProblems)}</span>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h2>Subtraction</h2>
+                    <div class="stat-row">
+                        <span class="stat-label">Stars:</span>
+                        <span class="stat-value">⭐ ${getVal(s.subtractionStars)}</span>
+                    </div>
+                    <div class="stat-row">
+                        <span class="stat-label">Level:</span>
+                        <span class="stat-value">${getVal(s.subtractionLevel)}</span>
+                    </div>
+                    <div class="stat-row">
+                        <span class="stat-label">Best Streak:</span>
+                        <span class="stat-value">🔥 ${getVal(s.subtractionBest)}</span>
+                    </div>
+                    <div class="stat-row">
+                        <span class="stat-label">Problems Solved:</span>
+                        <span class="stat-value">${getVal(s.subtractionProblems)}</span>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h2>Multiplication</h2>
+                    <div class="stat-row">
+                        <span class="stat-label">Stars:</span>
+                        <span class="stat-value">⭐ ${getVal(s.multiplicationStars)}</span>
+                    </div>
+                    <div class="stat-row">
+                        <span class="stat-label">Level:</span>
+                        <span class="stat-value">${getVal(s.multiplicationLevel)}</span>
+                    </div>
+                    <div class="stat-row">
+                        <span class="stat-label">Best Streak:</span>
+                        <span class="stat-value">🔥 ${getVal(s.multiplicationBest)}</span>
+                    </div>
+                    <div class="stat-row">
+                        <span class="stat-label">Problems Solved:</span>
+                        <span class="stat-value">${getVal(s.multiplicationProblems)}</span>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h2>Division</h2>
+                    <div class="stat-row">
+                        <span class="stat-label">Stars:</span>
+                        <span class="stat-value">⭐ ${getVal(s.divisionStars)}</span>
+                    </div>
+                    <div class="stat-row">
+                        <span class="stat-label">Level:</span>
+                        <span class="stat-value">${getVal(s.divisionLevel)}</span>
+                    </div>
+                    <div class="stat-row">
+                        <span class="stat-label">Best Streak:</span>
+                        <span class="stat-value">🔥 ${getVal(s.divisionBest)}</span>
+                    </div>
+                    <div class="stat-row">
+                        <span class="stat-label">Problems Solved:</span>
+                        <span class="stat-value">${getVal(s.divisionProblems)}</span>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h2>Fun Math</h2>
+                    <div class="stat-row">
+                        <span class="stat-label">Stars:</span>
+                        <span class="stat-value">⭐ ${getVal(s.funMathStars)}</span>
+                    </div>
+                    <div class="stat-row">
+                        <span class="stat-label">Level:</span>
+                        <span class="stat-value">${getVal(s.funMathLevel)}</span>
+                    </div>
+                    <div class="stat-row">
+                        <span class="stat-label">Best Streak:</span>
+                        <span class="stat-value">🔥 ${getVal(s.funMathBest)}</span>
+                    </div>
+                    <div class="stat-row">
+                        <span class="stat-label">Problems Solved:</span>
+                        <span class="stat-value">${getVal(s.funMathProblems)}</span>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h2>Achievements Unlocked (${getVal(s.achievements) ? s.achievements.length : 0})</h2>
+                    <div class="achievements">
+                        ${s.achievements && s.achievements.includes('first_star') ? '<span class="achievement">⭐ First Star</span>' : ''}
+                        ${s.achievements && s.achievements.includes('star_10') ? '<span class="achievement">🌟 Star Collector</span>' : ''}
+                        ${s.achievements && s.achievements.includes('star_50') ? '<span class="achievement">✨ Star Master</span>' : ''}
+                        ${s.achievements && s.achievements.includes('streak_5') ? '<span class="achievement">🔥 On Fire!</span>' : ''}
+                        ${s.achievements && s.achievements.includes('streak_10') ? '<span class="achievement">💥 Unstoppable!</span>' : ''}
+                        ${s.achievements && s.achievements.includes('addition_expert') ? '<span class="achievement">➕ Addition Expert</span>' : ''}
+                        ${s.achievements && s.achievements.includes('subtraction_expert') ? '<span class="achievement">➖ Subtraction Expert</span>' : ''}
+                        ${s.achievements && s.achievements.includes('multiplication_expert') ? '<span class="achievement">✖️ Multiplication Expert</span>' : ''}
+                        ${s.achievements && s.achievements.includes('division_expert') ? '<span class="achievement">➗ Division Expert</span>' : ''}
+                        ${s.achievements && s.achievements.includes('fun_math_master') ? '<span class="achievement">🎲 Fun Math Master</span>' : ''}
+                        ${s.achievements && s.achievements.includes('math_ninja') ? '<span class="achievement">🥷 Math Ninja</span>' : ''}
+                        ${s.achievements && s.achievements.includes('dedicated_learner') ? '<span class="achievement">📚 Dedicated Learner</span>' : ''}
+                        ${s.achievements && s.achievements.includes('perfect_score') ? '<span class="achievement">💯 Perfect Score</span>' : ''}
+                    </div>
+                </div>
+
+                <div class="footer">
+                    <p>Generated on ${new Date().toLocaleDateString()} at ${new Date().toLocaleTimeString()}</p>
+                    <p>🌟 Keep up the great work! 🌟</p>
+                </div>
+            </body>
+            </html>
+        `);
+        reportWindow.document.close();
+        reportWindow.print();
     }
 
     resetProgress() {
