@@ -1,4 +1,4 @@
-const CACHE_NAME = 'kids-math-v1';
+const CACHE_NAME = 'kids-math-v2';
 const urlsToCache = [
     '/',
     '/index.html',
@@ -8,6 +8,7 @@ const urlsToCache = [
     '/division.html',
     '/fun-math.html',
     '/progress.html',
+    '/social-skills.html',
     '/shared-styles.css',
     '/styles.css',
     '/subtraction-styles.css',
@@ -15,12 +16,20 @@ const urlsToCache = [
     '/division-styles.css',
     '/fun-math-styles.css',
     '/progress-styles.css',
+    '/social-skills-styles.css',
     '/app.js',
     '/base-game.js',
     '/menu.js',
     '/progress.js',
+    '/addition.js',
+    '/subtraction.js',
+    '/multiplication.js',
+    '/division.js',
+    '/fun-math.js',
+    '/social-skills.js',
     '/manifest.json',
-    '/icons/icon-192.png'
+    '/icons/icon-192.png',
+    '/icons/icon-512.png'
 ];
 
 self.addEventListener('install', event => {
@@ -57,7 +66,7 @@ self.addEventListener('fetch', event => {
                 });
             })
             .catch(() => {
-                return caches.match('/index.html');
+                return caches.match('./index.html');
             })
     );
 });

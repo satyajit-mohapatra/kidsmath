@@ -2,8 +2,8 @@
     "name": "Fun Math Adventure!",
     "short_name": "Kids Math",
     "description": "A fun, interactive math learning app for children - Addition, Subtraction, Multiplication, Division and more!",
-    "start_url": "/index.html",
-    "scope": "/",
+    "start_url": "./index.html",
+    "scope": "./",
     "display": "standalone",
     "orientation": "any",
     "background_color": "#ffffff",
@@ -61,7 +61,7 @@
     "categories": ["education", "games", "family"],
     "prefer_related_applications": false,
     "share_target": {
-        "action": "/index.html",
+        "action": "./index.html",
         "method": "GET",
         "params": {
             "title": "title",
@@ -74,28 +74,28 @@
             "name": "Addition",
             "short_name": "Add",
             "description": "Practice addition",
-            "url": "/addition.html",
+            "url": "./addition.html",
             "icons": [{ "src": "icons/icon-96.png", "sizes": "96x96" }]
         },
         {
             "name": "Subtraction",
             "short_name": "Subtract",
             "description": "Practice subtraction",
-            "url": "/subtraction.html",
+            "url": "./subtraction.html",
             "icons": [{ "src": "icons/icon-96.png", "sizes": "96x96" }]
         },
         {
             "name": "Multiplication",
             "short_name": "Multiply",
             "description": "Practice multiplication",
-            "url": "/multiplication.html",
+            "url": "./multiplication.html",
             "icons": [{ "src": "icons/icon-96.png", "sizes": "96x96" }]
         },
         {
             "name": "Division",
             "short_name": "Divide",
             "description": "Practice division",
-            "url": "/division.html",
+            "url": "./division.html",
             "icons": [{ "src": "icons/icon-96.png", "sizes": "96x96" }]
         }
     ]
