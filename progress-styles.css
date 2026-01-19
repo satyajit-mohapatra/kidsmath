@@ -113,6 +113,10 @@
     background: linear-gradient(90deg, #fd79a8 0%, #e17055 100%);
 }
 
+.social-fill {
+    background: linear-gradient(90deg, #a29bfe 0%, #6c5ce7 100%);
+}
+
 .progress-stats {
     display: flex;
     justify-content: space-between;

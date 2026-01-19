@@ -17,6 +17,10 @@ class ProgressManager {
             multiplicationStars: 0,
             divisionStars: 0,
             funMathStars: 0,
+            socialSkillsStars: 0,
+            socialSkillsBest: 0,
+            socialSkillsLevel: 1,
+            socialSkillsProblems: 0,
             additionBest: 0,
             subtractionBest: 0,
             multiplicationBest: 0,
@@ -80,6 +84,14 @@ class ProgressManager {
         document.getElementById('multiplicationProblems').textContent = this.stats.multiplicationProblems || 0;
         document.getElementById('divisionProblems').textContent = this.stats.divisionProblems || 0;
         document.getElementById('funMathProblems').textContent = this.stats.funMathProblems || 0;
+
+        document.getElementById('socialSkillsStars').textContent = this.stats.socialSkillsStars || 0;
+        document.getElementById('socialSkillsBest').textContent = this.stats.socialSkillsBest || 0;
+        document.getElementById('socialSkillsLevel').textContent = this.stats.socialSkillsLevel || 1;
+        document.getElementById('socialSkillsProblems').textContent = this.stats.socialSkillsProblems || 0;
+
+        const socialSkillsPercent = Math.min((this.stats.socialSkillsStars / 100) * 100, 100);
+        document.getElementById('socialSkillsFill').style.width = `${socialSkillsPercent}%`;
 
         const lastPlayed = document.getElementById('lastPlayed');
         if (this.stats.lastPlayed) {
@@ -258,7 +270,7 @@ class ProgressManager {
             <!DOCTYPE html>
             <html>
             <head>
-                <title>Math Progress Report</title>
+                <title>Progress Report</title>
                 <style>
                     body { 
                         font-family: 'Comic Sans MS', 'Arial Rounded MT Bold', Arial, sans-serif; 
@@ -267,12 +279,16 @@ class ProgressManager {
                         margin: 0 auto; 
                         background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
                         min-height: 100vh;
+                        -webkit-print-color-adjust: exact;
+                        print-color-adjust: exact;
                     }
                     .report-container {
                         background: white;
                         border-radius: 30px;
                         padding: 30px;
                         box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+                        -webkit-print-color-adjust: exact;
+                        print-color-adjust: exact;
                     }
                     .report-header {
                         text-align: center;
@@ -281,23 +297,31 @@ class ProgressManager {
                     .report-avatar {
                         font-size: 4rem;
                         margin-bottom: 10px;
-                        animation: bounce 2s infinite;
-                    }
-                    @keyframes bounce {
-                        0%, 100% { transform: translateY(0); }
-                        50% { transform: translateY(-10px); }
                     }
                     .player-name {
-                        font-size: 1.5rem;
+                        font-size: 2rem;
+                        background: linear-gradient(135deg, #ff6b6b, #feca57, #48dbfb, #ff9ff3);
+                        -webkit-background-clip: text;
+                        -webkit-text-fill-color: transparent;
+                        background-clip: text;
                         color: #ff6b6b;
-                        font-weight: bold;
-                        margin-top: 5px;
+                        font-weight: 900;
+                        margin-top: 10px;
+                        letter-spacing: 1px;
+                    }
+                    .player-badge {
+                        display: inline-block;
+                        background: linear-gradient(135deg, #ffeaa7 0%, #fdcb6e 100%);
+                        padding: 8px 20px;
+                        border-radius: 25px;
+                        margin-top: 10px;
+                        -webkit-print-color-adjust: exact;
+                        print-color-adjust: exact;
                     }
                     h1 { 
                         color: #ff6b6b; 
                         text-align: center; 
                         font-size: 2.5rem;
-                        text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
                         margin-bottom: 10px;
                     }
                     .report-date {
@@ -316,46 +340,70 @@ class ProgressManager {
                         padding: 20px; 
                         border-radius: 20px; 
                         box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+                        -webkit-print-color-adjust: exact;
+                        print-color-adjust: exact;
                     }
                     .overall-section {
                         background: linear-gradient(135deg, #ffeaa7 0%, #fdcb6e 100%);
                         border: 3px solid #f39c12;
+                        -webkit-print-color-adjust: exact;
+                        print-color-adjust: exact;
                     }
                     .overall-section h2 { border-color: #f39c12; color: #d35400; }
+                    
+                    .fun-section {
+                        background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+                        border: 3px solid #e17055;
+                        -webkit-print-color-adjust: exact;
+                        print-color-adjust: exact;
+                    }
+                    .fun-section h2 { border-color: #e17055; color: #d35400; }
+                    
+                    .social-section {
+                        background: linear-gradient(135deg, #a29bfe 0%, #6c5ce7 100%);
+                        border: 3px solid #6c5ce7;
+                        -webkit-print-color-adjust: exact;
+                        print-color-adjust: exact;
+                    }
+                    .social-section h2 { border-color: #6c5ce7; color: #6c5ce7; }
                     
                     .addition-section {
                         background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
                         border: 3px solid #4facfe;
+                        -webkit-print-color-adjust: exact;
+                        print-color-adjust: exact;
                     }
                     .addition-section h2 { border-color: #4facfe; color: #0984e3; }
                     
                     .subtraction-section {
                         background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
                         border: 3px solid #fa709a;
+                        -webkit-print-color-adjust: exact;
+                        print-color-adjust: exact;
                     }
                     .subtraction-section h2 { border-color: #fa709a; color: #e84393; }
                     
                     .multiplication-section {
                         background: linear-gradient(135deg, #d299c2 0%, #fef9d7 100%);
                         border: 3px solid #fd79a8;
+                        -webkit-print-color-adjust: exact;
+                        print-color-adjust: exact;
                     }
                     .multiplication-section h2 { border-color: #fd79a8; color: #e84393; }
                     
                     .division-section {
                         background: linear-gradient(135deg, #89f7fe 0%, #66a6ff 100%);
                         border: 3px solid #0984e3;
+                        -webkit-print-color-adjust: exact;
+                        print-color-adjust: exact;
                     }
                     .division-section h2 { border-color: #0984e3; color: #0056b3; }
-                    
-                    .fun-section {
-                        background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
-                        border: 3px solid #e17055;
-                    }
-                    .fun-section h2 { border-color: #e17055; color: #d35400; }
                     
                     .achievements-section {
                         background: linear-gradient(135deg, #d4fc79 0%, #96e6a1 100%);
                         border: 3px solid #00b894;
+                        -webkit-print-color-adjust: exact;
+                        print-color-adjust: exact;
                     }
                     .achievements-section h2 { border-color: #00b894; color: #00b894; }
                     
@@ -372,6 +420,8 @@ class ProgressManager {
                         background: rgba(255,255,255,0.5);
                         padding: 5px 15px;
                         border-radius: 20px;
+                        -webkit-print-color-adjust: exact;
+                        print-color-adjust: exact;
                     }
                     .achievements { 
                         display: flex; 
@@ -386,6 +436,8 @@ class ProgressManager {
                         font-size: 14px;
                         border: 2px solid #ffca28;
                         box-shadow: 0 2px 8px rgba(255,202,40,0.4);
+                        -webkit-print-color-adjust: exact;
+                        print-color-adjust: exact;
                     }
                     .footer { 
                         text-align: center; 
@@ -406,8 +458,10 @@ class ProgressManager {
                 <div class="report-container">
                     <div class="report-header">
                         <div class="report-avatar">${profile.avatar || '🦊'}</div>
-                        <h1>🌟 Math Progress Report 🌟</h1>
-                        <p class="player-name">${playerName}</p>
+                        <h1>🌟 Progress Report 🌟</h1>
+                        <div class="player-badge">
+                            <p class="player-name">${playerName}</p>
+                        </div>
                     </div>
                     <p class="report-date">Generated on ${new Date().toLocaleDateString()} at ${new Date().toLocaleTimeString()}</p>
                     
@@ -428,6 +482,46 @@ class ProgressManager {
                         <div class="stat-row">
                             <span class="stat-label">Last Played:</span>
                             <span class="stat-value">🕐 ${s.lastPlayed ? new Date(s.lastPlayed).toLocaleDateString() : 'Never'}</span>
+                        </div>
+                    </div>
+
+                    <div class="section fun-section">
+                        <h2>🎲 Fun Math</h2>
+                        <div class="stat-row">
+                            <span class="stat-label">Stars:</span>
+                            <span class="stat-value">⭐ ${getVal(s.funMathStars)}</span>
+                        </div>
+                        <div class="stat-row">
+                            <span class="stat-label">Level:</span>
+                            <span class="stat-value">📈 ${getVal(s.funMathLevel)}</span>
+                        </div>
+                        <div class="stat-row">
+                            <span class="stat-label">Best Streak:</span>
+                            <span class="stat-value">🔥 ${getVal(s.funMathBest)}</span>
+                        </div>
+                        <div class="stat-row">
+                            <span class="stat-label">Activities Completed:</span>
+                            <span class="stat-value">📝 ${getVal(s.funMathProblems)}</span>
+                        </div>
+                    </div>
+
+                    <div class="section social-section">
+                        <h2>🤝 Social Skills</h2>
+                        <div class="stat-row">
+                            <span class="stat-label">Stars:</span>
+                            <span class="stat-value">⭐ ${getVal(s.socialSkillsStars)}</span>
+                        </div>
+                        <div class="stat-row">
+                            <span class="stat-label">Level:</span>
+                            <span class="stat-value">📈 ${getVal(s.socialSkillsLevel)}</span>
+                        </div>
+                        <div class="stat-row">
+                            <span class="stat-label">Best Streak:</span>
+                            <span class="stat-value">🔥 ${getVal(s.socialSkillsBest)}</span>
+                        </div>
+                        <div class="stat-row">
+                            <span class="stat-label">Scenarios Completed:</span>
+                            <span class="stat-value">📝 ${getVal(s.socialSkillsProblems)}</span>
                         </div>
                     </div>
 
@@ -511,26 +605,6 @@ class ProgressManager {
                         </div>
                     </div>
 
-                    <div class="section fun-section">
-                        <h2>🎲 Fun Math</h2>
-                        <div class="stat-row">
-                            <span class="stat-label">Stars:</span>
-                            <span class="stat-value">⭐ ${getVal(s.funMathStars)}</span>
-                        </div>
-                        <div class="stat-row">
-                            <span class="stat-label">Level:</span>
-                            <span class="stat-value">📈 ${getVal(s.funMathLevel)}</span>
-                        </div>
-                        <div class="stat-row">
-                            <span class="stat-label">Best Streak:</span>
-                            <span class="stat-value">🔥 ${getVal(s.funMathBest)}</span>
-                        </div>
-                        <div class="stat-row">
-                            <span class="stat-label">Problems Solved:</span>
-                            <span class="stat-value">📝 ${getVal(s.funMathProblems)}</span>
-                        </div>
-                    </div>
-
                     <div class="section achievements-section">
                         <h2>🏆 Achievements (${getVal(s.achievements) ? s.achievements.length : 0})</h2>
                         <div class="achievements">
@@ -571,6 +645,10 @@ class ProgressManager {
             multiplicationStars: 0,
             divisionStars: 0,
             funMathStars: 0,
+            socialSkillsStars: 0,
+            socialSkillsBest: 0,
+            socialSkillsLevel: 1,
+            socialSkillsProblems: 0,
             additionBest: 0,
             subtractionBest: 0,
             multiplicationBest: 0,
