@@ -78,7 +78,7 @@
                 </div>
             </div>
 
-            <div class="compact-explanation">
+            <div class="compact-explanation" id="compactExplanation" style="display: none;">
                 <h4 class="explanation-title">📖 Step by Step</h4>
                 <div id="compactSteps"></div>
             </div>
@@ -93,6 +93,7 @@
                         <span class="hint-counter" id="hintCounter">0/6</span>
                     </button>
                     <button class="tutorial-btn" id="tutorialBtn">🎬 Show me how!</button>
+                    <button class="steps-btn" id="stepsBtn" style="display: none;">📝 Show Me Steps!</button>
                 </div>
                 <div class="hint-content" id="hintContent"></div>
             </div>
@@ -116,7 +117,7 @@
         <div class="celebration-container" id="celebration"></div>
     </div>
 
-    <script src="../../src/js/core/app.js"></script>
+    <script src="../../../src/js/core/base-game.js"></script>
     <script src="addition.js"></script>
     <script>
         if ('serviceWorker' in navigator) {
