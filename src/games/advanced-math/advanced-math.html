@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Kids Math">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="theme-color" content="#4facfe">
+    <meta name="description" content="Learn Multiple Ways to Do Math! Master arithmetic with Standard, Vedic, Ancient, and Computer methods.">
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="icons/icon-192.png">
+    <link rel="icon" type="image/png" href="icons/icon-192.png">
+    <title>Arithmetic Algorithms - Learn Multiple Math Methods!</title>
+    <link rel="stylesheet" href="../../css/shared-styles.css">
+    <link rel="stylesheet" href="advanced-math-styles.css">
+</head>
+<body>
+    <div class="container">
+        <nav class="nav-header">
+            <a href="../../../index.html" class="back-btn">← Back to Menu</a>
+        </nav>
+        
+        <header class="header">
+            <h1 class="title">🧮 Arithmetic Algorithms</h1>
+            <p class="subtitle">Learn different ways to calculate!</p>
+            <div class="stats">
+                <div class="stat-item">
+                    <span class="stat-label">Stars:</span>
+                    <span class="stat-value" id="stars">⭐ 0</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Methods Learned:</span>
+                    <span class="stat-value" id="methodsLearned">0</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Streak:</span>
+                    <span class="stat-value" id="streak">🔥 0</span>
+                </div>
+            </div>
+        </header>
+
+        <section class="operation-selector">
+            <h2 class="section-title">Choose Operation</h2>
+            <div class="operation-buttons">
+                <button class="operation-btn active" data-operation="addition">
+                    <span class="op-icon">➕</span>
+                    <span class="op-name">Addition</span>
+                </button>
+                <button class="operation-btn" data-operation="subtraction">
+                    <span class="op-icon">➖</span>
+                    <span class="op-name">Subtraction</span>
+                </button>
+                <button class="operation-btn" data-operation="multiplication">
+                    <span class="op-icon">✖️</span>
+                    <span class="op-name">Multiplication</span>
+                </button>
+                <button class="operation-btn" data-operation="division">
+                    <span class="op-icon">➗</span>
+                    <span class="op-name">Division</span>
+                </button>
+            </div>
+        </section>
+
+        <section class="method-selector">
+            <h2 class="section-title">Choose Method</h2>
+            <div class="method-buttons" id="methodButtons">
+                <button class="method-btn active" data-method="standard">
+                    <span class="method-icon">📐</span>
+                    <span class="method-name">Standard</span>
+                    <span class="method-difficulty">⭐</span>
+                </button>
+            </div>
+        </section>
+
+        <section class="game-area">
+            <div class="input-display" id="inputDisplay">
+                <div class="input-numbers">
+                    <span class="number">247</span>
+                    <span class="operator">+</span>
+                    <span class="number">185</span>
+                    <span class="equals">=</span>
+                </div>
+            </div>
+
+            <div class="step-controls">
+                <button class="step-btn" id="prevStepBtn" disabled>← Previous</button>
+                <span class="step-progress" id="stepProgress">Step 1 of 5</span>
+                <button class="step-btn" id="nextStepBtn">Next →</button>
+            </div>
+
+            <div class="playback-controls">
+                <button class="play-btn" id="playStepsBtn">▶️ Play Steps</button>
+                <button class="play-btn" id="resetStepsBtn">🔄 Reset</button>
+                <div class="speed-control">
+                    <label>Speed:</label>
+                    <input type="range" id="stepSpeed" min="1" max="5" value="3">
+                </div>
+            </div>
+
+            <div class="step-display" id="stepDisplay">
+                <div class="step-container">
+                    <div class="step-number">Step 1</div>
+                    <div class="step-title">Set Up Problem</div>
+                    <div class="step-description">Write numbers aligned by place value</div>
+                    <div class="step-calculation">247 + 185</div>
+                    <div class="step-explanation">💡 Align the numbers by their rightmost digits (ones place).</div>
+                </div>
+            </div>
+
+            <div class="answer-section">
+                <p>What is the answer?</p>
+                <input type="number" class="answer-input" id="answerInput" placeholder="?">
+                <button class="submit-btn" id="submitBtn">Check! ✓</button>
+            </div>
+
+            <div class="feedback-area" id="feedbackArea"></div>
+
+            <div class="hint-area">
+                <div class="mascot" id="mascot">🦊</div>
+                <div class="hint-buttons">
+                    <button class="hint-btn" id="hintBtn">
+                        💡 Need a hint?
+                        <span class="hint-counter" id="hintCounter">0/3</span>
+                    </button>
+                    <button class="hint-btn" id="explainBtn">
+                        📖 How does this method work?
+                    </button>
+                </div>
+                <div class="hint-content" id="hintContent"></div>
+            </div>
+        </section>
+
+        <section class="method-info-panel" id="methodInfo">
+            <h3>Method Information</h3>
+            <p>Click on different methods to learn about them!</p>
+        </section>
+
+        <section class="method-explanation-panel" id="methodExplanation">
+            <button class="expand-btn" id="expandExplanationBtn">📖 Learn More About This Method</button>
+            <div class="explanation-content" id="explanationContent" style="display: none;">
+                <h3>Method Explanation</h3>
+                <p>Click "How does this method work?" to see detailed explanations, history, and when to use each technique!</p>
+            </div>
+        </section>
+
+        <section class="examples-section">
+            <h2 class="section-title">Try Example Problems</h2>
+            <p class="examples-subtitle">Select an example to see this method in action</p>
+            <div class="example-selector">
+                <select class="example-select" id="exampleSelect">
+                    <option value="">-- Choose an Example --</option>
+                </select>
+                <button class="load-example-btn" id="loadExampleBtn">Load Example</button>
+            </div>
+        </section>
+
+        <div class="celebration-container" id="celebration"></div>
+    </div>
+
+    <script src="../../src/js/core/base-game.js"></script>
+    <script src="../../src/js/calculation-engine/step-data.js"></script>
+    <script src="../../src/js/calculation-engine/visualization/grid-renderer.js"></script>
+    <script src="../../src/js/calculation-engine/visualization/column-renderer.js"></script>
+    <script src="../../src/js/calculation-engine/visualization/binary-renderer.js"></script>
+    <script src="../../src/js/calculation-engine/addition/standard-addition.js"></script>
+    <script src="../../src/js/calculation-engine/addition/kahan-summation.js"></script>
+    <script src="../../src/js/calculation-engine/addition/carry-lookahead.js"></script>
+    <script src="../../src/js/calculation-engine/subtraction/standard-subtraction.js"></script>
+    <script src="../../src/js/calculation-engine/subtraction/twos-complement.js"></script>
+    <script src="../../src/js/calculation-engine/multiplication/grade-school-multiplication.js"></script>
+    <script src="../../src/js/calculation-engine/multiplication/vedic-nikhilam.js"></script>
+    <script src="../../src/js/calculation-engine/multiplication/vedic-urdhva-tiryak.js"></script>
+    <script src="../../src/js/calculation-engine/multiplication/vedic-ekadhikena.js"></script>
+    <script src="../../src/js/calculation-engine/multiplication/lattice-multiplication.js"></script>
+    <script src="../../src/js/calculation-engine/multiplication/russian-peasant.js"></script>
+    <script src="../../src/js/calculation-engine/multiplication/abacus-methods.js"></script>
+    <script src="../../src/js/calculation-engine/multiplication/karatsuba.js"></script>
+    <script src="../../src/js/calculation-engine/division/long-division.js"></script>
+    <script src="../../src/js/calculation-engine/division/vedic-paravartya.js"></script>
+    <script src="../../src/js/calculation-engine/division/synthetic-division.js"></script>
+    <script src="../../src/js/calculation-engine/division/non-restoring-division.js"></script>
+    <script src="../../src/js/calculation-engine/division/newton-raphson.js"></script>
+    <script src="../../src/js/calculation-engine/index.js"></script>
+    <script src="../../src/js/core/algorithm-game.js"></script>
+    <script src="advanced-math.js"></script>
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./sw.js').catch(() => {});
+            });
+        }
+    </script>
+</body>
+</html>

@@ -26,14 +26,14 @@
     <link rel="apple-touch-icon" sizes="384x384" href="icons/icon-384.png">
     <link rel="apple-touch-icon" sizes="512x512" href="icons/icon-512.png">
     <link rel="icon" type="image/png" href="icons/icon-192.png">
-    <link rel="stylesheet" href="shared-styles.css">
+    <link rel="stylesheet" href="src/css/shared-styles.css">
 </head>
 <body>
     <div class="container menu-container">
         <header class="header">
             <h1 class="title">🌟 Fun Math Adventure! 🌟</h1>
             <p class="subtitle" id="salutation">👋 Hello, friend!</p>
-            <button class="profile-btn" id="profileBtn">👤 Profile</button>
+            <button class="profile-btn" id="profileBtn" onclick="var m=document.getElementById('profileModal'); m.style.display='flex'; m.classList.add('show');">👤 Profile</button>
         </header>
 
         <div class="stats-summary">
@@ -48,49 +48,56 @@
         </div>
 
         <div class="menu-grid">
-            <a href="fun-math.html" class="menu-card fun-card">
+            <a href="src/games/fun-math/fun-math.html" class="menu-card fun-card">
                 <div class="menu-icon">🎲</div>
                 <h3 class="menu-title">Fun Math</h3>
                 <p class="menu-description">Patterns, comparing, and more!</p>
                 <div class="menu-stars" id="funMathStars">⭐ 0</div>
             </a>
 
-            <a href="social-skills.html" class="menu-card social-card">
+            <a href="src/games/social-skills/social-skills.html" class="menu-card social-card">
                 <div class="menu-icon">🤝</div>
                 <h3 class="menu-title">Social Skills</h3>
                 <p class="menu-description">Polite words, sharing, and making friends!</p>
                 <div class="menu-stars" id="socialSkillsStars">⭐ 0</div>
             </a>
 
-            <a href="addition.html" class="menu-card addition-card">
+            <a href="src/games/addition/addition.html" class="menu-card addition-card">
                 <div class="menu-icon">➕</div>
                 <h3 class="menu-title">Addition</h3>
                 <p class="menu-description">Learn to add numbers together!</p>
                 <div class="menu-stars" id="additionStars">⭐ 0</div>
             </a>
 
-            <a href="subtraction.html" class="menu-card subtraction-card">
+            <a href="src/games/subtraction/subtraction.html" class="menu-card subtraction-card">
                 <div class="menu-icon">➖</div>
                 <h3 class="menu-title">Subtraction</h3>
                 <p class="menu-description">Take away and find what's left!</p>
                 <div class="menu-stars" id="subtractionStars">⭐ 0</div>
             </a>
 
-            <a href="multiplication.html" class="menu-card multiplication-card">
+            <a href="src/games/multiplication/multiplication.html" class="menu-card multiplication-card">
                 <div class="menu-icon">✖️</div>
                 <h3 class="menu-title">Multiplication</h3>
                 <p class="menu-description">Groups and arrays made fun!</p>
                 <div class="menu-stars" id="multiplicationStars">⭐ 0</div>
             </a>
 
-            <a href="division.html" class="menu-card division-card">
+            <a href="src/games/division/division.html" class="menu-card division-card">
                 <div class="menu-icon">➗</div>
                 <h3 class="menu-title">Division</h3>
                 <p class="menu-description">Share equally and see what's left!</p>
                 <div class="menu-stars" id="divisionStars">⭐ 0</div>
             </a>
 
-            <a href="progress.html" class="menu-card progress-card">
+             <a href="src/games/advanced-math/advanced-math.html" class="menu-card arithmetic-card">
+                <div class="menu-icon">🧮</div>
+                <h3 class="menu-title">Arithmetic Algorithms</h3>
+                <p class="menu-description">Learn multiple calculation methods for every operation!</p>
+                <div class="menu-stars" id="advancedMathStars">⭐ 0</div>
+            </a>
+
+            <a href="src/games/progress/progress.html" class="menu-card progress-card">
                 <div class="menu-icon">📊</div>
                 <h3 class="menu-title">Progress</h3>
                 <p class="menu-description">See your achievements!</p>
@@ -119,14 +126,75 @@
                 <div class="avatar-option">🐙</div>
             </div>
             <input type="text" id="profileName" placeholder="Enter your name" maxlength="20">
+            
+            <div id="gameVisibilitySection" class="visibility-section" style="display: block;">
+                <h3>Show/Hide Games</h3>
+                <div class="visibility-toggle">
+                    <label class="toggle-label">
+                        <span class="toggle-icon">🎲</span>
+                        <span class="toggle-text">Fun Math</span>
+                        <input type="checkbox" class="visibility-checkbox" data-game="funMath" checked>
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+                <div class="visibility-toggle">
+                    <label class="toggle-label">
+                        <span class="toggle-icon">🤝</span>
+                        <span class="toggle-text">Social Skills</span>
+                        <input type="checkbox" class="visibility-checkbox" data-game="socialSkills" checked>
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+                <div class="visibility-toggle">
+                    <label class="toggle-label">
+                        <span class="toggle-icon">➕</span>
+                        <span class="toggle-text">Addition</span>
+                        <input type="checkbox" class="visibility-checkbox" data-game="addition" checked>
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+                <div class="visibility-toggle">
+                    <label class="toggle-label">
+                        <span class="toggle-icon">➖</span>
+                        <span class="toggle-text">Subtraction</span>
+                        <input type="checkbox" class="visibility-checkbox" data-game="subtraction" checked>
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+                <div class="visibility-toggle">
+                    <label class="toggle-label">
+                        <span class="toggle-icon">✖️</span>
+                        <span class="toggle-text">Multiplication</span>
+                        <input type="checkbox" class="visibility-checkbox" data-game="multiplication" checked>
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+                <div class="visibility-toggle">
+                    <label class="toggle-label">
+                        <span class="toggle-icon">➗</span>
+                        <span class="toggle-text">Division</span>
+                        <input type="checkbox" class="visibility-checkbox" data-game="division" checked>
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+                <div class="visibility-toggle">
+                    <label class="toggle-label">
+                        <span class="toggle-icon">🧮</span>
+                        <span class="toggle-text">Arithmetic Algorithms</span>
+                        <input type="checkbox" class="visibility-checkbox" data-game="advancedMath" checked>
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+            </div>
+            
             <div class="modal-buttons">
-                <button class="modal-btn cancel-btn" id="closeProfile">Cancel</button>
+                <button class="modal-btn cancel-btn" id="closeProfile" onclick="var m=document.getElementById('profileModal'); m.style.display='none'; m.classList.remove('show');">Cancel</button>
                 <button class="modal-btn save-btn" id="saveProfile">Save</button>
             </div>
         </div>
     </div>
 
-    <script src="menu.js"></script>
+    <script src="src/js/core/menu.js"></script>
     <script>
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {

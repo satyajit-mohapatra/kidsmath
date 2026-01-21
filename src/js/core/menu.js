@@ -9,7 +9,46 @@ class MenuManager {
         this.displayStats();
         this.displaySalutation();
         this.setupMascot();
+        this.initGameVisibility();
+        this.renderGameCards();
         this.setupProfile();
+    }
+
+    initGameVisibility() {
+        if (!this.profile.gameVisibility) {
+            this.profile.gameVisibility = {
+                funMath: true,
+                socialSkills: true,
+                addition: true,
+                subtraction: true,
+                multiplication: true,
+                division: true,
+                advancedMath: true
+            };
+            this.saveProfile();
+        }
+    }
+
+    renderGameCards() {
+        const gameCards = document.querySelectorAll('.menu-card');
+        gameCards.forEach(card => {
+            const href = card.getAttribute('href');
+            let gameKey = '';
+
+            if (href.includes('fun-math')) gameKey = 'funMath';
+            else if (href.includes('social-skills')) gameKey = 'socialSkills';
+            else if (href.includes('addition')) gameKey = 'addition';
+            else if (href.includes('subtraction')) gameKey = 'subtraction';
+            else if (href.includes('multiplication')) gameKey = 'multiplication';
+            else if (href.includes('division')) gameKey = 'division';
+            else if (href.includes('advanced-math')) gameKey = 'advancedMath';
+
+            if (gameKey && this.profile.gameVisibility[gameKey] === false) {
+                card.style.display = 'none';
+            } else {
+                card.style.display = '';
+            }
+        });
     }
 
     loadStats() {
@@ -23,6 +62,7 @@ class MenuManager {
             divisionStars: 0,
             funMathStars: 0,
             socialSkillsStars: 0,
+            advancedMathStars: 0,
             achievements: []
         };
     }
@@ -32,7 +72,16 @@ class MenuManager {
         this.profile = savedProfile ? JSON.parse(savedProfile) : {
             name: '',
             avatar: '🦊',
-            createdAt: null
+            createdAt: null,
+            gameVisibility: {
+                funMath: true,
+                socialSkills: true,
+                addition: true,
+                subtraction: true,
+                multiplication: true,
+                division: true,
+                advancedMath: true
+            }
         };
     }
 
@@ -70,15 +119,18 @@ class MenuManager {
         const saveProfile = document.getElementById('saveProfile');
         const profileAvatar = document.getElementById('profileAvatar');
         const avatarOptions = document.querySelectorAll('.avatar-option');
+        const visibilitySection = document.getElementById('gameVisibilitySection');
+        const visibilityCheckboxes = document.querySelectorAll('.visibility-checkbox');
 
-        profileBtn.addEventListener('click', () => {
-            document.getElementById('profileName').value = this.profile.name || '';
-            profileAvatar.textContent = this.profile.avatar || '🦊';
-            profileModal.classList.add('show');
-        });
+        visibilitySection.style.display = 'block';
 
-        closeProfile.addEventListener('click', () => {
-            profileModal.classList.remove('show');
+        visibilityCheckboxes.forEach(checkbox => {
+            const gameKey = checkbox.dataset.game;
+            checkbox.checked = this.profile.gameVisibility[gameKey] !== false;
+            checkbox.addEventListener('change', (e) => {
+                const key = e.target.dataset.game;
+                this.profile.gameVisibility[key] = e.target.checked;
+            });
         });
 
         avatarOptions.forEach(option => {
@@ -87,19 +139,26 @@ class MenuManager {
             });
         });
 
-        saveProfile.addEventListener('click', () => {
-            const name = document.getElementById('profileName').value.trim();
-            this.profile.name = name;
-            this.profile.avatar = profileAvatar.textContent;
-            if (!this.profile.createdAt) {
-                this.profile.createdAt = new Date().toISOString();
-            }
-            this.saveProfile();
-            this.displaySalutation();
-            profileModal.classList.remove('show');
-            this.playTone(800, 0.1);
-            setTimeout(() => this.playTone(1000, 0.1), 100);
-        });
+        if (saveProfile) {
+            saveProfile.addEventListener('click', () => {
+                const name = document.getElementById('profileName').value.trim();
+                this.profile.name = name;
+                this.profile.avatar = profileAvatar.textContent;
+                if (!this.profile.createdAt) {
+                    this.profile.createdAt = new Date().toISOString();
+                }
+                this.saveProfile();
+                this.displaySalutation();
+                this.renderGameCards();
+                this.playTone(800, 0.1);
+                setTimeout(() => this.playTone(1000, 0.1), 100);
+                const modal = document.getElementById('profileModal');
+                if (modal) {
+                    modal.style.display = 'none';
+                    modal.classList.remove('show');
+                }
+            });
+        }
     }
 
     displayStats() {
@@ -111,6 +170,7 @@ class MenuManager {
         document.getElementById('divisionStars').textContent = `⭐ ${this.stats.divisionStars}`;
         document.getElementById('funMathStars').textContent = `⭐ ${this.stats.funMathStars}`;
         document.getElementById('socialSkillsStars').textContent = `⭐ ${this.stats.socialSkillsStars || 0}`;
+        document.getElementById('advancedMathStars').textContent = `⭐ ${this.stats.advancedMathStars || 0}`;
         document.getElementById('progressStars').textContent = `🏆 ${this.stats.achievements.length}`;
     }
 
@@ -170,5 +230,5 @@ class MenuManager {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    new MenuManager();
+    window.menuManager = new MenuManager();
 });

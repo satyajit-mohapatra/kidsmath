@@ -7,22 +7,22 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="Kids Math">
     <meta name="mobile-web-app-capable" content="yes">
-    <meta name="theme-color" content="#fa709a">
-    <meta name="description" content="Subtraction Adventure! Learn subtraction with borrowing visuals and fun activities.">
+    <meta name="theme-color" content="#fd79a8">
+    <meta name="description" content="Multiplication Adventure! Learn multiplication with arrays and groups made fun!">
     <link rel="manifest" href="manifest.json">
     <link rel="apple-touch-icon" href="icons/icon-192.png">
     <link rel="icon" type="image/png" href="icons/icon-192.png">
-    <title>Subtraction - Fun Math Adventure!</title>
-    <link rel="stylesheet" href="shared-styles.css">
-    <link rel="stylesheet" href="subtraction-styles.css">
+    <title>Multiplication - Fun Math Adventure!</title>
+    <link rel="stylesheet" href="../../css/shared-styles.css">
+    <link rel="stylesheet" href="../../css/games/multiplication-styles.css">
 </head>
 <body>
     <div class="container">
         <nav class="nav-header">
-            <a href="index.html" class="back-btn">← Back to Menu</a>
+            <a href="../../../index.html" class="back-btn">← Back to Menu</a>
         </nav>
         <header class="header">
-            <h1 class="title">➖ Subtraction Adventure!</h1>
+            <h1 class="title">✖️ Multiplication Adventure!</h1>
             <div class="stats">
                 <div class="stat-item">
                     <span class="stat-label">Stars:</span>
@@ -44,38 +44,25 @@
 
         <div class="game-area">
             <div class="problem-display">
-                <div class="vertical-problem">
-                    <div class="borrow-row" id="borrowRow" style="display: none;">
-                        <div class="borrow-section"></div>
-                    </div>
-
+                <div class="horizontal-problem">
                     <div class="problem-row">
                         <div class="number-section">
-                            <span class="spacer"></span>
                             <span class="number-display" id="number1">0</span>
                         </div>
-                        <div class="visual-objects" id="visual1"></div>
-                    </div>
-
-                    <div class="problem-row">
+                        <div class="operator">×</div>
                         <div class="number-section">
-                            <span class="operator">-</span>
                             <span class="number-display" id="number2">0</span>
                         </div>
-                        <div class="visual-objects" id="visual2"></div>
-                    </div>
-
-                    <div class="divider"></div>
-
-                    <div class="answer-row" id="answerRow">
+                        <div class="operator">=</div>
                         <div class="number-section">
-                            <span class="spacer"></span>
                             <input type="number" class="answer-input" id="answerInput" placeholder="?">
-                            <div class="column-answer-container" id="columnAnswerContainer"></div>
                         </div>
                         <button class="submit-btn" id="submitBtn">Check! ✓</button>
                     </div>
                 </div>
+
+                <div class="array-display" id="arrayDisplay"></div>
+                <div class="groups-display" id="groupsDisplay"></div>
             </div>
 
             <div class="compact-explanation">
@@ -83,12 +70,10 @@
                 <div id="compactSteps"></div>
             </div>
 
-            <div class="visual-crossout-area" id="crossoutArea"></div>
-
             <div class="feedback-area" id="feedbackArea"></div>
 
             <div class="hint-area">
-                <div class="mascot" id="mascot">🐰</div>
+                <div class="mascot" id="mascot">🦉</div>
                 <div class="hint-buttons">
                     <button class="hint-btn" id="hintBtn">
                         💡 Need a hint?
@@ -108,7 +93,7 @@
                     <div class="tutorial-steps" id="tutorialSteps"></div>
                     <div class="tutorial-controls">
                         <button class="tutorial-nav" id="prevStep">⬅️ Back</button>
-                        <span class="step-indicator" id="stepIndicator">Step 1 of 5</span>
+                        <span class="step-indicator" id="stepIndicator">Step 1 of 4</span>
                         <button class="tutorial-nav" id="nextStep">Next ➡️</button>
                     </div>
                 </div>
@@ -118,8 +103,8 @@
         <div class="celebration-container" id="celebration"></div>
     </div>
 
-    <script src="base-game.js"></script>
-    <script src="subtraction.js"></script>
+    <script src="../../src/js/core/base-game.js"></script>
+    <script src="multiplication.js"></script>
     <script>
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {

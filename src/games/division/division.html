@@ -7,22 +7,22 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="Kids Math">
     <meta name="mobile-web-app-capable" content="yes">
-    <meta name="theme-color" content="#fd79a8">
-    <meta name="description" content="Multiplication Adventure! Learn multiplication with arrays and groups made fun!">
+    <meta name="theme-color" content="#74b9ff">
+    <meta name="description" content="Division Adventure! Learn division with sharing concepts made easy!">
     <link rel="manifest" href="manifest.json">
     <link rel="apple-touch-icon" href="icons/icon-192.png">
     <link rel="icon" type="image/png" href="icons/icon-192.png">
-    <title>Multiplication - Fun Math Adventure!</title>
-    <link rel="stylesheet" href="shared-styles.css">
-    <link rel="stylesheet" href="multiplication-styles.css">
+    <title>Division - Fun Math Adventure!</title>
+    <link rel="stylesheet" href="../../css/shared-styles.css">
+    <link rel="stylesheet" href="../../css/games/division-styles.css">
 </head>
 <body>
     <div class="container">
         <nav class="nav-header">
-            <a href="index.html" class="back-btn">← Back to Menu</a>
+            <a href="../../../index.html" class="back-btn">← Back to Menu</a>
         </nav>
         <header class="header">
-            <h1 class="title">✖️ Multiplication Adventure!</h1>
+            <h1 class="title">➗ Division Adventure!</h1>
             <div class="stats">
                 <div class="stat-item">
                     <span class="stat-label">Stars:</span>
@@ -44,25 +44,28 @@
 
         <div class="game-area">
             <div class="problem-display">
-                <div class="horizontal-problem">
+                <div class="division-problem">
                     <div class="problem-row">
                         <div class="number-section">
-                            <span class="number-display" id="number1">0</span>
+                            <span class="number-display" id="dividend">0</span>
                         </div>
-                        <div class="operator">×</div>
+                        <div class="operator">÷</div>
                         <div class="number-section">
-                            <span class="number-display" id="number2">0</span>
+                            <span class="number-display" id="divisor">0</span>
                         </div>
                         <div class="operator">=</div>
                         <div class="number-section">
-                            <input type="number" class="answer-input" id="answerInput" placeholder="?">
+                            <input type="number" class="answer-input" id="quotientInput" placeholder="?">
+                        </div>
+                        <div class="remainder-section">
+                            <span class="remainder-label">R</span>
+                            <input type="number" class="remainder-input" id="remainderInput" placeholder="0">
                         </div>
                         <button class="submit-btn" id="submitBtn">Check! ✓</button>
                     </div>
                 </div>
 
-                <div class="array-display" id="arrayDisplay"></div>
-                <div class="groups-display" id="groupsDisplay"></div>
+                <div class="sharing-display" id="sharingDisplay"></div>
             </div>
 
             <div class="compact-explanation">
@@ -73,7 +76,7 @@
             <div class="feedback-area" id="feedbackArea"></div>
 
             <div class="hint-area">
-                <div class="mascot" id="mascot">🦉</div>
+                <div class="mascot" id="mascot">🐻</div>
                 <div class="hint-buttons">
                     <button class="hint-btn" id="hintBtn">
                         💡 Need a hint?
@@ -103,8 +106,8 @@
         <div class="celebration-container" id="celebration"></div>
     </div>
 
-    <script src="base-game.js"></script>
-    <script src="multiplication.js"></script>
+    <script src="../../src/js/core/base-game.js"></script>
+    <script src="division.js"></script>
     <script>
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
