@@ -55,6 +55,9 @@ class SubtractionGame extends BaseGame {
                 if (num1 > 50) {
                     num1 = 50 - (10 - ones1);
                 }
+                if (num2 >= num1) {
+                    num2 = Math.max(1, Math.floor(num1 / 2));
+                }
                 break;
             case 4:
                 num1 = this.randomNumber(21, 99);
@@ -67,15 +70,15 @@ class SubtractionGame extends BaseGame {
                         num2 = 11 + l4ones1 - 1;
                     }
                 }
-                if (num2 >= num1) {
-                    num2 = Math.floor(num1 / 2);
-                    if (num2 < 11) { num2 = 11; }
-                }
                 if (l4ones1 >= l4ones2) {
                     const needsBorrow = Math.random() > 0.5;
                     if (needsBorrow) {
                         num2 = num2 + (l4ones1 - l4ones2 + 1);
                     }
+                }
+                if (num2 >= num1) {
+                    num2 = Math.floor(num1 / 2);
+                    if (num2 < 11) { num2 = 11; }
                 }
                 break;
         }
@@ -163,17 +166,11 @@ class SubtractionGame extends BaseGame {
 
         const ones1Div = document.createElement('div');
         ones1Div.className = 'column-visual ones-column active';
-        ones1Div.innerHTML = `
-            <div class="column-label">🔢 First subtract ONES!</div>
-            ${this.createDigitVisuals(this.currentProblem.ones1, 'ones', 1)}
-        `;
+        ones1Div.innerHTML = this.createDigitVisuals(this.currentProblem.ones1, 'ones', 1);
 
         const ones2Div = document.createElement('div');
         ones2Div.className = 'column-visual ones-column active';
-        ones2Div.innerHTML = `
-            <div class="column-label">🔢 Ones to remove</div>
-            ${this.createDigitVisuals(this.currentProblem.ones2, 'ones', 2)}
-        `;
+        ones2Div.innerHTML = this.createDigitVisuals(this.currentProblem.ones2, 'ones', 2);
 
         visual1.appendChild(ones1Div);
         visual2.appendChild(ones2Div);
@@ -186,25 +183,25 @@ class SubtractionGame extends BaseGame {
         this.hintLevel = 0;
         document.getElementById('hintCounter').textContent = '0/4';
         this.highlightColumn('tens');
+        this.hideBorrow();
 
         const visual1 = document.getElementById('visual1');
         const visual2 = document.getElementById('visual2');
         visual1.innerHTML = '';
         visual2.innerHTML = '';
 
+        const ones1 = this.currentProblem.ones1;
+        const ones2 = this.currentProblem.ones2;
+        const tens1 = this.currentProblem.tens1;
+        const needsBorrow = ones1 < ones2;
+
         const tens1Div = document.createElement('div');
         tens1Div.className = 'column-visual tens-column active';
-        tens1Div.innerHTML = `
-            <div class="column-label">🎯 Now subtract TENS!</div>
-            ${this.createDigitVisuals(this.currentProblem.tens1, 'tens', 1)}
-        `;
+        tens1Div.innerHTML = this.createTensVisuals(tens1, needsBorrow, 1);
 
         const tens2Div = document.createElement('div');
         tens2Div.className = 'column-visual tens-column active';
-        tens2Div.innerHTML = `
-            <div class="column-label">🎯 Tens to remove</div>
-            ${this.createDigitVisuals(this.currentProblem.tens2, 'tens', 2)}
-        `;
+        tens2Div.innerHTML = this.createDigitVisuals(this.currentProblem.tens2, 'tens', 2);
 
         visual1.appendChild(tens1Div);
         visual2.appendChild(tens2Div);
@@ -261,28 +258,67 @@ class SubtractionGame extends BaseGame {
             }
         } else {
             for (let i = 0; i < digit; i++) {
-                html += `
-                    <div class="ten-group">
-                        ${this.createTenBundle(this.colors[(numberIndex * 10 + i) % this.colors.length])}
-                    </div>
-                `;
+                html += this.createTenBundle(this.colors[(numberIndex * 10 + i) % this.colors.length]);
             }
         }
 
         html += '</div>';
-        html += `<div class="digit-count">${digit} ${type}</div>`;
 
+        return html;
+    }
+
+    createTensVisuals(tens, needsBorrow, numberIndex) {
+        let html = '<div class="digit-objects">';
+
+        if (needsBorrow && tens > 0) {
+            const borrowedTens = tens - 1;
+            html += `
+                <div class="borrow-visual-group">
+                    <div class="borrowed-tens-container">
+                        <span class="borrow-label-original">Original</span>
+                        <div class="borrowed-tens-original">
+                            ${this.createTenBundles(tens, numberIndex, 'crossed-out')}
+                        </div>
+                    </div>
+                    <div class="borrow-arrow">→</div>
+                    <div class="borrowed-tens-container">
+                        <span class="borrow-label-final">After</span>
+                        <div class="borrowed-tens-final">
+                            ${this.createTenBundles(borrowedTens, numberIndex, 'highlighted')}
+                        </div>
+                    </div>
+                </div>
+            `;
+        } else {
+            html += this.createDigitVisuals(tens, 'tens', numberIndex).replace('<div class="digit-objects">', '').replace('</div>', '');
+        }
+
+        html += '</div>';
+        return html;
+    }
+
+    createTenBundles(count, numberIndex, style) {
+        let html = '';
+        for (let i = 0; i < count; i++) {
+            const color = this.colors[(numberIndex * 10 + i) % this.colors.length];
+            const emoji = this.emojis[0];
+            if (style === 'crossed-out') {
+                html += `
+                    <div class="ten-bundle crossed-out" style="border-color: ${color}">
+                        ${emoji}
+                        <span class="cross-line"></span>
+                    </div>
+                `;
+            } else {
+                html += this.createTenBundle(color);
+            }
+        }
         return html;
     }
 
     createTenBundle(color) {
         const emoji = this.emojis[0];
-        return `
-            <div class="ten-bundle" style="border-color: ${color}">
-                <div class="ten-bundle-icon">📦</div>
-                <div class="ten-bundle-number">10</div>
-            </div>
-        `;
+        return `<div class="ten-bundle" style="border-color: ${color}">${emoji}</div>`;
     }
 
     setupProgressiveBorrow() {
@@ -319,18 +355,23 @@ class SubtractionGame extends BaseGame {
                     const borrowValue = e.target.value;
                     if (borrowValue && borrowValue.length >= 1) {
                         this.showBorrowForward(borrowValue);
+                        if (parseInt(borrowValue) === 1 && e.target.value.length === 1) {
+                            const onesInput = document.querySelector('.column-answer-input[data-column="ones"]');
+                            if (onesInput) {
+                                setTimeout(() => onesInput.focus(), 100);
+                            }
+                        }
                     } else {
                         this.hideBorrow();
-                    }
-
-                    if (e.target.value.length === 1) {
-                        setTimeout(() => this.showTensColumn(), 100);
                     }
                 });
 
                 borrowInput.addEventListener('keypress', (e) => {
                     if (e.key === 'Enter' && this.currentColumn === 'ones') {
-                        this.showTensColumn();
+                        const onesInput = document.querySelector('.column-answer-input[data-column="ones"]');
+                        if (onesInput) {
+                            onesInput.focus();
+                        }
                     }
                 });
             }
@@ -347,12 +388,20 @@ class SubtractionGame extends BaseGame {
             borrowRow.appendChild(borrowForward);
         }
 
+        let emojisHtml = '';
+        for (let i = 0; i < 10; i++) {
+            const emoji = this.emojis[i % this.emojis.length];
+            const color = this.colors[i % this.colors.length];
+            emojisHtml += `<div class="borrow-emoji" style="background: ${color}; animation-delay: ${i * 0.05}s">${emoji}</div>`;
+        }
+
         borrowForward.innerHTML = `
             <div class="borrow-forward-visual">
                 <div class="borrow-forward-image">
                     <div class="borrow-visual-box">
+                        <div class="borrow-visual-label">10 borrowed!</div>
                         <div class="borrow-visual-objects">
-                            <div class="borrow-visual-object" style="background: #fab1a0; animation-delay: 0s">10</div>
+                            ${emojisHtml}
                         </div>
                     </div>
                 </div>
@@ -411,13 +460,7 @@ class SubtractionGame extends BaseGame {
             }
         });
 
-        onesInput.addEventListener('input', (e) => {
-            const ones1 = this.currentProblem.ones1;
-            const ones2 = this.currentProblem.ones2;
-            if (ones1 < ones2 && e.target.value.length === 1) {
-                document.getElementById('borrowInput').focus();
-            }
-        });
+
 
         const newSubmitBtn = submitBtn.cloneNode(true);
         submitBtn.parentNode.replaceChild(newSubmitBtn, submitBtn);
@@ -554,6 +597,16 @@ class SubtractionGame extends BaseGame {
                 }
             }
 
+            const correctOnesAnswer = ones1 < ones2 ? (ones1 + 10) - ones2 : ones1 - ones2;
+
+            if (parseInt(onesAnswer) !== correctOnesAnswer) {
+                this.showFeedback(`❌ Check again! ${ones1}${ones1 < ones2 ? ' + 10 (borrowed)' : ''} - ${ones2} = ?`, 'incorrect');
+                this.playErrorSound();
+                inputs[1].focus();
+                inputs[1].select();
+                return;
+            }
+
             this.showTensColumn();
 
             this.playTone(800, 0.2);
@@ -634,12 +687,15 @@ class SubtractionGame extends BaseGame {
                     hintMessage = `🎯 Now! Look at the TENS column!`;
                     this.highlightColumn('tens');
                 } else if (this.hintLevel === 2) {
-                    hintMessage = `🔢 Subtract tens: ${this.currentProblem.tens1} - ${this.currentProblem.tens2} = ?`;
+                    hintMessage = `🔢 See the visual above! One ten was borrowed!`;
                 } else if (this.hintLevel === 3) {
                     const ones1 = this.currentProblem.ones1;
                     const ones2 = this.currentProblem.ones2;
-                    const borrow = ones1 < ones2 ? 1 : 0;
-                    hintMessage = `🧮 Remember we borrowed! ${this.currentProblem.tens1} - ${this.currentProblem.tens2} - ${borrow} = ?`;
+                    if (ones1 < ones2) {
+                        hintMessage = `🧮 Use the highlighted tens: ${(this.currentProblem.tens1 - 1)} - ${this.currentProblem.tens2} = ?`;
+                    } else {
+                        hintMessage = `🔢 Subtract tens: ${this.currentProblem.tens1} - ${this.currentProblem.tens2} = ?`;
+                    }
                 } else if (this.hintLevel >= 4) {
                     hintMessage = `💡 The answer is ${this.currentProblem.answer}!`;
                 }
@@ -730,7 +786,11 @@ class SubtractionGame extends BaseGame {
                 ${needsBorrow ? `
                 <div class="compact-step">
                     <span class="compact-step-number">2</span>
-                    <span>BORROW! → ${ones1 + 10} - ${ones2} = ${finalOnes}</span>
+                    <span>BORROW 10! → ${ones1 + 10} - ${ones2} = ${finalOnes}</span>
+                </div>
+                <div class="compact-step" style="background: #ffeaa7;">
+                    <span class="compact-step-number">3</span>
+                    <span>TENS reduced: ${tens1} → ${tens1 - 1} (borrowed 1)</span>
                 </div>
                 ` : `
                 <div class="compact-step">
@@ -739,7 +799,7 @@ class SubtractionGame extends BaseGame {
                 </div>
                 `}
                 <div class="compact-step">
-                    <span class="compact-step-number">${needsBorrow ? '3' : '3'}</span>
+                    <span class="compact-step-number">${needsBorrow ? '4' : '3'}</span>
                     <span>TENS: ${needsBorrow ? tens1 - 1 : tens1} - ${tens2} = ${finalTens}</span>
                 </div>
                 <div class="compact-step" style="background: #c8e6c9;">
@@ -930,5 +990,11 @@ class SubtractionGame extends BaseGame {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    new SubtractionGame();
+    console.log('DOM loaded, initializing SubtractionGame...');
+    try {
+        const game = new SubtractionGame();
+        console.log('SubtractionGame initialized successfully');
+    } catch (error) {
+        console.error('Error initializing SubtractionGame:', error);
+    }
 });
