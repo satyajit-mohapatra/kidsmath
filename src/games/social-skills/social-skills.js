@@ -6,6 +6,7 @@ class SocialSkillsGame {
         this.currentScenario = null;
         this.usedHint = false;
         this.hintLevel = 0;
+        this.speechEnabled = true;
 
         this.emojis = ['🌟', '🎈', '🎪', '🎯', '🎨', '🎭', '🦄', '🌈'];
         this.colors = ['#ff6b6b', '#4ecdc4', '#45b7d1', '#96ceb4', '#ffeaa7', '#dfe6e9', '#fd79a8', '#a29bfe'];
@@ -360,6 +361,7 @@ class SocialSkillsGame {
 
         document.getElementById('hintBtn').addEventListener('click', () => this.showHint());
         document.getElementById('mascot').addEventListener('click', () => this.mascotClick());
+        document.getElementById('soundToggleBtn')?.addEventListener('click', () => this.toggleSpeech());
     }
 
     generateScenario() {
@@ -368,12 +370,16 @@ class SocialSkillsGame {
         document.getElementById('hintContent').textContent = '';
         document.getElementById('feedbackArea').innerHTML = '';
         document.getElementById('hintCounter').textContent = '0/6';
+        this.stopSpeaking();
 
         const levelScenarios = this.scenarios[this.currentLevel] || this.scenarios[1];
         const randomIndex = Math.floor(Math.random() * levelScenarios.length);
         this.currentScenario = levelScenarios[randomIndex];
 
         this.displayScenario();
+        
+        // Auto-speak the scenario for accessibility
+        setTimeout(() => this.speak(`${this.currentScenario.text} ${this.currentScenario.question}`), 500);
     }
 
     displayScenario() {
@@ -383,7 +389,7 @@ class SocialSkillsGame {
 
         const scenarioText = document.getElementById('scenarioText');
         scenarioText.innerHTML = `
-            <div class="scenario-label">Scenario:</div>
+            <div class="scenario-label">Scenario: <button class="speak-btn" style="border:none; background:none; cursor:pointer;">🔊</button></div>
             <div class="scenario-description">${scenario.text}</div>
         `;
 
@@ -392,6 +398,11 @@ class SocialSkillsGame {
             <div class="question-label">Question:</div>
             <div class="question-text">${scenario.question}</div>
         `;
+
+        // Add click listener for the speak button we just injected
+        scenarioText.querySelector('.speak-btn').addEventListener('click', () => {
+            this.speak(`${scenario.text} ${scenario.question}`);
+        });
 
         const answerOptions = document.getElementById('answerOptions');
         answerOptions.innerHTML = '';
@@ -406,27 +417,24 @@ class SocialSkillsGame {
                 <span class="option-letter">${String.fromCharCode(65 + index)}</span>
                 <span class="option-text">${option.text}</span>
             `;
-            optionBtn.addEventListener('click', () => this.selectAnswer(optionBtn, option.correct));
+            optionBtn.addEventListener('click', () => {
+                this.speak(option.text); // Read the option when clicked/selected
+                this.selectAnswer(optionBtn, option.correct);
+            });
             answerOptions.appendChild(optionBtn);
         });
     }
 
     selectAnswer(button, isCorrect) {
         const allOptions = document.querySelectorAll('.answer-option');
-        allOptions.forEach(opt => opt.disabled = true);
 
         if (isCorrect) {
+            allOptions.forEach(opt => opt.disabled = true);
             button.classList.add('correct');
             this.handleCorrectAnswer();
         } else {
             button.classList.add('incorrect');
-
-            allOptions.forEach(opt => {
-                if (opt.dataset.correct === 'true') {
-                    opt.classList.add('correct');
-                }
-            });
-
+            button.disabled = true; // Disable just this wrong option
             this.handleIncorrectAnswer();
         }
     }
@@ -442,6 +450,7 @@ class SocialSkillsGame {
         const celebration = this.currentScenario.celebration;
         this.showFeedback(`✨ Correct! ${celebration}`, 'correct');
         this.playSuccessSound();
+        this.speak(`Correct! ${celebration}`);
 
         if (this.streak % 3 === 0) {
             this.showCelebration();
@@ -453,15 +462,12 @@ class SocialSkillsGame {
     }
 
     handleIncorrectAnswer() {
-        this.streak = 0;
-        this.updateStats();
-
-        this.showFeedback(`🤔 Not quite! ${this.currentScenario.hint}`, 'incorrect');
+        // Don't reset streak immediately for developmental delay support (Errorless Learning)
+        // Just provide a gentle hint and let them try again
+        
+        this.showFeedback(`🤔 Try again! ${this.currentScenario.hint}`, 'incorrect');
         this.playErrorSound();
-
-        setTimeout(() => {
-            this.generateScenario();
-        }, 3000);
+        this.speak(`Try again. ${this.currentScenario.hint}`);
     }
 
     showHint() {
@@ -489,6 +495,7 @@ class SocialSkillsGame {
 
         const hintMessage = hintMessages[this.hintLevel - 1] || this.currentScenario.hint;
         document.getElementById('hintContent').textContent = hintMessage;
+        this.speak(hintMessage);
 
         if (this.hintLevel === 1) {
             this.stars += 1;
@@ -552,6 +559,7 @@ class SocialSkillsGame {
 
         const message = messages[Math.floor(Math.random() * messages.length)];
         document.getElementById('hintContent').textContent = message;
+        this.speak(message);
 
         mascot.style.transform = 'scale(1.3) rotate(360deg)';
         mascot.style.transition = 'transform 0.5s ease';
@@ -597,6 +605,30 @@ class SocialSkillsGame {
             oscillator.stop(audioContext.currentTime + duration);
         } catch (e) {
         }
+    }
+
+    speak(text) {
+        if (!this.speechEnabled || !window.speechSynthesis) return;
+        
+        this.stopSpeaking();
+        
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.rate = 0.9; // Slightly slower for better comprehension
+        utterance.pitch = 1.1; // Friendly, slightly higher pitch
+        utterance.lang = 'en-US';
+        
+        window.speechSynthesis.speak(utterance);
+    }
+
+    stopSpeaking() {
+        if (window.speechSynthesis) {
+            window.speechSynthesis.cancel();
+        }
+    }
+
+    toggleSpeech() {
+        this.speechEnabled = !this.speechEnabled;
+        this.stopSpeaking();
     }
 }
 

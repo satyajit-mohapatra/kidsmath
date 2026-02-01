@@ -117,6 +117,14 @@
     background: linear-gradient(90deg, #a29bfe 0%, #6c5ce7 100%);
 }
 
+.fractions-fill {
+    background: linear-gradient(90deg, #ff6b6b 0%, #ff8e8e 100%);
+}
+
+.time-money-fill {
+    background: linear-gradient(90deg, #ffd700 0%, #ffed4e 100%);
+}
+
 .progress-stats {
     display: flex;
     justify-content: space-between;

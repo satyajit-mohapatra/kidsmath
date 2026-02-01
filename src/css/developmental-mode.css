@@ -1,0 +1,626 @@
+/**
+ * Developmental Mode Styles
+ * Enhanced accessibility styles for children with developmental delays
+ */
+
+/* ==========================================================================
+   Base Developmental Mode Styles
+   ========================================================================== */
+
+.developmental-mode {
+    --btn-min-height: 60px;
+    --btn-min-width: 60px;
+    --btn-font-size: 1.3rem;
+    --touch-target-size: 60px;
+    --animation-duration: 0.5s;
+}
+
+.developmental-mode.extra-large-buttons {
+    --btn-min-height: 80px;
+    --btn-min-width: 80px;
+    --btn-font-size: 1.5rem;
+    --touch-target-size: 80px;
+}
+
+/* ==========================================================================
+   Mascot Animations
+   ========================================================================== */
+
+@keyframes mascot-bounce {
+    0%, 100% { transform: translateY(0); }
+    25% { transform: translateY(-15px) scale(1.1); }
+    50% { transform: translateY(-8px) scale(1.05); }
+    75% { transform: translateY(-12px) scale(1.08); }
+}
+
+@keyframes mascot-spin {
+    0% { transform: rotate(0deg) scale(1); }
+    25% { transform: rotate(15deg) scale(1.2); }
+    50% { transform: rotate(-15deg) scale(1.3); }
+    75% { transform: rotate(10deg) scale(1.2); }
+    100% { transform: rotate(0deg) scale(1); }
+}
+
+@keyframes mascot-wave {
+    0%, 100% { transform: rotate(0deg); }
+    20% { transform: rotate(20deg); }
+    40% { transform: rotate(-15deg); }
+    60% { transform: rotate(15deg); }
+    80% { transform: rotate(-10deg); }
+}
+
+@keyframes mascot-jump {
+    0%, 100% { transform: translateY(0) scale(1); }
+    50% { transform: translateY(-30px) scale(1.15); }
+}
+
+.mascot-bounce {
+    animation: mascot-bounce 0.8s ease-in-out;
+}
+
+.mascot-spin {
+    animation: mascot-spin 1s ease-in-out;
+}
+
+.mascot-wave {
+    animation: mascot-wave 0.8s ease-in-out;
+}
+
+.mascot-jump {
+    animation: mascot-jump 0.6s ease-out;
+}
+
+/* Enhanced mascot for developmental mode */
+.developmental-mode .mascot {
+    font-size: 5rem;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
+}
+
+.developmental-mode .mascot:hover {
+    transform: scale(1.1);
+}
+
+.developmental-mode .mascot:active {
+    transform: scale(0.95);
+}
+
+/* ==========================================================================
+   Extra Large Buttons
+   ========================================================================== */
+
+.developmental-mode .level-btn,
+.developmental-mode .activity-btn,
+.developmental-mode .submit-btn,
+.developmental-mode .hint-btn,
+.developmental-mode .tutorial-btn {
+    min-height: var(--btn-min-height);
+    min-width: var(--btn-min-width);
+    font-size: var(--btn-font-size);
+    padding: 15px 25px;
+    border-radius: 20px;
+    font-weight: 600;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+    transition: all 0.3s ease;
+}
+
+.developmental-mode .level-btn:hover,
+.developmental-mode .activity-btn:hover,
+.developmental-mode .submit-btn:hover,
+.developmental-mode .hint-btn:hover,
+.developmental-mode .tutorial-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+}
+
+.developmental-mode .level-btn:active,
+.developmental-mode .activity-btn:active,
+.developmental-mode .submit-btn:active,
+.developmental-mode .hint-btn:active,
+.developmental-mode .tutorial-btn:active {
+    transform: scale(0.98);
+}
+
+/* ==========================================================================
+   Picture Answer Options
+   ========================================================================== */
+
+.picture-answer-options {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    max-width: 500px;
+    margin: 20px auto;
+}
+
+.picture-answer-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    min-height: 120px;
+    background: linear-gradient(135deg, #ffffff 0%, #f0f4ff 100%);
+    border: 4px solid #e0e0e0;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.picture-answer-btn:hover {
+    transform: scale(1.05);
+    border-color: #4facfe;
+    box-shadow: 0 8px 25px rgba(79, 172, 254, 0.3);
+}
+
+.picture-answer-btn:active {
+    transform: scale(0.98);
+}
+
+.picture-answer-btn.selected {
+    border-color: #4facfe;
+    background: linear-gradient(135deg, #e8f4ff 0%, #d0e8ff 100%);
+}
+
+.picture-answer-btn.correct {
+    border-color: #00b894;
+    background: linear-gradient(135deg, #d4f5e9 0%, #a8e6cf 100%);
+    animation: correct-pulse 0.5s ease;
+}
+
+.picture-answer-btn.incorrect {
+    border-color: #e74c3c;
+    background: linear-gradient(135deg, #ffe6e6 0%, #ffcccc 100%);
+    animation: shake 0.5s ease;
+}
+
+@keyframes correct-pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    20% { transform: translateX(-10px); }
+    40% { transform: translateX(10px); }
+    60% { transform: translateX(-10px); }
+    80% { transform: translateX(10px); }
+}
+
+.picture-answer-emoji {
+    font-size: 2rem;
+    margin-bottom: 10px;
+}
+
+.picture-answer-number {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #2d3436;
+}
+
+/* ==========================================================================
+   Emoji Objects (for counting)
+   ========================================================================== */
+
+.emoji-objects {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    padding: 15px;
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.emoji-object {
+    font-size: 2.5rem;
+    opacity: 0.5;
+    transform: scale(0.8);
+    transition: all 0.4s ease;
+    cursor: pointer;
+}
+
+.emoji-object.counted {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.emoji-object.pop {
+    animation: pop-in 0.4s ease-out;
+}
+
+@keyframes pop-in {
+    0% { transform: scale(0.5); opacity: 0; }
+    50% { transform: scale(1.3); }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+.emoji-object:hover {
+    transform: scale(1.2);
+}
+
+/* ==========================================================================
+   Break Reminder Modal
+   ========================================================================== */
+
+.break-reminder-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10000;
+    animation: fadeIn 0.3s ease;
+}
+
+.break-reminder-content {
+    background: linear-gradient(135deg, #a8edea 0%, #fed6e3 50%, #ffecd2 100%);
+    padding: 40px;
+    border-radius: 30px;
+    text-align: center;
+    max-width: 400px;
+    margin: 20px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    animation: slideUp 0.4s ease;
+}
+
+.break-reminder-emoji {
+    font-size: 5rem;
+    margin-bottom: 20px;
+    animation: rainbow-bounce 2s infinite;
+}
+
+@keyframes rainbow-bounce {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    25% { transform: translateY(-10px) rotate(5deg); }
+    50% { transform: translateY(-5px) rotate(-5deg); }
+    75% { transform: translateY(-12px) rotate(3deg); }
+}
+
+.break-reminder-content h2 {
+    font-size: 1.8rem;
+    color: #2d3436;
+    margin-bottom: 15px;
+}
+
+.break-reminder-content p {
+    font-size: 1.2rem;
+    color: #636e72;
+    margin-bottom: 10px;
+}
+
+.break-activities {
+    list-style: none;
+    padding: 0;
+    margin: 20px 0;
+    text-align: left;
+}
+
+.break-activities li {
+    font-size: 1.2rem;
+    padding: 10px 15px;
+    margin: 8px 0;
+    background: rgba(255, 255, 255, 0.7);
+    border-radius: 15px;
+    transition: transform 0.3s ease;
+}
+
+.break-activities li:hover {
+    transform: translateX(10px);
+}
+
+.break-continue-btn {
+    background: linear-gradient(135deg, #00b894 0%, #00cec9 100%);
+    color: white;
+    font-size: 1.4rem;
+    font-weight: 700;
+    padding: 18px 40px;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    margin-top: 20px;
+    box-shadow: 0 8px 25px rgba(0, 184, 148, 0.4);
+    transition: all 0.3s ease;
+}
+
+.break-continue-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 12px 35px rgba(0, 184, 148, 0.5);
+}
+
+/* ==========================================================================
+   Session Limit Modal
+   ========================================================================== */
+
+.session-limit-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.85);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10001;
+}
+
+.session-limit-content {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 40px;
+    border-radius: 30px;
+    text-align: center;
+    max-width: 400px;
+    margin: 20px;
+}
+
+.session-limit-emoji {
+    font-size: 5rem;
+    margin-bottom: 20px;
+}
+
+.session-limit-content h2 {
+    font-size: 1.8rem;
+    margin-bottom: 15px;
+}
+
+.session-limit-content p {
+    font-size: 1.2rem;
+    opacity: 0.9;
+    margin-bottom: 10px;
+}
+
+.session-limit-buttons {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    margin-top: 25px;
+    flex-wrap: wrap;
+}
+
+.session-home-btn,
+.session-unlock-btn {
+    padding: 15px 30px;
+    border-radius: 50px;
+    font-size: 1.2rem;
+    font-weight: 600;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.session-home-btn {
+    background: #00b894;
+    color: white;
+}
+
+.session-unlock-btn {
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    border: 2px solid rgba(255, 255, 255, 0.5);
+}
+
+/* ==========================================================================
+   Parent Settings Modal
+   ========================================================================== */
+
+.parent-settings-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10000;
+    overflow-y: auto;
+    padding: 20px;
+}
+
+.parent-settings-content {
+    background: white;
+    padding: 30px;
+    border-radius: 20px;
+    max-width: 500px;
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+.parent-settings-content h2 {
+    text-align: center;
+    font-size: 1.6rem;
+    margin-bottom: 25px;
+    color: #2d3436;
+}
+
+.settings-section {
+    margin-bottom: 25px;
+    padding: 15px;
+    background: #f8f9fa;
+    border-radius: 15px;
+}
+
+.settings-section h3 {
+    font-size: 1.1rem;
+    color: #636e72;
+    margin-bottom: 15px;
+    border-bottom: 2px solid #e0e0e0;
+    padding-bottom: 10px;
+}
+
+.setting-toggle {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 0;
+    cursor: pointer;
+}
+
+.setting-toggle input[type="checkbox"] {
+    width: 24px;
+    height: 24px;
+    accent-color: #4facfe;
+}
+
+.setting-toggle span {
+    font-size: 1rem;
+    color: #2d3436;
+}
+
+.setting-input {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 0;
+}
+
+.setting-input span {
+    font-size: 1rem;
+    color: #2d3436;
+    flex: 1;
+}
+
+.setting-input input[type="number"],
+.setting-input input[type="password"] {
+    width: 80px;
+    padding: 10px;
+    border: 2px solid #e0e0e0;
+    border-radius: 10px;
+    font-size: 1rem;
+    text-align: center;
+}
+
+.settings-buttons {
+    display: flex;
+    gap: 15px;
+    justify-content: flex-end;
+    margin-top: 20px;
+}
+
+.settings-buttons .cancel-btn,
+.settings-buttons .save-btn {
+    padding: 12px 30px;
+    border-radius: 50px;
+    font-size: 1rem;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.settings-buttons .cancel-btn {
+    background: #e0e0e0;
+    color: #2d3436;
+}
+
+.settings-buttons .save-btn {
+    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+    color: white;
+}
+
+/* ==========================================================================
+   Super Easy Level Label
+   ========================================================================== */
+
+.super-easy-level-btn {
+    background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+    color: #e17055;
+    font-weight: 700;
+    border: 3px dashed #e17055;
+    animation: super-easy-glow 2s infinite alternate;
+}
+
+@keyframes super-easy-glow {
+    0% { box-shadow: 0 0 10px rgba(225, 112, 85, 0.3); }
+    100% { box-shadow: 0 0 25px rgba(225, 112, 85, 0.6); }
+}
+
+/* ==========================================================================
+   Voice Narrator Toggle
+   ========================================================================== */
+
+.voice-toggle-btn {
+    background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+    border: none;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.voice-toggle-btn:hover {
+    transform: scale(1.1);
+}
+
+.voice-toggle-btn.disabled {
+    opacity: 0.5;
+    filter: grayscale(1);
+}
+
+/* ==========================================================================
+   Animations
+   ========================================================================== */
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slideUp {
+    from { 
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to { 
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ==========================================================================
+   Responsive Adjustments
+   ========================================================================== */
+
+@media (max-width: 600px) {
+    .picture-answer-options {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+    }
+    
+    .picture-answer-btn {
+        min-height: 100px;
+        padding: 15px;
+    }
+    
+    .picture-answer-emoji {
+        font-size: 1.6rem;
+    }
+    
+    .picture-answer-number {
+        font-size: 1.4rem;
+    }
+    
+    .break-reminder-content,
+    .session-limit-content,
+    .parent-settings-content {
+        padding: 25px;
+    }
+    
+    .developmental-mode .mascot {
+        font-size: 4rem;
+    }
+}

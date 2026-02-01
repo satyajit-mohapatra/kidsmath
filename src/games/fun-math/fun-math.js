@@ -21,6 +21,10 @@ class FunMathGame extends BaseGame {
         });
 
         document.getElementById('hintBtn').addEventListener('click', () => this.showHint());
+        document.getElementById('tutorialBtn').addEventListener('click', () => this.startTutorial());
+        document.getElementById('closeTutorial').addEventListener('click', () => this.closeTutorial());
+        document.getElementById('nextStep').addEventListener('click', () => this.nextTutorialStep());
+        document.getElementById('prevStep').addEventListener('click', () => this.prevTutorialStep());
         document.getElementById('mascot').addEventListener('click', () => this.mascotClick());
     }
 
@@ -483,6 +487,241 @@ class FunMathGame extends BaseGame {
         setTimeout(() => {
             mascot.style.transform = 'scale(1) rotate(0deg)';
         }, 500);
+    }
+
+    startTutorial() {
+        this.tutorialStep = 0;
+        this.tutorialSteps = this.createTutorialSteps();
+        this.renderTutorialSteps();
+        document.getElementById('tutorialOverlay').classList.add('active');
+        this.updateTutorialUI();
+        this.playTone(600, 0.2);
+    }
+
+    closeTutorial() {
+        document.getElementById('tutorialOverlay').classList.remove('active');
+        this.playTone(400, 0.2);
+    }
+
+    createTutorialSteps() {
+        const problem = this.currentProblem;
+        
+        switch(problem.type) {
+            case 'matching':
+                return [
+                    {
+                        title: '📊 Step 1: Find the Number',
+                        explanation: `Look for the card with the number ${problem.target}!`,
+                        highlight: 'number'
+                    },
+                    {
+                        title: '🧮 Step 2: Count the Objects',
+                        explanation: `Find the card with ${problem.target} objects and count them!`,
+                        highlight: 'objects'
+                    },
+                    {
+                        title: '🎯 Step 3: Match Them!',
+                        explanation: `Click both cards to match ${problem.target} with ${problem.target} objects!`,
+                        highlight: 'match'
+                    }
+                ];
+            case 'comparing':
+                return [
+                    {
+                        title: '📊 Step 1: Count Both Sides',
+                        explanation: `Count the objects on the left: ${problem.num1}. Count on the right: ${problem.num2}.`,
+                        highlight: 'count'
+                    },
+                    {
+                        title: '🧮 Step 2: Compare',
+                        explanation: `${problem.num1} ${problem.num1 > problem.num2 ? 'is greater than' : problem.num1 < problem.num2 ? 'is less than' : 'equals'} ${problem.num2}!`,
+                        highlight: 'compare'
+                    },
+                    {
+                        title: '🎯 Step 3: Choose the Symbol',
+                        explanation: `Use "${problem.answer}" because ${problem.num1} ${problem.answer} ${problem.num2}!`,
+                        highlight: 'answer'
+                    }
+                ];
+            case 'patterns':
+                return [
+                    {
+                        title: '📊 Step 1: Look at the Pattern',
+                        explanation: `Study the sequence: ${problem.sequence.join(', ')}, ?`,
+                        highlight: 'pattern'
+                    },
+                    {
+                        title: '🧮 Step 2: Find the Rule',
+                        explanation: problem.patternDescription,
+                        highlight: 'rule'
+                    },
+                    {
+                        title: '🎯 Step 3: The Answer!',
+                        explanation: `The next number is ${problem.answer}!`,
+                        highlight: 'answer'
+                    }
+                ];
+            case 'skip-count':
+                return [
+                    {
+                        title: '📊 Step 1: Start Counting',
+                        explanation: `Start at ${problem.start} and count by ${problem.skip}s!`,
+                        highlight: 'start'
+                    },
+                    {
+                        title: '🧮 Step 2: Add Each Time',
+                        explanation: `${problem.start}, ${problem.start + problem.skip}, ${problem.start + problem.skip * 2}, keep going!`,
+                        highlight: 'sequence'
+                    },
+                    {
+                        title: '🎯 Step 3: Click in Order',
+                        explanation: `Click the numbers in order from smallest to largest!`,
+                        highlight: 'click'
+                    }
+                ];
+            default:
+                return [
+                    {
+                        title: '📊 Step 1: Understand',
+                        explanation: 'Look at the problem carefully!',
+                        highlight: 'understand'
+                    },
+                    {
+                        title: '🧮 Step 2: Solve',
+                        explanation: 'Think about the answer!',
+                        highlight: 'solve'
+                    },
+                    {
+                        title: '🎯 Step 3: Answer',
+                        explanation: 'Great job!',
+                        highlight: 'answer'
+                    }
+                ];
+        }
+    }
+
+    renderTutorialSteps() {
+        const container = document.getElementById('tutorialSteps');
+        container.innerHTML = '';
+
+        this.tutorialSteps.forEach((step, index) => {
+            const stepDiv = document.createElement('div');
+            stepDiv.className = `tutorial-step ${index === 0 ? 'active' : ''}`;
+            stepDiv.id = `step-${index}`;
+
+            stepDiv.innerHTML = `
+                <div class="tutorial-step-title">${step.title}</div>
+                <div class="tutorial-visual">
+                    ${this.createTutorialVisual(step, index)}
+                </div>
+                <div class="tutorial-explanation">${step.explanation}</div>
+            `;
+
+            container.appendChild(stepDiv);
+        });
+    }
+
+    createTutorialVisual(step, stepIndex) {
+        const problem = this.currentProblem;
+        
+        switch(problem.type) {
+            case 'matching':
+                return `
+                    <div class="tutorial-problem" style="flex-direction: row; justify-content: center; gap: 30px; align-items: center;">
+                        <div style="text-align: center;">
+                            <div style="font-size: 3rem; background: #74b9ff; width: 80px; height: 80px; border-radius: 15px; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold;">${problem.target}</div>
+                            <div style="margin-top: 10px; font-size: 1rem; color: #74b9ff;">Number</div>
+                        </div>
+                        <div style="font-size: 2rem; color: #6c5ce7;">=</div>
+                        <div style="text-align: center;">
+                            <div style="font-size: 1.5rem; background: #fd79a8; width: 80px; height: 80px; border-radius: 15px; display: flex; align-items: center; justify-content: center; flex-wrap: wrap; padding: 5px;">
+                                ${Array(problem.target).fill('🌟').join(' ')}
+                            </div>
+                            <div style="margin-top: 10px; font-size: 1rem; color: #fd79a8;">Objects</div>
+                        </div>
+                    </div>
+                `;
+            case 'comparing':
+                return `
+                    <div class="tutorial-problem" style="flex-direction: row; justify-content: center; gap: 20px; align-items: center;">
+                        <div style="text-align: center;">
+                            <div style="font-size: 2.5rem; color: #74b9ff; font-weight: bold;">${problem.num1}</div>
+                            <div style="display: flex; gap: 3px; justify-content: center; margin-top: 5px;">
+                                ${Array(Math.min(problem.num1, 10)).fill(0).map(() => '<div style="width: 15px; height: 15px; background: #74b9ff; border-radius: 50%;"></div>').join('')}
+                            </div>
+                        </div>
+                        <div style="font-size: 3rem; color: #6c5ce7; font-weight: bold; background: #f8f9fa; padding: 10px 20px; border-radius: 10px;">${stepIndex === 2 ? problem.answer : '?'}</div>
+                        <div style="text-align: center;">
+                            <div style="font-size: 2.5rem; color: #fd79a8; font-weight: bold;">${problem.num2}</div>
+                            <div style="display: flex; gap: 3px; justify-content: center; margin-top: 5px;">
+                                ${Array(Math.min(problem.num2, 10)).fill(0).map(() => '<div style="width: 15px; height: 15px; background: #fd79a8; border-radius: 50%;"></div>').join('')}
+                            </div>
+                        </div>
+                    </div>
+                `;
+            case 'patterns':
+                return `
+                    <div class="tutorial-problem" style="flex-direction: column; gap: 15px;">
+                        <div style="display: flex; gap: 15px; justify-content: center; align-items: center;">
+                            ${problem.sequence.map((item, i) => `
+                                <div style="width: 60px; height: 60px; background: linear-gradient(135deg, #74b9ff, #0984e3); border-radius: 15px; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.5rem; font-weight: bold; animation: bounce 0.5s ${i * 0.1}s;">${item}</div>
+                            `).join('')}
+                            <div style="width: 60px; height: 60px; background: linear-gradient(135deg, #fd79a8, #e84393); border-radius: 15px; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.5rem; font-weight: bold; animation: pulse 1s infinite;">${stepIndex === 2 ? problem.answer : '?'}</div>
+                        </div>
+                        <div style="font-size: 1.2rem; color: #6c5ce7; background: #f8f9fa; padding: 10px 20px; border-radius: 10px;">${problem.patternDescription}</div>
+                    </div>
+                `;
+            case 'skip-count':
+                const numbers = [];
+                for (let i = problem.start; i <= problem.end; i += problem.skip) {
+                    numbers.push(i);
+                }
+                return `
+                    <div class="tutorial-problem" style="flex-direction: column; gap: 15px;">
+                        <div style="font-size: 1.5rem; color: #6c5ce7;">Count by ${problem.skip}s:</div>
+                        <div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
+                            ${numbers.map((num, i) => `
+                                <div style="width: 50px; height: 50px; background: ${i === 0 ? '#74b9ff' : 'linear-gradient(135deg, #55efc4, #00b894)'}; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.2rem; font-weight: bold; animation: ${i === 0 ? 'none' : `bounce 0.5s ${i * 0.1}s`};">${num}</div>
+                            `).join('')}
+                        </div>
+                        <div style="font-size: 1.2rem; color: #fd79a8;">Start at ${problem.start}, add ${problem.skip} each time!</div>
+                    </div>
+                `;
+            default:
+                return `
+                    <div class="tutorial-problem" style="flex-direction: row; justify-content: center; gap: 20px;">
+                        <span style="font-size: 3rem;">🎲</span>
+                    </div>
+                `;
+        }
+    }
+
+    nextTutorialStep() {
+        if (this.tutorialStep < this.tutorialSteps.length - 1) {
+            this.tutorialStep++;
+            this.updateTutorialUI();
+            this.playTone(600, 0.1);
+        }
+    }
+
+    prevTutorialStep() {
+        if (this.tutorialStep > 0) {
+            this.tutorialStep--;
+            this.updateTutorialUI();
+            this.playTone(500, 0.1);
+        }
+    }
+
+    updateTutorialUI() {
+        document.querySelectorAll('.tutorial-step').forEach((step, index) => {
+            step.classList.toggle('active', index === this.tutorialStep);
+        });
+
+        document.getElementById('stepIndicator').textContent =
+            `Step ${this.tutorialStep + 1} of ${this.tutorialSteps.length}`;
+
+        document.getElementById('prevStep').disabled = this.tutorialStep === 0;
+        document.getElementById('nextStep').disabled = this.tutorialStep === this.tutorialSteps.length - 1;
     }
 
     handleCorrectAnswer() {

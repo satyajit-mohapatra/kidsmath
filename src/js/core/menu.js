@@ -122,6 +122,20 @@ class MenuManager {
         const visibilitySection = document.getElementById('gameVisibilitySection');
         const visibilityCheckboxes = document.querySelectorAll('.visibility-checkbox');
 
+        if (profileBtn && profileModal) {
+            profileBtn.addEventListener('click', () => {
+                profileModal.style.display = 'flex';
+                profileModal.classList.add('show');
+            });
+        }
+
+        if (closeProfile && profileModal) {
+            closeProfile.addEventListener('click', () => {
+                profileModal.style.display = 'none';
+                profileModal.classList.remove('show');
+            });
+        }
+
         visibilitySection.style.display = 'block';
 
         visibilityCheckboxes.forEach(checkbox => {

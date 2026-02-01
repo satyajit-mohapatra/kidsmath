@@ -39,6 +39,7 @@ class DivisionGame extends BaseGame {
 
         document.getElementById('hintBtn').addEventListener('click', () => this.showHint());
         document.getElementById('tutorialBtn').addEventListener('click', () => this.startTutorial());
+        document.getElementById('stepsBtn').addEventListener('click', () => this.showSteps());
         document.getElementById('closeTutorial').addEventListener('click', () => this.closeTutorial());
         document.getElementById('nextStep').addEventListener('click', () => this.nextTutorialStep());
         document.getElementById('prevStep').addEventListener('click', () => this.prevTutorialStep());
@@ -53,6 +54,8 @@ class DivisionGame extends BaseGame {
         document.getElementById('quotientInput').value = '';
         document.getElementById('remainderInput').value = '0';
         document.getElementById('sharingDisplay').innerHTML = '';
+        document.getElementById('compactExplanation').style.display = 'none';
+        document.getElementById('stepsBtn').style.display = 'none';
 
         let dividend, divisor, quotient, remainder;
 
@@ -311,6 +314,14 @@ class DivisionGame extends BaseGame {
         this.playErrorSound();
 
         document.getElementById('quotientInput').select();
+        document.getElementById('stepsBtn').style.display = 'inline-flex';
+    }
+
+    showSteps() {
+        this.updateExplanation();
+        document.getElementById('compactExplanation').style.display = 'block';
+        document.getElementById('stepsBtn').style.display = 'none';
+        this.playTone(600, 0.1);
     }
 
     showHint() {
@@ -458,20 +469,73 @@ class DivisionGame extends BaseGame {
 
     createTutorialVisual(step, stepIndex) {
         const { dividend, divisor, quotient, remainder } = this.currentProblem;
+        
+        let visualHTML = '';
+        
+        if (step.highlight === 'problem') {
+            // Show the items to be shared
+            visualHTML = `
+                <div class="tutorial-problem" style="flex-direction: column; gap: 15px;">
+                    <div style="font-size: 1.5rem; margin-bottom: 10px;">We have ${dividend} items:</div>
+                    <div style="display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; max-width: 350px; padding: 15px; background: #f8f9fa; border-radius: 15px;">
+                        ${Array(dividend).fill(0).map((_, i) => `
+                            <div style="width: 30px; height: 30px; background: linear-gradient(135deg, #74b9ff, #0984e3); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 0.8rem; animation: bounce 0.5s ${i * 0.05}s;">${i + 1}</div>
+                        `).join('')}
+                    </div>
+                    <div style="font-size: 1.3rem; color: #6c5ce7; margin-top: 10px;">To share among ${divisor} friends</div>
+                </div>
+            `;
+        } else if (step.highlight === 'share') {
+            // Show the sharing visualization
+            const friendColors = ['#fd79a8', '#74b9ff', '#55efc4', '#ffeaa7', '#a29bfe', '#ff7675', '#00cec9', '#fab1a0'];
+            visualHTML = `
+                <div class="tutorial-problem" style="flex-direction: column; gap: 15px;">
+                    <div style="font-size: 1.5rem; margin-bottom: 10px;">Each friend gets ${quotient}:</div>
+                    <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
+                        ${Array(divisor).fill(0).map((_, i) => `
+                            <div style="display: flex; flex-direction: column; align-items: center; gap: 5px;">
+                                <div style="font-size: 2rem;">👤</div>
+                                <div style="font-size: 0.9rem; color: ${friendColors[i % friendColors.length]}; font-weight: bold;">Friend ${i + 1}</div>
+                                <div style="display: flex; gap: 3px; flex-wrap: wrap; justify-content: center; max-width: 80px;">
+                                    ${Array(quotient).fill(0).map((_, j) => `
+                                        <div style="width: 20px; height: 20px; background: ${friendColors[i % friendColors.length]}; border-radius: 50%;"></div>
+                                    `).join('')}
+                                </div>
+                                <div style="font-size: 1.2rem; font-weight: bold; color: ${friendColors[i % friendColors.length]};">${quotient}</div>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+        } else if (step.highlight === 'remainder' && remainder > 0) {
+            // Show remainder visualization
+            visualHTML = `
+                <div class="tutorial-problem" style="flex-direction: column; gap: 15px;">
+                    <div style="font-size: 1.5rem; margin-bottom: 10px; color: #e17055;">${remainder} items left over:</div>
+                    <div style="display: flex; gap: 8px; justify-content: center; padding: 15px; background: #ffeaa7; border-radius: 15px; border: 3px dashed #e17055;">
+                        ${Array(remainder).fill(0).map((_, i) => `
+                            <div style="width: 35px; height: 35px; background: linear-gradient(135deg, #e17055, #d63031); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 1rem; animation: pulse 1s infinite;">✨</div>
+                        `).join('')}
+                    </div>
+                    <div style="font-size: 1.3rem; color: #e17055; font-weight: bold;">Remainder = ${remainder}</div>
+                </div>
+            `;
+        } else {
+            // Default: show the equation
+            visualHTML = `
+                <div class="tutorial-problem" style="flex-direction: row; justify-content: center; gap: 15px;">
+                    <span class="tutorial-digit" style="font-size: 2.5rem;">${dividend}</span>
+                    <span class="tutorial-digit" style="font-size: 2.5rem; color: #0984e3;">÷</span>
+                    <span class="tutorial-digit" style="font-size: 2.5rem;">${divisor}</span>
+                    <span class="tutorial-digit" style="font-size: 2.5rem; color: #0984e3;">=</span>
+                    <span class="tutorial-digit" style="font-size: 2.5rem; color: #6c5ce7;">${stepIndex === 3 ? quotient : '?'}</span>
+                    ${remainder > 0 ? `<span class="tutorial-digit" style="font-size: 1.5rem; color: #e17055;">R</span>
+                    <span class="tutorial-digit" style="font-size: 2rem; color: #e17055;">${stepIndex === 3 ? remainder : '?'}</span>` : ''}
+                </div>
+            `;
+        }
 
-        const visual = `
-            <div class="tutorial-problem" style="flex-direction: row; justify-content: center; gap: 15px;">
-                <span class="tutorial-digit" style="font-size: 2.5rem;">${dividend}</span>
-                <span class="tutorial-digit" style="font-size: 2.5rem; color: #0984e3;">÷</span>
-                <span class="tutorial-digit" style="font-size: 2.5rem;">${divisor}</span>
-                <span class="tutorial-digit" style="font-size: 2.5rem; color: #0984e3;">=</span>
-                <span class="tutorial-digit" style="font-size: 2.5rem; color: #6c5ce7;">${stepIndex === 3 ? quotient : '?'}</span>
-                ${remainder > 0 ? `<span class="tutorial-digit" style="font-size: 1.5rem; color: #e17055;">R</span>
-                <span class="tutorial-digit" style="font-size: 2rem; color: #e17055;">${stepIndex === 3 ? remainder : '?'}</span>` : ''}
-            </div>
-        `;
-
-        return visual;
+        return visualHTML;
     }
 
     nextTutorialStep() {

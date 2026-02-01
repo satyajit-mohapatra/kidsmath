@@ -15,6 +15,7 @@ class MultiplicationGame extends BaseGame {
 
         document.getElementById('hintBtn').addEventListener('click', () => this.showHint());
         document.getElementById('tutorialBtn').addEventListener('click', () => this.startTutorial());
+        document.getElementById('stepsBtn').addEventListener('click', () => this.showSteps());
         document.getElementById('closeTutorial').addEventListener('click', () => this.closeTutorial());
         document.getElementById('nextStep').addEventListener('click', () => this.nextTutorialStep());
         document.getElementById('prevStep').addEventListener('click', () => this.prevTutorialStep());
@@ -30,6 +31,8 @@ class MultiplicationGame extends BaseGame {
         document.getElementById('answerInput').focus();
         document.getElementById('arrayDisplay').innerHTML = '';
         document.getElementById('groupsDisplay').innerHTML = '';
+        document.getElementById('compactExplanation').style.display = 'none';
+        document.getElementById('stepsBtn').style.display = 'none';
 
         let num1, num2;
 
@@ -399,6 +402,18 @@ class MultiplicationGame extends BaseGame {
         }
     }
 
+    handleIncorrectAnswer(userAnswer) {
+        super.handleIncorrectAnswer(userAnswer);
+        document.getElementById('stepsBtn').style.display = 'inline-flex';
+    }
+
+    showSteps() {
+        this.updateExplanation();
+        document.getElementById('compactExplanation').style.display = 'block';
+        document.getElementById('stepsBtn').style.display = 'none';
+        this.playTone(600, 0.1);
+    }
+
     showHint() {
         this.hintLevel++;
         this.playTone(700, 0.15);
@@ -515,6 +530,46 @@ class MultiplicationGame extends BaseGame {
     createTutorialSteps() {
         const num1 = this.currentProblem.num1;
         const num2 = this.currentProblem.num2;
+        const answer = this.currentProblem.answer;
+        
+        // Check if we need to show partial products method for larger numbers
+        const showPartialProducts = this.currentLevel >= 3 && num2 >= 10;
+        const ones2 = num2 % 10;
+        const tens2 = Math.floor(num2 / 10);
+        
+        if (showPartialProducts && tens2 > 0) {
+            const tensPartial = num1 * tens2;
+            const onesPartial = num1 * ones2;
+            
+            return [
+                {
+                    title: '📊 Step 1: Break Down the Problem',
+                    explanation: `We have ${num1} × ${num2}. Let's break ${num2} into ${tens2} tens and ${ones2} ones!`,
+                    highlight: 'break'
+                },
+                {
+                    title: '🧮 Step 2: Multiply by Tens',
+                    explanation: `First, multiply ${num1} × ${tens2} = ${tensPartial}. This is ${tensPartial} tens, which equals ${tensPartial * 10}!`,
+                    highlight: 'tens'
+                },
+                {
+                    title: '🔢 Step 3: Multiply by Ones',
+                    explanation: `Next, multiply ${num1} × ${ones2} = ${onesPartial}!`,
+                    highlight: 'ones'
+                },
+                {
+                    title: '➕ Step 4: Add the Parts',
+                    explanation: `Add the partial products: ${tensPartial * 10} + ${onesPartial} = ${answer}`,
+                    highlight: 'add'
+                },
+                {
+                    title: '🎯 Step 5: The Answer!',
+                    explanation: `${num1} × ${num2} = ${answer}. Great work! You used the partial products method!`,
+                    highlight: 'answer',
+                    showFinal: true
+                }
+            ];
+        }
 
         return [
             {
@@ -529,13 +584,14 @@ class MultiplicationGame extends BaseGame {
             },
             {
                 title: '➕ Step 3: Add Them Up',
-                explanation: `Add all groups: ${Array(num1).fill(num2).join(' + ')} = ${this.currentProblem.answer}`,
+                explanation: `Add all groups: ${Array(num1).fill(num2).join(' + ')} = ${answer}`,
                 highlight: 'add'
             },
             {
-                title: '🎯 Step 4: The Answer!',
-                explanation: `${num1} × ${num2} = ${this.currentProblem.answer}. Great work! Multiplication is just repeated addition!`,
-                highlight: 'answer'
+                    title: '🎯 Step 4: The Answer!',
+                    explanation: `${num1} × ${num2} = ${answer}. Great work! Multiplication is just repeated addition!`,
+                    highlight: 'answer',
+                    showFinal: true
             }
         ];
     }
@@ -564,16 +620,85 @@ class MultiplicationGame extends BaseGame {
     createTutorialVisual(step, stepIndex) {
         const num1 = this.currentProblem.num1;
         const num2 = this.currentProblem.num2;
-
-        return `
-            <div class="tutorial-problem" style="flex-direction: row; justify-content: center; gap: 20px;">
-                <span class="tutorial-digit" style="font-size: 2.5rem;">${num1}</span>
-                <span class="tutorial-digit" style="font-size: 2.5rem; color: #fd79a8;">×</span>
-                <span class="tutorial-digit" style="font-size: 2.5rem;">${num2}</span>
-                <span class="tutorial-digit" style="font-size: 2.5rem; color: #fd79a8;">=</span>
-                <span class="tutorial-digit" style="font-size: 2.5rem; color: #6c5ce7;">${stepIndex === 3 ? this.currentProblem.answer : '?'}</span>
-            </div>
-        `;
+        const answer = this.currentProblem.answer;
+        
+        // Check if we're using partial products
+        const showPartialProducts = this.currentLevel >= 3 && num2 >= 10;
+        const ones2 = num2 % 10;
+        const tens2 = Math.floor(num2 / 10);
+        
+        let visualHTML = '';
+        
+        if (showPartialProducts && tens2 > 0) {
+            const tensPartial = num1 * tens2;
+            const onesPartial = num1 * ones2;
+            
+            // Build visual based on step
+            if (step.highlight === 'break') {
+                visualHTML = `
+                    <div class="tutorial-problem" style="flex-direction: column; gap: 15px;">
+                        <div style="font-size: 2rem; color: #6c5ce7;">${num1} × ${num2}</div>
+                        <div style="font-size: 1.5rem;">Break ${num2} into:</div>
+                        <div style="display: flex; gap: 20px; justify-content: center;">
+                            <div style="background: #74b9ff; padding: 10px 20px; border-radius: 10px; color: white;">${tens2} tens</div>
+                            <div style="background: #fd79a8; padding: 10px 20px; border-radius: 10px; color: white;">${ones2} ones</div>
+                        </div>
+                    </div>
+                `;
+            } else if (step.highlight === 'tens') {
+                visualHTML = `
+                    <div class="tutorial-problem" style="flex-direction: column; gap: 15px;">
+                        <div style="font-size: 1.8rem;">${num1} × ${tens2} = ${tensPartial}</div>
+                        <div style="font-size: 1.5rem; color: #74b9ff;">${tensPartial} tens = ${tensPartial * 10}</div>
+                        <div style="display: flex; gap: 5px; justify-content: center; flex-wrap: wrap; max-width: 300px;">
+                            ${Array(num1).fill(0).map((_, i) => `<div style="background: #74b9ff; padding: 5px 10px; border-radius: 5px; color: white; font-size: 0.9rem;">${tens2}0</div>`).join('')}
+                        </div>
+                    </div>
+                `;
+            } else if (step.highlight === 'ones') {
+                visualHTML = `
+                    <div class="tutorial-problem" style="flex-direction: column; gap: 15px;">
+                        <div style="font-size: 1.8rem;">${num1} × ${ones2} = ${onesPartial}</div>
+                        <div style="display: flex; gap: 5px; justify-content: center; flex-wrap: wrap; max-width: 300px;">
+                            ${Array(num1).fill(0).map((_, i) => `<div style="background: #fd79a8; padding: 5px 10px; border-radius: 5px; color: white; font-size: 0.9rem;">${ones2}</div>`).join('')}
+                        </div>
+                    </div>
+                `;
+            } else if (step.highlight === 'add') {
+                visualHTML = `
+                    <div class="tutorial-problem" style="flex-direction: column; gap: 15px;">
+                        <div style="font-size: 1.5rem;">Add the parts:</div>
+                        <div style="font-size: 2rem; color: #74b9ff;">${tensPartial * 10}</div>
+                        <div style="font-size: 1.5rem;">+</div>
+                        <div style="font-size: 2rem; color: #fd79a8;">${onesPartial}</div>
+                        <div style="font-size: 2.5rem; color: #6c5ce7; font-weight: bold;">= ${answer}</div>
+                    </div>
+                `;
+            } else {
+                visualHTML = `
+                    <div class="tutorial-problem" style="flex-direction: row; justify-content: center; gap: 20px;">
+                        <span class="tutorial-digit" style="font-size: 2.5rem;">${num1}</span>
+                        <span class="tutorial-digit" style="font-size: 2.5rem; color: #fd79a8;">×</span>
+                        <span class="tutorial-digit" style="font-size: 2.5rem;">${num2}</span>
+                        <span class="tutorial-digit" style="font-size: 2.5rem; color: #fd79a8;">=</span>
+                        <span class="tutorial-digit" style="font-size: 2.5rem; color: #6c5ce7;">${step.showFinal ? answer : '?'}</span>
+                    </div>
+                `;
+            }
+        } else {
+            // Standard repeated addition visual
+            visualHTML = `
+                <div class="tutorial-problem" style="flex-direction: row; justify-content: center; gap: 20px;">
+                    <span class="tutorial-digit" style="font-size: 2.5rem;">${num1}</span>
+                    <span class="tutorial-digit" style="font-size: 2.5rem; color: #fd79a8;">×</span>
+                    <span class="tutorial-digit" style="font-size: 2.5rem;">${num2}</span>
+                    <span class="tutorial-digit" style="font-size: 2.5rem; color: #fd79a8;">=</span>
+                    <span class="tutorial-digit" style="font-size: 2.5rem; color: #6c5ce7;">${step.showFinal ? answer : '?'}</span>
+                </div>
+            `;
+        }
+        
+        return visualHTML;
     }
 
     nextTutorialStep() {

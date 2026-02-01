@@ -18,8 +18,21 @@
 </head>
 <body>
     <div class="container">
+        <div class="loading-overlay" id="loadingOverlay">
+            <div class="loading-spinner">
+                <span class="loading-emoji">🎯</span>
+                <div class="spinner"></div>
+                <div class="loading-text" id="loadingText">Loading...</div>
+            </div>
+        </div>
         <nav class="nav-header">
             <a href="../../../index.html" class="back-btn">← Back to Menu</a>
+            <div class="nav-controls">
+                <button class="sound-toggle-btn" id="soundToggleBtn" title="Toggle Sound">🔊</button>
+                <button class="help-btn" id="helpBtn" title="Keyboard Shortcuts">⌨️</button>
+                <button class="accessibility-btn" id="highContrastBtn" title="Toggle High Contrast">⬜</button>
+                <button class="accessibility-btn" id="reducedMotionBtn" title="Toggle Reduced Motion">▶️</button>
+            </div>
         </nav>
         <header class="header">
             <h1 class="title">📊 Your Progress!</h1>
@@ -167,6 +180,40 @@
                     </div>
                 </div>
             </div>
+
+            <div class="progress-section">
+                <h2 class="section-title">🍕 Fractions Progress</h2>
+                <div class="progress-bar">
+                    <div class="progress-fill fractions-fill" id="fractionsFill"></div>
+                </div>
+                <div class="progress-stats">
+                    <div class="progress-detail">
+                        <span>⭐ <span id="fractionsStars">0</span></span>
+                        <span class="detail-label">Level <span id="fractionsLevel">1</span></span>
+                    </div>
+                    <div class="progress-detail">
+                        <span>🔥 Best: <span id="fractionsBest">0</span></span>
+                        <span class="detail-label"><span id="fractionsProblems">0</span> activities</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="progress-section">
+                <h2 class="section-title">⏰ Time & Money Progress</h2>
+                <div class="progress-bar">
+                    <div class="progress-fill time-money-fill" id="timeMoneyFill"></div>
+                </div>
+                <div class="progress-stats">
+                    <div class="progress-detail">
+                        <span>⭐ <span id="timeMoneyStars">0</span></span>
+                        <span class="detail-label">Level <span id="timeMoneyLevel">1</span></span>
+                    </div>
+                    <div class="progress-detail">
+                        <span>🔥 Best: <span id="timeMoneyBest">0</span></span>
+                        <span class="detail-label"><span id="timeMoneyProblems">0</span> activities</span>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <div class="last-played-section">
@@ -176,6 +223,95 @@
                     <div class="last-played-label">Last Played</div>
                     <div class="last-played-time" id="lastPlayed">Never</div>
                 </div>
+            </div>
+        </div>
+
+        <div class="analytics-section">
+            <div class="analytics-header">
+                <h2>📊 Learning Analytics</h2>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-box">
+                    <div class="stat-box-icon">🎯</div>
+                    <div class="stat-box-value" id="accuracyRate">0%</div>
+                    <div class="stat-box-label">Accuracy Rate</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-box-icon">📈</div>
+                    <div class="stat-box-value" id="learningTrend">-</div>
+                    <div class="stat-box-label">Learning Trend</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-box-icon">🏆</div>
+                    <div class="stat-box-value" id="strongestOp">-</div>
+                    <div class="stat-box-label">Strongest</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-box-icon">💪</div>
+                    <div class="stat-box-value" id="weakestOp">-</div>
+                    <div class="stat-box-label">Needs Practice</div>
+                </div>
+            </div>
+
+            <div class="chart-container">
+                <div class="chart-title">📅 Weekly Activity</div>
+                <div id="weeklyChart"></div>
+            </div>
+
+            <div class="chart-container">
+                <div class="chart-title">🎮 Game Breakdown</div>
+                <div class="pie-chart-container" id="gameBreakdownChart"></div>
+            </div>
+
+            <div class="recommendations-container">
+                <div class="recommendations-title">💡 Personalized Recommendations</div>
+                <div id="recommendationsList"></div>
+            </div>
+
+            <div class="session-summary">
+                <div class="session-summary-header">
+                    <div class="session-summary-title">📋 Recent Session Summary</div>
+                    <div class="session-summary-date" id="sessionDate">-</div>
+                </div>
+                <div class="session-stats-row">
+                    <div class="session-stat">
+                        <span class="session-stat-value" id="sessionProblems">0</span>
+                        <span class="session-stat-label">Problems</span>
+                    </div>
+                    <div class="session-stat">
+                        <span class="session-stat-value" id="sessionCorrect">0</span>
+                        <span class="session-stat-label">Correct</span>
+                    </div>
+                    <div class="session-stat">
+                        <span class="session-stat-value" id="sessionAccuracy">0%</span>
+                        <span class="session-stat-label">Accuracy</span>
+                    </div>
+                    <div class="session-stat">
+                        <span class="session-stat-value" id="sessionStars">0</span>
+                        <span class="session-stat-label">Stars</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="daily-challenges-section">
+            <div class="daily-challenges-container">
+                <div class="daily-challenges-header">
+                    <h2>📅 Daily Challenges</h2>
+                    <div class="daily-challenges-date" id="challengesDate">Today</div>
+                </div>
+                <div class="challenges-summary">
+                    <div class="challenge-summary-item">
+                        <span class="number" id="completedChallenges">0</span>
+                        <span class="label">Completed</span>
+                    </div>
+                    <div class="challenge-summary-item rewards">
+                        <span class="number" id="challengeRewards">0</span>
+                        <span class="label">⭐ Bonus Stars</span>
+                    </div>
+                </div>
+                <div id="dailyChallengesList"></div>
             </div>
         </div>
 
@@ -190,6 +326,55 @@
         </div>
     </div>
 
+    <div class="modal keyboard-shortcuts-modal" id="shortcutsModal">
+        <div class="modal-content">
+            <h2>⌨️ Keyboard Shortcuts</h2>
+            <div class="keyboard-shortcuts-list">
+                <div class="shortcut-item">
+                    <span class="shortcut-description">Submit Answer</span>
+                    <span class="shortcut-keys"><span class="key">Enter</span></span>
+                </div>
+                <div class="shortcut-item">
+                    <span class="shortcut-description">Get a Hint</span>
+                    <span class="shortcut-keys"><span class="key">Space</span></span>
+                </div>
+                <div class="shortcut-item">
+                    <span class="shortcut-description">Select Level 1</span>
+                    <span class="shortcut-keys"><span class="key">1</span></span>
+                </div>
+                <div class="shortcut-item">
+                    <span class="shortcut-description">Select Level 2</span>
+                    <span class="shortcut-keys"><span class="key">2</span></span>
+                </div>
+                <div class="shortcut-item">
+                    <span class="shortcut-description">Select Level 3</span>
+                    <span class="shortcut-keys"><span class="key">3</span></span>
+                </div>
+                <div class="shortcut-item">
+                    <span class="shortcut-description">Select Level 4</span>
+                    <span class="shortcut-keys"><span class="key">4</span></span>
+                </div>
+                <div class="shortcut-item">
+                    <span class="shortcut-description">Toggle Sound</span>
+                    <span class="shortcut-keys"><span class="key">Ctrl</span><span class="key">M</span></span>
+                </div>
+                <div class="shortcut-item">
+                    <span class="shortcut-description">Toggle High Contrast</span>
+                    <span class="shortcut-keys"><span class="key">Ctrl</span><span class="key">H</span></span>
+                </div>
+                <div class="shortcut-item">
+                    <span class="shortcut-description">Toggle Reduced Motion</span>
+                    <span class="shortcut-keys"><span class="key">Ctrl</span><span class="key">R</span></span>
+                </div>
+            </div>
+            <button class="modal-btn save-btn" onclick="document.getElementById('shortcutsModal').style.display='none'">Got it!</button>
+        </div>
+    </div>
+
+    <script src="../../js/core/base-game.js"></script>
+    <script src="../../js/core/achievements.js"></script>
+    <script src="../../js/core/daily-challenges.js"></script>
+    <script src="../../js/core/analytics.js"></script>
     <script src="progress.js"></script>
     <script>
         if ('serviceWorker' in navigator) {

@@ -5,23 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
-    <meta name="apple-mobile-web-app-title" content="Social Skills">
+    <meta name="apple-mobile-web-app-title" content="Kids Math">
     <meta name="mobile-web-app-capable" content="yes">
-    <meta name="theme-color" content="#f093fb">
-    <meta name="description" content="Social Skills Adventure! Learn polite words, sharing, and making friends!">
+    <meta name="theme-color" content="#ffd700">
+    <meta name="description" content="Time & Money Adventure! Learn to tell time and count money with fun activities.">
     <link rel="manifest" href="manifest.json">
     <link rel="apple-touch-icon" href="icons/icon-192.png">
     <link rel="icon" type="image/png" href="icons/icon-192.png">
-    <title>Social Skills - Fun Math Adventure!</title>
+    <title>Time & Money - Fun Math Adventure!</title>
     <link rel="stylesheet" href="../../css/shared-styles.css">
-    <link rel="stylesheet" href="../../css/styles.css">
-    <link rel="stylesheet" href="../../css/games/social-skills-styles.css">
+    <link rel="stylesheet" href="../../css/games/time-money-styles.css">
 </head>
 <body>
     <div class="container">
         <div class="loading-overlay" id="loadingOverlay">
             <div class="loading-spinner">
-                <span class="loading-emoji">🎯</span>
+                <span class="loading-emoji">💰</span>
                 <div class="spinner"></div>
                 <div class="loading-text" id="loadingText">Loading...</div>
             </div>
@@ -36,7 +35,7 @@
             </div>
         </nav>
         <header class="header">
-            <h1 class="title">🤝 Social Skills Adventure!</h1>
+            <h1 class="title">⏰ Time & Money!</h1>
             <div class="stats">
                 <div class="stat-item">
                     <span class="stat-label">Stars:</span>
@@ -49,31 +48,24 @@
             </div>
         </header>
 
-        <div class="level-selector">
-            <button class="level-btn active" data-level="1">Level 1: Easy</button>
-            <button class="level-btn" data-level="2">Level 2: Medium</button>
-            <button class="level-btn" data-level="3">Level 3: Hard</button>
+        <div class="activity-selector">
+            <button class="activity-btn active" data-activity="clock">🕐 Clock</button>
+            <button class="activity-btn" data-activity="digital">⌚ Digital</button>
+            <button class="activity-btn" data-activity="count">💰 Count</button>
+            <button class="activity-btn" data-activity="change">💵 Change</button>
+            <button class="activity-btn" data-activity="word">📝 Word</button>
         </div>
 
         <div class="game-area">
-            <div class="scenario-display">
-                <div class="scenario-card" id="scenarioCard">
-                    <div class="scenario-character" id="scenarioCharacter">👧</div>
-                    <div class="scenario-text" id="scenarioText">Loading...</div>
-                    <div class="scenario-question" id="scenarioQuestion"></div>
-                </div>
-            </div>
-
-            <div class="answer-options" id="answerOptions"></div>
-
+            <div id="activityDisplay"></div>
             <div class="feedback-area" id="feedbackArea"></div>
 
             <div class="hint-area">
-                <div class="mascot" id="mascot">🦊</div>
+                <div class="mascot" id="mascot">💰</div>
                 <div class="hint-buttons">
                     <button class="hint-btn" id="hintBtn">
                         💡 Need a hint?
-                        <span class="hint-counter" id="hintCounter">0/6</span>
+                        <span class="hint-counter" id="hintCounter">0/3</span>
                     </button>
                 </div>
                 <div class="hint-content" id="hintContent"></div>
@@ -96,22 +88,6 @@
                     <span class="shortcut-keys"><span class="key">Space</span></span>
                 </div>
                 <div class="shortcut-item">
-                    <span class="shortcut-description">Select Level 1</span>
-                    <span class="shortcut-keys"><span class="key">1</span></span>
-                </div>
-                <div class="shortcut-item">
-                    <span class="shortcut-description">Select Level 2</span>
-                    <span class="shortcut-keys"><span class="key">2</span></span>
-                </div>
-                <div class="shortcut-item">
-                    <span class="shortcut-description">Select Level 3</span>
-                    <span class="shortcut-keys"><span class="key">3</span></span>
-                </div>
-                <div class="shortcut-item">
-                    <span class="shortcut-description">Select Level 4</span>
-                    <span class="shortcut-keys"><span class="key">4</span></span>
-                </div>
-                <div class="shortcut-item">
                     <span class="shortcut-description">Toggle Sound</span>
                     <span class="shortcut-keys"><span class="key">Ctrl</span><span class="key">M</span></span>
                 </div>
@@ -128,10 +104,10 @@
         </div>
     </div>
 
-    <script src="../../js/core/base-game.js"></script>
-    <script src="../../js/core/achievements.js"></script>
-    <script src="../../js/core/daily-challenges.js"></script>
-    <script src="social-skills.js"></script>
+    <script src="../../../js/core/base-game.js"></script>
+    <script src="../../../js/core/achievements.js"></script>
+    <script src="../../../js/core/daily-challenges.js"></script>
+    <script src="time-money.js"></script>
     <script>
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {

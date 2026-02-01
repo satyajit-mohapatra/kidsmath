@@ -1,9 +1,19 @@
+// XSS Protection Utility
+function escapeHtml(text) {
+    if (text === null || text === undefined) return '';
+    const div = document.createElement('div');
+    div.textContent = String(text);
+    return div.innerHTML;
+}
+
 class ProgressManager {
     constructor() {
         this.loadStats();
+        this.analytics = new Analytics();
         this.displayProgress();
         this.checkAchievements();
         this.setupEventListeners();
+        this.displayAnalytics();
     }
 
     loadStats() {
@@ -41,11 +51,23 @@ class ProgressManager {
         };
     }
 
+    // Helper method to safely set element text content
+    setText(id, value) {
+        const el = document.getElementById(id);
+        if (el) el.textContent = value;
+    }
+
+    // Helper method to safely set element style
+    setStyle(id, property, value) {
+        const el = document.getElementById(id);
+        if (el) el.style[property] = value;
+    }
+
     displayProgress() {
-        document.getElementById('totalStars').textContent = this.stats.totalStars;
-        document.getElementById('bestStreak').textContent = this.stats.bestStreak;
-        document.getElementById('totalProblems').textContent = this.stats.totalProblems || 0;
-        document.getElementById('achievementCount').textContent = this.stats.achievements ? this.stats.achievements.length : 0;
+        this.setText('totalStars', this.stats.totalStars);
+        this.setText('bestStreak', this.stats.bestStreak);
+        this.setText('totalProblems', this.stats.totalProblems || 0);
+        this.setText('achievementCount', this.stats.achievements ? this.stats.achievements.length : 0);
 
         const maxStars = 100;
 
@@ -55,67 +77,152 @@ class ProgressManager {
         const divisionPercent = Math.min((this.stats.divisionStars / maxStars) * 100, 100);
         const funMathPercent = Math.min((this.stats.funMathStars / maxStars) * 100, 100);
 
-        document.getElementById('additionFill').style.width = `${additionPercent}%`;
-        document.getElementById('subtractionFill').style.width = `${subtractionPercent}%`;
-        document.getElementById('multiplicationFill').style.width = `${multiplicationPercent}%`;
-        document.getElementById('divisionFill').style.width = `${divisionPercent}%`;
-        document.getElementById('funMathFill').style.width = `${funMathPercent}%`;
+        this.setStyle('additionFill', 'width', `${additionPercent}%`);
+        this.setStyle('subtractionFill', 'width', `${subtractionPercent}%`);
+        this.setStyle('multiplicationFill', 'width', `${multiplicationPercent}%`);
+        this.setStyle('divisionFill', 'width', `${divisionPercent}%`);
+        this.setStyle('funMathFill', 'width', `${funMathPercent}%`);
 
-        document.getElementById('additionStars').textContent = this.stats.additionStars;
-        document.getElementById('subtractionStars').textContent = this.stats.subtractionStars;
-        document.getElementById('multiplicationStars').textContent = this.stats.multiplicationStars;
-        document.getElementById('divisionStars').textContent = this.stats.divisionStars;
-        document.getElementById('funMathStars').textContent = this.stats.funMathStars;
+        this.setText('additionStars', this.stats.additionStars);
+        this.setText('subtractionStars', this.stats.subtractionStars);
+        this.setText('multiplicationStars', this.stats.multiplicationStars);
+        this.setText('divisionStars', this.stats.divisionStars);
+        this.setText('funMathStars', this.stats.funMathStars);
 
-        document.getElementById('additionBest').textContent = this.stats.additionBest || 0;
-        document.getElementById('subtractionBest').textContent = this.stats.subtractionBest || 0;
-        document.getElementById('multiplicationBest').textContent = this.stats.multiplicationBest || 0;
-        document.getElementById('divisionBest').textContent = this.stats.divisionBest || 0;
-        document.getElementById('funMathBest').textContent = this.stats.funMathBest || 0;
+        this.setText('additionBest', this.stats.additionBest || 0);
+        this.setText('subtractionBest', this.stats.subtractionBest || 0);
+        this.setText('multiplicationBest', this.stats.multiplicationBest || 0);
+        this.setText('divisionBest', this.stats.divisionBest || 0);
+        this.setText('funMathBest', this.stats.funMathBest || 0);
 
-        document.getElementById('additionLevel').textContent = this.stats.additionLevel || 1;
-        document.getElementById('subtractionLevel').textContent = this.stats.subtractionLevel || 1;
-        document.getElementById('multiplicationLevel').textContent = this.stats.multiplicationLevel || 1;
-        document.getElementById('divisionLevel').textContent = this.stats.divisionLevel || 1;
-        document.getElementById('funMathLevel').textContent = this.stats.funMathLevel || 1;
+        this.setText('additionLevel', this.stats.additionLevel || 1);
+        this.setText('subtractionLevel', this.stats.subtractionLevel || 1);
+        this.setText('multiplicationLevel', this.stats.multiplicationLevel || 1);
+        this.setText('divisionLevel', this.stats.divisionLevel || 1);
+        this.setText('funMathLevel', this.stats.funMathLevel || 1);
 
-        document.getElementById('additionProblems').textContent = this.stats.additionProblems || 0;
-        document.getElementById('subtractionProblems').textContent = this.stats.subtractionProblems || 0;
-        document.getElementById('multiplicationProblems').textContent = this.stats.multiplicationProblems || 0;
-        document.getElementById('divisionProblems').textContent = this.stats.divisionProblems || 0;
-        document.getElementById('funMathProblems').textContent = this.stats.funMathProblems || 0;
+        this.setText('additionProblems', this.stats.additionProblems || 0);
+        this.setText('subtractionProblems', this.stats.subtractionProblems || 0);
+        this.setText('multiplicationProblems', this.stats.multiplicationProblems || 0);
+        this.setText('divisionProblems', this.stats.divisionProblems || 0);
+        this.setText('funMathProblems', this.stats.funMathProblems || 0);
 
-        document.getElementById('socialSkillsStars').textContent = this.stats.socialSkillsStars || 0;
-        document.getElementById('socialSkillsBest').textContent = this.stats.socialSkillsBest || 0;
-        document.getElementById('socialSkillsLevel').textContent = this.stats.socialSkillsLevel || 1;
-        document.getElementById('socialSkillsProblems').textContent = this.stats.socialSkillsProblems || 0;
+        this.setText('socialSkillsStars', this.stats.socialSkillsStars || 0);
+        this.setText('socialSkillsBest', this.stats.socialSkillsBest || 0);
+        this.setText('socialSkillsLevel', this.stats.socialSkillsLevel || 1);
+        this.setText('socialSkillsProblems', this.stats.socialSkillsProblems || 0);
 
         const socialSkillsPercent = Math.min((this.stats.socialSkillsStars / 100) * 100, 100);
-        document.getElementById('socialSkillsFill').style.width = `${socialSkillsPercent}%`;
+        this.setStyle('socialSkillsFill', 'width', `${socialSkillsPercent}%`);
+
+        this.setText('fractionsStars', this.stats.fractionsStars || 0);
+        this.setText('fractionsBest', this.stats.fractionsBest || 0);
+        this.setText('fractionsLevel', this.stats.fractionsLevel || 1);
+        this.setText('fractionsProblems', this.stats.fractionsProblems || 0);
+
+        const fractionsPercent = Math.min((this.stats.fractionsStars / 100) * 100, 100);
+        this.setStyle('fractionsFill', 'width', `${fractionsPercent}%`);
+
+        this.setText('timeMoneyStars', this.stats.timeMoneyStars || 0);
+        this.setText('timeMoneyBest', this.stats.timeMoneyBest || 0);
+        this.setText('timeMoneyLevel', this.stats.timeMoneyLevel || 1);
+        this.setText('timeMoneyProblems', this.stats.timeMoneyProblems || 0);
+
+        const timeMoneyPercent = Math.min((this.stats.timeMoneyStars / 100) * 100, 100);
+        this.setStyle('timeMoneyFill', 'width', `${timeMoneyPercent}%`);
 
         const lastPlayed = document.getElementById('lastPlayed');
-        if (this.stats.lastPlayed) {
-            const date = new Date(this.stats.lastPlayed);
-            const now = new Date();
-            const diffMs = now - date;
-            const diffMins = Math.floor(diffMs / 60000);
-            const diffHours = Math.floor(diffMs / 3600000);
-            const diffDays = Math.floor(diffMs / 86400000);
+        if (lastPlayed) {
+            if (this.stats.lastPlayed) {
+                const date = new Date(this.stats.lastPlayed);
+                const now = new Date();
+                const diffMs = now - date;
+                const diffMins = Math.floor(diffMs / 60000);
+                const diffHours = Math.floor(diffMs / 3600000);
+                const diffDays = Math.floor(diffMs / 86400000);
 
-            if (diffMins < 1) {
-                lastPlayed.textContent = 'Just now';
-            } else if (diffMins < 60) {
-                lastPlayed.textContent = `${diffMins} minute${diffMins > 1 ? 's' : ''} ago`;
-            } else if (diffHours < 24) {
-                lastPlayed.textContent = `${diffHours} hour${diffHours > 1 ? 's' : ''} ago`;
-            } else if (diffDays < 7) {
-                lastPlayed.textContent = `${diffDays} day${diffDays > 1 ? 's' : ''} ago`;
+                if (diffMins < 1) {
+                    lastPlayed.textContent = 'Just now';
+                } else if (diffMins < 60) {
+                    lastPlayed.textContent = `${diffMins} minute${diffMins > 1 ? 's' : ''} ago`;
+                } else if (diffHours < 24) {
+                    lastPlayed.textContent = `${diffHours} hour${diffHours > 1 ? 's' : ''} ago`;
+                } else if (diffDays < 7) {
+                    lastPlayed.textContent = `${diffDays} day${diffDays > 1 ? 's' : ''} ago`;
+                } else {
+                    lastPlayed.textContent = date.toLocaleDateString();
+                }
             } else {
-                lastPlayed.textContent = date.toLocaleDateString();
+                lastPlayed.textContent = 'Never';
             }
-        } else {
-            lastPlayed.textContent = 'Never';
         }
+
+        this.displayDailyChallenges();
+    }
+
+    displayDailyChallenges() {
+        if (typeof DailyChallenges === 'undefined') return;
+
+        const dailyChallenges = new DailyChallenges();
+        const todaysChallenges = dailyChallenges.getTodaysChallenges();
+        const dailyStats = this.getDailyStats();
+
+        this.setText('challengesDate', dailyChallenges.getTodaysDate());
+        this.setText('completedChallenges', dailyChallenges.getCompletedCount());
+        this.setText('challengeRewards', dailyChallenges.getTotalRewards());
+
+        const container = document.getElementById('dailyChallengesList');
+        if (!container) return;
+        container.innerHTML = '';
+
+        todaysChallenges.forEach(challenge => {
+            const isCompleted = dailyChallenges.completedChallenges.includes(challenge.id);
+            const progress = dailyChallenges.getChallengeProgress(challenge, dailyStats);
+
+            const challengeCard = document.createElement('div');
+            challengeCard.className = `challenge-card ${isCompleted ? 'completed' : 'pending'}`;
+            challengeCard.innerHTML = `
+                <div class="challenge-reward-badge">+${challenge.reward} ⭐</div>
+                <div class="challenge-card-header">
+                    <div class="challenge-card-icon">${challenge.icon}</div>
+                    <div class="challenge-card-title">
+                        <h3>${challenge.name}</h3>
+                        <span class="difficulty difficulty-${challenge.difficulty}">${challenge.difficulty}</span>
+                    </div>
+                </div>
+                <div class="challenge-card-desc">${challenge.description}</div>
+                <div class="challenge-card-progress">
+                    <div class="challenge-card-progress-bar" style="width: ${progress.percentage}%"></div>
+                </div>
+                <div class="challenge-card-progress-text">
+                    <span>${isCompleted ? 'Completed!' : `${progress.current} / ${progress.target}`}</span>
+                    <span>${Math.round(progress.percentage)}%</span>
+                </div>
+            `;
+            container.appendChild(challengeCard);
+        });
+    }
+
+    getDailyStats() {
+        const savedDailyStats = localStorage.getItem('dailyStats');
+        if (savedDailyStats) {
+            const stats = JSON.parse(savedDailyStats);
+            const today = new Date().toDateString();
+            if (stats.date === today) {
+                return stats;
+            }
+        }
+        return {
+            dailyStreak: 0,
+            dailyProblems: 0,
+            dailyStars: 0,
+            dailyProblemsWithoutHints: 0,
+            dailyFastProblems: 0,
+            dailyAdditionProblems: 0,
+            dailySubtractionProblems: 0,
+            dailyMultiplicationProblems: 0,
+            dailyDivisionProblems: 0
+        };
     }
 
     checkAchievements() {
@@ -245,16 +352,106 @@ class ProgressManager {
         this.saveStats();
     }
 
-    setupEventListeners() {
-        document.getElementById('resetProgress').addEventListener('click', () => {
-            if (confirm('Are you sure you want to reset all your progress? This cannot be undone!')) {
-                this.resetProgress();
-            }
-        });
+    displayAnalytics() {
+        if (typeof Analytics === 'undefined') return;
 
-        document.getElementById('printReport').addEventListener('click', () => {
-            this.printReport();
-        });
+        const weeklyData = this.analytics.getWeeklyProgress();
+        const gameBreakdown = this.analytics.getGameBreakdown();
+        const recommendations = this.analytics.getRecommendations();
+        const velocity = this.analytics.getLearningVelocity();
+        const strongest = this.analytics.getStrongestOperation();
+        const weakest = this.analytics.getWeakestOperation();
+
+        this.setText('accuracyRate', 
+            this.stats.totalProblems > 0 
+                ? Math.round((this.stats.correctProblems || 0) / this.stats.totalProblems * 100) + '%'
+                : '0%');
+
+        this.setText('learningTrend', 
+            velocity ? (velocity.improvement > 0 ? '↗️ +' : velocity.improvement < 0 ? '↘️ ' : '→ ') + 
+            Math.abs(velocity.improvement) + '%' : '-');
+
+        this.setText('strongestOp', 
+            strongest ? this.capitalize(strongest) : '-');
+
+        this.setText('weakestOp', 
+            weakest ? this.capitalize(weakest) : '-');
+
+        if (weeklyData.length > 0) {
+            this.analytics.createBarChart(weeklyData.map(d => ({
+                label: d.day,
+                value: d.problems
+            })), 'weeklyChart', {
+                colors: ['#4facfe', '#00f2fe', '#ff6b6b', '#ffd93d', '#6bcf7f', '#a29bfe', '#fd79a8']
+            });
+        }
+
+        if (gameBreakdown.length > 0) {
+            this.analytics.createPieChart(gameBreakdown.map(g => ({
+                label: this.capitalize(g.game),
+                value: g.problems
+            })), 'gameBreakdownChart');
+        }
+
+        const recommendationsContainer = document.getElementById('recommendationsList');
+        if (recommendationsContainer) {
+            recommendationsContainer.innerHTML = '';
+            recommendations.forEach(rec => {
+                const item = document.createElement('div');
+                item.className = `recommendation-item ${rec.type}`;
+                item.innerHTML = `
+                    <div class="recommendation-icon">${rec.icon}</div>
+                    <div class="recommendation-text">${rec.message}</div>
+                `;
+                recommendationsContainer.appendChild(item);
+            });
+        }
+
+        const recentSessions = this.analytics.getSessionHistory(1);
+        if (recentSessions.length > 0) {
+            const lastSession = recentSessions[recentSessions.length - 1];
+            const sessionDate = new Date(lastSession.timestamp);
+            
+            this.setText('sessionDate', 
+                sessionDate.toLocaleDateString() + ' ' + sessionDate.toLocaleTimeString());
+            
+            const todaySessions = recentSessions.filter(s => 
+                new Date(s.timestamp).toDateString() === new Date().toDateString()
+            );
+            
+            const sessionProblems = todaySessions.length;
+            const sessionCorrect = todaySessions.filter(s => s.result === 'correct').length;
+            const sessionStars = todaySessions.reduce((sum, s) => sum + (s.stars || 0), 0);
+            
+            this.setText('sessionProblems', sessionProblems);
+            this.setText('sessionCorrect', sessionCorrect);
+            this.setText('sessionAccuracy', 
+                sessionProblems > 0 ? Math.round(sessionCorrect / sessionProblems * 100) + '%' : '0%');
+            this.setText('sessionStars', sessionStars);
+        }
+    }
+
+    capitalize(str) {
+        return str.charAt(0).toUpperCase() + str.slice(1);
+    }
+
+    setupEventListeners() {
+        const resetBtn = document.getElementById('resetProgress');
+        const printBtn = document.getElementById('printReport');
+        
+        if (resetBtn) {
+            resetBtn.addEventListener('click', () => {
+                if (confirm('Are you sure you want to reset all your progress? This cannot be undone!')) {
+                    this.resetProgress();
+                }
+            });
+        }
+
+        if (printBtn) {
+            printBtn.addEventListener('click', () => {
+                this.printReport();
+            });
+        }
     }
 
     printReport() {
@@ -263,8 +460,16 @@ class ProgressManager {
         const getVal = (val) => val || 0;
         
         const savedProfile = localStorage.getItem('mathGameProfile');
-        const profile = savedProfile ? JSON.parse(savedProfile) : { name: '', avatar: '🦊' };
-        const playerName = profile.name || 'Math Learner';
+        let profile = { name: '', avatar: '🦊' };
+        try {
+            if (savedProfile) {
+                profile = JSON.parse(savedProfile);
+            }
+        } catch (e) {
+            console.error('Error parsing profile:', e);
+        }
+        const playerName = escapeHtml(profile.name) || 'Math Learner';
+        const avatar = escapeHtml(profile.avatar) || '🦊';
         
         reportWindow.document.write(`
             <!DOCTYPE html>
@@ -457,7 +662,7 @@ class ProgressManager {
             <body>
                 <div class="report-container">
                     <div class="report-header">
-                        <div class="report-avatar">${profile.avatar || '🦊'}</div>
+                        <div class="report-avatar">${avatar}</div>
                         <h1>🌟 Progress Report 🌟</h1>
                         <div class="player-badge">
                             <p class="player-name">${playerName}</p>
@@ -676,7 +881,11 @@ class ProgressManager {
     }
 
     saveStats() {
-        localStorage.setItem('mathGameStats', JSON.stringify(this.stats));
+        try {
+            localStorage.setItem('mathGameStats', JSON.stringify(this.stats));
+        } catch (e) {
+            console.error('Error saving stats:', e);
+        }
     }
 }
 

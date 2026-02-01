@@ -18,8 +18,21 @@
 </head>
 <body>
     <div class="container">
+        <div class="loading-overlay" id="loadingOverlay">
+            <div class="loading-spinner">
+                <span class="loading-emoji">🎯</span>
+                <div class="spinner"></div>
+                <div class="loading-text" id="loadingText">Loading...</div>
+            </div>
+        </div>
         <nav class="nav-header">
             <a href="../../../index.html" class="back-btn">← Back to Menu</a>
+            <div class="nav-controls">
+                <button class="sound-toggle-btn" id="soundToggleBtn" title="Toggle Sound">🔊</button>
+                <button class="help-btn" id="helpBtn" title="Keyboard Shortcuts">⌨️</button>
+                <button class="accessibility-btn" id="highContrastBtn" title="Toggle High Contrast">⬜</button>
+                <button class="accessibility-btn" id="reducedMotionBtn" title="Toggle Reduced Motion">▶️</button>
+            </div>
         </nav>
         
         <header class="header">
@@ -159,31 +172,78 @@
         <div class="celebration-container" id="celebration"></div>
     </div>
 
-    <script src="../../src/js/core/base-game.js"></script>
-    <script src="../../src/js/calculation-engine/step-data.js"></script>
-    <script src="../../src/js/calculation-engine/visualization/grid-renderer.js"></script>
-    <script src="../../src/js/calculation-engine/visualization/column-renderer.js"></script>
-    <script src="../../src/js/calculation-engine/visualization/binary-renderer.js"></script>
-    <script src="../../src/js/calculation-engine/addition/standard-addition.js"></script>
-    <script src="../../src/js/calculation-engine/addition/kahan-summation.js"></script>
-    <script src="../../src/js/calculation-engine/addition/carry-lookahead.js"></script>
-    <script src="../../src/js/calculation-engine/subtraction/standard-subtraction.js"></script>
-    <script src="../../src/js/calculation-engine/subtraction/twos-complement.js"></script>
-    <script src="../../src/js/calculation-engine/multiplication/grade-school-multiplication.js"></script>
-    <script src="../../src/js/calculation-engine/multiplication/vedic-nikhilam.js"></script>
-    <script src="../../src/js/calculation-engine/multiplication/vedic-urdhva-tiryak.js"></script>
-    <script src="../../src/js/calculation-engine/multiplication/vedic-ekadhikena.js"></script>
-    <script src="../../src/js/calculation-engine/multiplication/lattice-multiplication.js"></script>
-    <script src="../../src/js/calculation-engine/multiplication/russian-peasant.js"></script>
-    <script src="../../src/js/calculation-engine/multiplication/abacus-methods.js"></script>
-    <script src="../../src/js/calculation-engine/multiplication/karatsuba.js"></script>
-    <script src="../../src/js/calculation-engine/division/long-division.js"></script>
-    <script src="../../src/js/calculation-engine/division/vedic-paravartya.js"></script>
-    <script src="../../src/js/calculation-engine/division/synthetic-division.js"></script>
-    <script src="../../src/js/calculation-engine/division/non-restoring-division.js"></script>
-    <script src="../../src/js/calculation-engine/division/newton-raphson.js"></script>
-    <script src="../../src/js/calculation-engine/index.js"></script>
-    <script src="../../src/js/core/algorithm-game.js"></script>
+    <div class="modal keyboard-shortcuts-modal" id="shortcutsModal">
+        <div class="modal-content">
+            <h2>⌨️ Keyboard Shortcuts</h2>
+            <div class="keyboard-shortcuts-list">
+                <div class="shortcut-item">
+                    <span class="shortcut-description">Submit Answer</span>
+                    <span class="shortcut-keys"><span class="key">Enter</span></span>
+                </div>
+                <div class="shortcut-item">
+                    <span class="shortcut-description">Get a Hint</span>
+                    <span class="shortcut-keys"><span class="key">Space</span></span>
+                </div>
+                <div class="shortcut-item">
+                    <span class="shortcut-description">Select Level 1</span>
+                    <span class="shortcut-keys"><span class="key">1</span></span>
+                </div>
+                <div class="shortcut-item">
+                    <span class="shortcut-description">Select Level 2</span>
+                    <span class="shortcut-keys"><span class="key">2</span></span>
+                </div>
+                <div class="shortcut-item">
+                    <span class="shortcut-description">Select Level 3</span>
+                    <span class="shortcut-keys"><span class="key">3</span></span>
+                </div>
+                <div class="shortcut-item">
+                    <span class="shortcut-description">Select Level 4</span>
+                    <span class="shortcut-keys"><span class="key">4</span></span>
+                </div>
+                <div class="shortcut-item">
+                    <span class="shortcut-description">Toggle Sound</span>
+                    <span class="shortcut-keys"><span class="key">Ctrl</span><span class="key">M</span></span>
+                </div>
+                <div class="shortcut-item">
+                    <span class="shortcut-description">Toggle High Contrast</span>
+                    <span class="shortcut-keys"><span class="key">Ctrl</span><span class="key">H</span></span>
+                </div>
+                <div class="shortcut-item">
+                    <span class="shortcut-description">Toggle Reduced Motion</span>
+                    <span class="shortcut-keys"><span class="key">Ctrl</span><span class="key">R</span></span>
+                </div>
+            </div>
+            <button class="modal-btn save-btn" onclick="document.getElementById('shortcutsModal').style.display='none'">Got it!</button>
+        </div>
+    </div>
+
+    <script src="../../js/core/base-game.js"></script>
+    <script src="../../js/core/achievements.js"></script>
+    <script src="../../js/core/daily-challenges.js"></script>
+    <script src="../../js/calculation-engine/step-data.js"></script>
+    <script src="../../js/calculation-engine/visualization/grid-renderer.js"></script>
+    <script src="../../js/calculation-engine/visualization/column-renderer.js"></script>
+    <script src="../../js/calculation-engine/visualization/binary-renderer.js"></script>
+    <script src="../../js/calculation-engine/addition/standard-addition.js"></script>
+    <script src="../../js/calculation-engine/addition/kahan-summation.js"></script>
+    <script src="../../js/calculation-engine/addition/carry-lookahead.js"></script>
+    <script src="../../js/calculation-engine/subtraction/standard-subtraction.js"></script>
+    <script src="../../js/calculation-engine/subtraction/twos-complement.js"></script>
+    <script src="../../js/calculation-engine/multiplication/grade-school-multiplication.js"></script>
+    <script src="../../js/calculation-engine/multiplication/vedic-nikhilam.js"></script>
+    <script src="../../js/calculation-engine/multiplication/vedic-urdhva-tiryak.js"></script>
+    <script src="../../js/calculation-engine/multiplication/vedic-ekadhikena.js"></script>
+    <script src="../../js/calculation-engine/multiplication/lattice-multiplication.js"></script>
+    <script src="../../js/calculation-engine/multiplication/russian-peasant.js"></script>
+    <script src="../../js/calculation-engine/multiplication/abacus-methods.js"></script>
+    <script src="../../js/calculation-engine/multiplication/karatsuba.js"></script>
+    <script src="../../js/calculation-engine/division/long-division.js"></script>
+    <script src="../../js/calculation-engine/division/vedic-paravartya.js"></script>
+    <script src="../../js/calculation-engine/division/synthetic-division.js"></script>
+    <script src="../../js/calculation-engine/division/non-restoring-division.js"></script>
+    <script src="../../js/calculation-engine/division/newton-raphson.js"></script>
+    <script src="../../js/calculation-engine/index.js"></script>
+    <script src="../../js/core/algorithm-game.js"></script>
     <script src="advanced-math.js"></script>
     <script>
         if ('serviceWorker' in navigator) {

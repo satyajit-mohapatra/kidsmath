@@ -1,0 +1,471 @@
+/* Time & Money Game Styles */
+
+.activity-selector {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+}
+
+.activity-btn {
+    background: linear-gradient(135deg, #fff9c4 0%, #ffe082 100%);
+    color: #2d3436;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 50px;
+    font-size: 0.95rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(255, 224, 130, 0.4);
+    min-width: 100px;
+}
+
+.activity-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(255, 224, 130, 0.6);
+}
+
+.activity-btn.active {
+    background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+    color: #2d3436;
+    box-shadow: 0 4px 15px rgba(255, 215, 0, 0.5);
+}
+
+/* Time & Money Game Container */
+.time-money-game {
+    text-align: center;
+    padding: 20px;
+}
+
+.activity-title {
+    font-size: 1.5rem;
+    color: #2d3436;
+    margin-bottom: 15px;
+}
+
+.activity-hint {
+    color: #636e72;
+    font-size: 1.1rem;
+    margin-bottom: 25px;
+    font-style: italic;
+}
+
+/* Clock Styles */
+.clock-container {
+    display: flex;
+    justify-content: center;
+    margin: 30px 0;
+}
+
+.analog-clock {
+    width: 250px;
+    height: 250px;
+    position: relative;
+}
+
+.analog-clock.interactive {
+    cursor: pointer;
+}
+
+.clock-face {
+    width: 100%;
+    height: 100%;
+    border: 6px solid #2d3436;
+    border-radius: 50%;
+    background: white;
+    position: relative;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.clock-center {
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    background: #2d3436;
+    border-radius: 50%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 10;
+}
+
+.hour-hand {
+    position: absolute;
+    width: 6px;
+    height: 70px;
+    background: #2d3436;
+    top: 50%;
+    left: 50%;
+    transform-origin: bottom center;
+    transform: translate(-50%, -100%);
+    border-radius: 3px;
+    z-index: 5;
+}
+
+.minute-hand {
+    position: absolute;
+    width: 4px;
+    height: 100px;
+    background: #ff6b6b;
+    top: 50%;
+    left: 50%;
+    transform-origin: bottom center;
+    transform: translate(-50%, -100%);
+    border-radius: 2px;
+    z-index: 4;
+}
+
+.clock-numbers {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+}
+
+.clock-num {
+    position: absolute;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #2d3436;
+}
+
+/* Time Input */
+.time-input-area {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    margin-top: 30px;
+}
+
+.time-inputs {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.time-input {
+    width: 80px;
+    height: 60px;
+    font-size: 1.5rem;
+    text-align: center;
+    border: 3px solid #ffd700;
+    border-radius: 15px;
+    font-family: inherit;
+    font-weight: bold;
+}
+
+.time-separator {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #2d3436;
+}
+
+/* Time Controls for Interactive Clock */
+.time-controls {
+    margin: 20px 0;
+    padding: 20px;
+    background: linear-gradient(135deg, #f0f4f8 0%, #e1e8ed 100%);
+    border-radius: 15px;
+}
+
+.hand-control {
+    margin-bottom: 15px;
+}
+
+.hand-control label {
+    display: block;
+    font-weight: bold;
+    color: #2d3436;
+    margin-bottom: 8px;
+}
+
+.hand-control input[type="range"] {
+    width: 100%;
+    height: 8px;
+    border-radius: 4px;
+    background: #e1e8ed;
+    outline: none;
+    -webkit-appearance: none;
+}
+
+.hand-control input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: #ffd700;
+    cursor: pointer;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+
+.hand-control input[type="range"]::-moz-range-thumb {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: #ffd700;
+    cursor: pointer;
+    border: none;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+
+/* Money Styles */
+.coins-container {
+    display: flex;
+    justify-content: center;
+    margin: 30px 0;
+}
+
+.coins-row {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.coin {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    color: white;
+    font-size: 0.9rem;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    border: 3px solid rgba(255,255,255,0.3);
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+}
+
+.money-input-area {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 30px;
+    flex-wrap: wrap;
+}
+
+.dollar-sign {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #2d3436;
+}
+
+.money-input {
+    width: 120px;
+    height: 60px;
+    font-size: 1.5rem;
+    text-align: center;
+    border: 3px solid #ffd700;
+    border-radius: 15px;
+    font-family: inherit;
+    font-weight: bold;
+}
+
+.money-input.cents {
+    width: 100px;
+}
+
+.cents-label {
+    font-size: 1.2rem;
+    color: #636e72;
+}
+
+/* Transaction Display */
+.transaction-display {
+    background: linear-gradient(135deg, #f0f4f8 0%, #e1e8ed 100%);
+    border-radius: 15px;
+    padding: 25px;
+    margin: 20px 0;
+    max-width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.transaction-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 0;
+    border-bottom: 2px solid #d1d8e0;
+}
+
+.transaction-item:last-child {
+    border-bottom: none;
+}
+
+.transaction-label {
+    font-size: 1.1rem;
+    color: #636e72;
+    font-weight: 500;
+}
+
+.transaction-amount {
+    font-size: 1.3rem;
+    font-weight: bold;
+    color: #2d3436;
+    background: white;
+    padding: 8px 15px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+/* Word Problem */
+.word-problem-text {
+    font-size: 1.2rem;
+    color: #2d3436;
+    line-height: 1.6;
+    margin: 25px 0;
+    padding: 25px;
+    background: linear-gradient(135deg, #fff9c4 0%, #ffe082 100%);
+    border-radius: 15px;
+    border-left: 5px solid #ffd700;
+    text-align: left;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Yes/No Buttons */
+.yes-no-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin-top: 30px;
+}
+
+.yes-no-btn {
+    padding: 20px 50px;
+    font-size: 1.5rem;
+    font-weight: bold;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.yes-no-btn[data-answer="yes"] {
+    background: linear-gradient(135deg, #55efc4 0%, #00b894 100%);
+    color: white;
+}
+
+.yes-no-btn[data-answer="no"] {
+    background: linear-gradient(135deg, #ff7675 0%, #d63031 100%);
+    color: white;
+}
+
+.yes-no-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+}
+
+.yes-no-btn:active {
+    transform: scale(0.95);
+}
+
+/* High Contrast Styles */
+body.high-contrast .activity-btn {
+    background: #fff !important;
+    border: 3px solid #000 !important;
+    color: #000 !important;
+}
+
+body.high-contrast .activity-btn.active {
+    background: #000 !important;
+    color: #fff !important;
+}
+
+body.high-contrast .clock-face {
+    border-color: #000 !important;
+    background: #fff !important;
+}
+
+body.high-contrast .hour-hand {
+    background: #000 !important;
+}
+
+body.high-contrast .minute-hand {
+    background: #000 !important;
+}
+
+body.high-contrast .clock-num {
+    color: #000 !important;
+}
+
+body.high-contrast .time-input {
+    border-color: #000 !important;
+    background: #fff !important;
+    color: #000 !important;
+}
+
+body.high-contrast .hand-control input[type="range"] {
+    background: #ccc !important;
+}
+
+body.high-contrast .hand-control input[type="range"]::-webkit-slider-thumb {
+    background: #000 !important;
+}
+
+body.high-contrast .hand-control input[type="range"]::-moz-range-thumb {
+    background: #000 !important;
+}
+
+body.high-contrast .coin {
+    border-color: #000 !important;
+    color: #fff !important;
+}
+
+body.high-contrast .money-input {
+    border-color: #000 !important;
+    background: #fff !important;
+    color: #000 !important;
+}
+
+body.high-contrast .transaction-display {
+    background: #fff !important;
+    border: 3px solid #000 !important;
+}
+
+body.high-contrast .transaction-amount {
+    background: #fff !important;
+    border: 2px solid #000 !important;
+    color: #000 !important;
+}
+
+body.high-contrast .word-problem-text {
+    background: #fff !important;
+    border: 3px solid #000 !important;
+    border-left: 5px solid #000 !important;
+}
+
+body.high-contrast .yes-no-btn[data-answer="yes"] {
+    background: #000 !important;
+    color: #fff !important;
+    border: 3px solid #000 !important;
+}
+
+body.high-contrast .yes-no-btn[data-answer="no"] {
+    background: #fff !important;
+    color: #000 !important;
+    border: 3px solid #000 !important;
+}
+
+/* Reduced Motion Styles */
+body.reduced-motion .activity-btn {
+    transition: none !important;
+}
+
+body.reduced-motion .yes-no-btn {
+    transition: none !important;
+}
+
+body.reduced-motion .coin {
+    transition: none !important;
+}

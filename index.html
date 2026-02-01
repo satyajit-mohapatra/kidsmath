@@ -33,7 +33,7 @@
         <header class="header">
             <h1 class="title">🌟 Fun Math Adventure! 🌟</h1>
             <p class="subtitle" id="salutation">👋 Hello, friend!</p>
-            <button class="profile-btn" id="profileBtn" onclick="var m=document.getElementById('profileModal'); m.style.display='flex'; m.classList.add('show');">👤 Profile</button>
+            <button class="profile-btn" id="profileBtn">👤 Profile</button>
         </header>
 
         <div class="stats-summary">
@@ -88,6 +88,20 @@
                 <h3 class="menu-title">Division</h3>
                 <p class="menu-description">Share equally and see what's left!</p>
                 <div class="menu-stars" id="divisionStars">⭐ 0</div>
+            </a>
+
+            <a href="src/games/fractions/fractions.html" class="menu-card fractions-card">
+                <div class="menu-icon">🍕</div>
+                <h3 class="menu-title">Fractions</h3>
+                <p class="menu-description">Learn fractions with pizza and shapes!</p>
+                <div class="menu-stars" id="fractionsStars">⭐ 0</div>
+            </a>
+
+            <a href="src/games/time-money/time-money.html" class="menu-card time-money-card">
+                <div class="menu-icon">⏰</div>
+                <h3 class="menu-title">Time & Money</h3>
+                <p class="menu-description">Learn to tell time and count money!</p>
+                <div class="menu-stars" id="timeMoneyStars">⭐ 0</div>
             </a>
 
              <a href="src/games/advanced-math/advanced-math.html" class="menu-card arithmetic-card">
@@ -179,6 +193,22 @@
                 </div>
                 <div class="visibility-toggle">
                     <label class="toggle-label">
+                        <span class="toggle-icon">🍕</span>
+                        <span class="toggle-text">Fractions</span>
+                        <input type="checkbox" class="visibility-checkbox" data-game="fractions" checked>
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+                <div class="visibility-toggle">
+                    <label class="toggle-label">
+                        <span class="toggle-icon">⏰</span>
+                        <span class="toggle-text">Time & Money</span>
+                        <input type="checkbox" class="visibility-checkbox" data-game="timeMoney" checked>
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+                <div class="visibility-toggle">
+                    <label class="toggle-label">
                         <span class="toggle-icon">🧮</span>
                         <span class="toggle-text">Arithmetic Algorithms</span>
                         <input type="checkbox" class="visibility-checkbox" data-game="advancedMath" checked>
@@ -188,7 +218,7 @@
             </div>
             
             <div class="modal-buttons">
-                <button class="modal-btn cancel-btn" id="closeProfile" onclick="var m=document.getElementById('profileModal'); m.style.display='none'; m.classList.remove('show');">Cancel</button>
+                <button class="modal-btn cancel-btn" id="closeProfile">Cancel</button>
                 <button class="modal-btn save-btn" id="saveProfile">Save</button>
             </div>
         </div>
