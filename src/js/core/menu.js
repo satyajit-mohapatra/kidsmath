@@ -23,7 +23,8 @@ class MenuManager {
                 subtraction: true,
                 multiplication: true,
                 division: true,
-                advancedMath: true
+                advancedMath: true,
+                sentenceFormation: true
             };
             this.saveProfile();
         }
@@ -42,6 +43,7 @@ class MenuManager {
             else if (href.includes('multiplication')) gameKey = 'multiplication';
             else if (href.includes('division')) gameKey = 'division';
             else if (href.includes('advanced-math')) gameKey = 'advancedMath';
+            else if (href.includes('sentence-formation')) gameKey = 'sentenceFormation';
 
             if (gameKey && this.profile.gameVisibility[gameKey] === false) {
                 card.style.display = 'none';
@@ -63,6 +65,7 @@ class MenuManager {
             funMathStars: 0,
             socialSkillsStars: 0,
             advancedMathStars: 0,
+            sentenceFormationStars: 0,
             achievements: []
         };
     }
@@ -80,7 +83,8 @@ class MenuManager {
                 subtraction: true,
                 multiplication: true,
                 division: true,
-                advancedMath: true
+                advancedMath: true,
+                sentenceFormation: true
             }
         };
     }
@@ -185,6 +189,7 @@ class MenuManager {
         document.getElementById('funMathStars').textContent = `⭐ ${this.stats.funMathStars}`;
         document.getElementById('socialSkillsStars').textContent = `⭐ ${this.stats.socialSkillsStars || 0}`;
         document.getElementById('advancedMathStars').textContent = `⭐ ${this.stats.advancedMathStars || 0}`;
+        document.getElementById('sentenceFormationStars').textContent = `⭐ ${this.stats.sentenceFormationStars || 0}`;
         document.getElementById('progressStars').textContent = `🏆 ${this.stats.achievements.length}`;
     }
 

@@ -192,6 +192,11 @@ body {
     border: 3px solid #e17055;
 }
 
+.nature-card {
+    background: linear-gradient(135deg, #d5f5e3 0%, #abebc6 100%);
+    border: 3px solid #00b894;
+}
+
 .social-card {
     background: linear-gradient(135deg, #a8e6cf 0%, #dcedc1 100%);
     border: 3px solid #4caf50;
@@ -215,6 +220,11 @@ body {
 .arithmetic-card {
     background: linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%);
     border: 3px solid #6c5ce7;
+}
+
+.sentence-card {
+    background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+    border: 3px solid #ff9f43;
 }
 
 .mascot-area {

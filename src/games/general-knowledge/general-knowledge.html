@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Kids Math">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="theme-color" content="#00b894">
+    <meta name="description" content="Learn about animals, space, body parts, fruits, colors, shapes, vehicles, jobs, weather, and more! Fun educational quizzes for kids!">
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="icons/icon-192.png">
+    <link rel="icon" type="image/png" href="icons/icon-192.png">
+    <title>World Explorer - Learn Everything!</title>
+    <link rel="stylesheet" href="../../css/shared-styles.css">
+    <link rel="stylesheet" href="../../css/games/general-knowledge-styles.css">
+</head>
+<body>
+    <div class="container">
+        <div class="loading-overlay" id="loadingOverlay">
+            <div class="loading-spinner">
+                <span class="loading-emoji">🌍</span>
+                <div class="spinner"></div>
+                <div class="loading-text" id="loadingText">Loading...</div>
+            </div>
+        </div>
+        <nav class="nav-header">
+            <a href="../../../index.html" class="back-btn">← Back to Menu</a>
+            <div class="nav-controls">
+                <button class="sound-toggle-btn" id="soundToggleBtn" title="Toggle Sound">🔊</button>
+                <button class="help-btn" id="helpBtn" title="Keyboard Shortcuts">⌨️</button>
+                <button class="accessibility-btn" id="highContrastBtn" title="Toggle High Contrast">⬜</button>
+                <button class="accessibility-btn" id="reducedMotionBtn" title="Toggle Reduced Motion">▶️</button>
+            </div>
+        </nav>
+        <header class="header">
+            <h1 class="title">🌍 World Explorer!</h1>
+            <div class="stats">
+                <div class="stat-item">
+                    <span class="stat-label">Stars:</span>
+                    <span class="stat-value" id="stars">⭐ 0</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Streak:</span>
+                    <span class="stat-value" id="streak">🔥 0</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Level 1: Subject Groups -->
+        <div class="subject-groups">
+            <button class="subject-btn active" data-subject="living">🌿 Living World</button>
+            <button class="subject-btn" data-subject="science">🔬 Science & Discovery</button>
+            <button class="subject-btn" data-subject="daily">🏠 Daily Life</button>
+            <button class="subject-btn" data-subject="world">🌎 Our Planet</button>
+        </div>
+
+        <!-- Level 2: Categories -->
+        <div class="category-container">
+            <!-- Living World Categories -->
+            <div class="category-group active" data-subject="living">
+                <button class="category-btn active" data-category="nature">🦁 Nature & Animals</button>
+                <button class="category-btn" data-category="body">🧠 Human Body</button>
+            </div>
+
+            <!-- Science & Discovery Categories -->
+            <div class="category-group" data-subject="science">
+                <button class="category-btn" data-category="space">🚀 Space & Astronomy</button>
+            </div>
+
+            <!-- Daily Life Categories -->
+            <div class="category-group" data-subject="daily">
+                <button class="category-btn" data-category="food">🍎 Food & Nutrition</button>
+                <button class="category-btn" data-category="basics">🎨 Basics (Colors & Shapes)</button>
+                <button class="category-btn" data-category="transport">🚗 Transportation</button>
+                <button class="category-btn" data-category="people">👨‍⚕️ People & Jobs</button>
+            </div>
+
+            <!-- Our Planet Categories -->
+            <div class="category-group" data-subject="world">
+                <button class="category-btn" data-category="time">📅 Time & Weather</button>
+                <button class="category-btn" data-category="geography">🌍 Geography</button>
+            </div>
+        </div>
+
+        <!-- Level 3: Activities -->
+        <div class="activity-container">
+            <!-- Nature & Animals -->
+            <div class="activity-group active" data-category="nature">
+                <button class="activity-btn active" data-activity="animal-names">🦁 Animal Names</button>
+                <button class="activity-btn" data-activity="bird-names">🦅 Bird Names</button>
+                <button class="activity-btn" data-activity="animal-sounds">🔊 Animal Sounds</button>
+                <button class="activity-btn" data-activity="bird-sounds">🎵 Bird Sounds</button>
+                <button class="activity-btn" data-activity="habitats">🏠 Habitats</button>
+                <button class="activity-btn" data-activity="baby-names">👶 Baby Animals</button>
+            </div>
+
+            <!-- Human Body -->
+            <div class="activity-group" data-category="body">
+                <button class="activity-btn" data-activity="body-parts">🧠 Body Parts</button>
+            </div>
+
+            <!-- Science & Space -->
+            <div class="activity-group" data-category="space">
+                <button class="activity-btn" data-activity="space">🚀 Space Objects</button>
+            </div>
+
+            <!-- Food & Nutrition -->
+            <div class="activity-group" data-category="food">
+                <button class="activity-btn" data-activity="fruits">🍎 Fruits</button>
+                <button class="activity-btn" data-activity="vegetables">🥕 Vegetables</button>
+            </div>
+
+            <!-- Basics -->
+            <div class="activity-group" data-category="basics">
+                <button class="activity-btn" data-activity="colors">🎨 Colors</button>
+                <button class="activity-btn" data-activity="shapes">📐 Shapes</button>
+            </div>
+
+            <!-- Transportation -->
+            <div class="activity-group" data-category="transport">
+                <button class="activity-btn" data-activity="transport">🚗 Vehicles</button>
+            </div>
+
+            <!-- People & Jobs -->
+            <div class="activity-group" data-category="people">
+                <button class="activity-btn" data-activity="professions">👨‍⚕️ Jobs</button>
+            </div>
+
+            <!-- Time & Weather -->
+            <div class="activity-group" data-category="time">
+                <button class="activity-btn" data-activity="weather">🌤️ Weather</button>
+                <button class="activity-btn" data-activity="seasons">🌸 Seasons</button>
+                <button class="activity-btn" data-activity="days">📅 Days</button>
+                <button class="activity-btn" data-activity="months">📆 Months</button>
+            </div>
+
+            <!-- Geography -->
+            <div class="activity-group" data-category="geography">
+                <button class="activity-btn" data-activity="continents">🌍 Continents</button>
+                <button class="activity-btn" data-activity="landmarks">🏛️ Landmarks</button>
+            </div>
+        </div>
+
+        <div class="game-area">
+            <div class="activity-display" id="activityDisplay"></div>
+
+            <div class="feedback-area" id="feedbackArea"></div>
+
+            <div class="hint-area">
+                <div class="mascot" id="mascot">🦊</div>
+                <div class="hint-buttons">
+                    <button class="hint-btn" id="hintBtn">
+                        💡 Need a hint?
+                        <span class="hint-counter" id="hintCounter">0/3</span>
+                    </button>
+                    <button class="tutorial-btn" id="tutorialBtn">🎬 Show me how!</button>
+                </div>
+                <div class="hint-content" id="hintContent"></div>
+            </div>
+
+            <div class="tutorial-overlay" id="tutorialOverlay">
+                <div class="tutorial-content">
+                    <div class="tutorial-header">
+                        <h2>📚 Let's Learn Step by Step!</h2>
+                        <button class="close-tutorial" id="closeTutorial">✕</button>
+                    </div>
+                    <div class="tutorial-steps" id="tutorialSteps"></div>
+                    <div class="tutorial-controls">
+                        <button class="tutorial-nav" id="prevStep">⬅️ Back</button>
+                        <span class="step-indicator" id="stepIndicator">Step 1 of 3</span>
+                        <button class="tutorial-nav" id="nextStep">Next ➡️</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="celebration-container" id="celebration"></div>
+    </div>
+
+    <div class="modal keyboard-shortcuts-modal" id="shortcutsModal">
+        <div class="modal-content">
+            <h2>⌨️ Keyboard Shortcuts</h2>
+            <div class="keyboard-shortcuts-list">
+                <div class="shortcut-item">
+                    <span class="shortcut-description">Submit Answer</span>
+                    <span class="shortcut-keys"><span class="key">Enter</span></span>
+                </div>
+                <div class="shortcut-item">
+                    <span class="shortcut-description">Get a Hint</span>
+                    <span class="shortcut-keys"><span class="key">Space</span></span>
+                </div>
+                <div class="shortcut-item">
+                    <span class="shortcut-description">Select Activity 1</span>
+                    <span class="shortcut-keys"><span class="key">1</span></span>
+                </div>
+                <div class="shortcut-item">
+                    <span class="shortcut-description">Select Activity 2</span>
+                    <span class="shortcut-keys"><span class="key">2</span></span>
+                </div>
+                <div class="shortcut-item">
+                    <span class="shortcut-description">Select Activity 3</span>
+                    <span class="shortcut-keys"><span class="key">3</span></span>
+                </div>
+                <div class="shortcut-item">
+                    <span class="shortcut-description">Select Activity 4</span>
+                    <span class="shortcut-keys"><span class="key">4</span></span>
+                </div>
+                <div class="shortcut-item">
+                    <span class="shortcut-description">Toggle Sound</span>
+                    <span class="shortcut-keys"><span class="key">Ctrl</span><span class="key">M</span></span>
+                </div>
+                <div class="shortcut-item">
+                    <span class="shortcut-description">Toggle High Contrast</span>
+                    <span class="shortcut-keys"><span class="key">Ctrl</span><span class="key">H</span></span>
+                </div>
+                <div class="shortcut-item">
+                    <span class="shortcut-description">Toggle Reduced Motion</span>
+                    <span class="shortcut-keys"><span class="key">Ctrl</span><span class="key">R</span></span>
+                </div>
+            </div>
+            <button class="modal-btn save-btn" onclick="document.getElementById('shortcutsModal').style.display='none'">Got it!</button>
+        </div>
+    </div>
+
+    <script src="../../js/core/base-game.js"></script>
+    <script src="../../js/core/achievements.js"></script>
+    <script src="../../js/core/daily-challenges.js"></script>
+    <script src="general-knowledge.js"></script>
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js').catch(() => {});
+            });
+        }
+    </script>
+</body>
+</html>

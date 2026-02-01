@@ -32,6 +32,8 @@ class TimeMoneyGame extends BaseGame {
 
         const hintBtn = document.getElementById('hintBtn');
         const mascot = document.getElementById('mascot');
+        const tutorialBtn = document.getElementById('tutorialBtn');
+        const closeExplanation = document.getElementById('closeExplanation');
         
         if (hintBtn) {
             hintBtn.addEventListener('click', () => this.showHint());
@@ -39,6 +41,174 @@ class TimeMoneyGame extends BaseGame {
         if (mascot) {
             mascot.addEventListener('click', () => this.mascotClick());
         }
+        if (tutorialBtn) {
+            tutorialBtn.addEventListener('click', () => this.showExplanation());
+        }
+        if (closeExplanation) {
+            closeExplanation.addEventListener('click', () => this.hideExplanation());
+        }
+    }
+
+    showExplanation() {
+        const explanationContainer = document.getElementById('explanationContainer');
+        const explanationSteps = document.getElementById('explanationSteps');
+        
+        explanationSteps.innerHTML = this.generateExplanation();
+        explanationContainer.style.display = 'block';
+        explanationContainer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        
+        this.playTone(800, 0.2);
+    }
+
+    hideExplanation() {
+        const explanationContainer = document.getElementById('explanationContainer');
+        explanationContainer.style.display = 'none';
+    }
+
+    generateExplanation() {
+        const problem = this.currentProblem;
+        let steps = '';
+
+        switch(problem.type) {
+            case 'clock':
+                steps = `
+                    <div class="explanation-step">
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                            <strong>Look at the short hand (hour hand)</strong><br>
+                            The short hand points to the hour. In this clock, it points to <span class="highlight">${problem.hour}</span>.
+                        </div>
+                    </div>
+                    <div class="explanation-step">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <strong>Look at the long hand (minute hand)</strong><br>
+                            The long hand shows the minutes. Each number on the clock = 5 minutes.<br>
+                            The long hand is at <span class="highlight">${problem.minute}</span> minutes.
+                        </div>
+                    </div>
+                    <div class="explanation-step">
+                        <div class="step-number">3</div>
+                        <div class="step-content">
+                            <strong>Put it together!</strong><br>
+                            Hour: <span class="highlight">${problem.hour}</span> + Minutes: <span class="highlight">${problem.minute.toString().padStart(2, '0')}</span><br>
+                            The time is <span class="answer-highlight">${this.formatTime(problem.hour, problem.minute)}</span>!
+                        </div>
+                    </div>
+                `;
+                break;
+
+            case 'digital':
+                steps = `
+                    <div class="explanation-step">
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                            <strong>Read the first two numbers</strong><br>
+                            These show the hour. The digital clock shows <span class="highlight">${problem.hour.toString().padStart(2, '0')}</span>.
+                        </div>
+                    </div>
+                    <div class="explanation-step">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <strong>Read the numbers after the colon (:)</strong><br>
+                            These show the minutes. The clock shows <span class="highlight">${problem.minute.toString().padStart(2, '0')}</span> minutes.
+                        </div>
+                    </div>
+                    <div class="explanation-step">
+                        <div class="step-number">3</div>
+                        <div class="step-content">
+                            <strong>Write the time!</strong><br>
+                            Hour: <span class="highlight">${problem.hour}</span> + Minutes: <span class="highlight">${problem.minute.toString().padStart(2, '0')}</span><br>
+                            The answer is <span class="answer-highlight">${this.formatTime(problem.hour, problem.minute)}</span>!
+                        </div>
+                    </div>
+                `;
+                break;
+
+            case 'count':
+                const coinList = problem.coins.map(c => `${c.value}¢`).join(' + ');
+                steps = `
+                    <div class="explanation-step">
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                            <strong>Look at each coin</strong><br>
+                            Count how many cents each coin is worth:<br>
+                            <span class="highlight">${coinList}</span>
+                        </div>
+                    </div>
+                    <div class="explanation-step">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <strong>Add them all up!</strong><br>
+                            ${problem.coins.map(c => `${c.value}¢`).join(' + ')} = <span class="highlight">${problem.answer}¢</span>
+                        </div>
+                    </div>
+                    <div class="explanation-step">
+                        <div class="step-number">3</div>
+                        <div class="step-content">
+                            <strong>Convert to dollars</strong><br>
+                            Remember: 100¢ = $1.00<br>
+                            ${problem.answer}¢ = <span class="answer-highlight">$${(problem.answer / 100).toFixed(2)}</span>
+                        </div>
+                    </div>
+                `;
+                break;
+
+            case 'change':
+                steps = `
+                    <div class="explanation-step">
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                            <strong>What did you pay?</strong><br>
+                            You paid: <span class="highlight">$${(problem.payment / 100).toFixed(2)}</span> (${problem.payment}¢)
+                        </div>
+                    </div>
+                    <div class="explanation-step">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <strong>What did the item cost?</strong><br>
+                            Item price: <span class="highlight">$${(problem.price / 100).toFixed(2)}</span> (${problem.price}¢)
+                        </div>
+                    </div>
+                    <div class="explanation-step">
+                        <div class="step-number">3</div>
+                        <div class="step-content">
+                            <strong>Subtract to find the change!</strong><br>
+                            ${problem.payment}¢ - ${problem.price}¢ = <span class="highlight">${problem.answer}¢</span><br>
+                            Your change is <span class="answer-highlight">$${(problem.answer / 100).toFixed(2)}</span>!
+                        </div>
+                    </div>
+                `;
+                break;
+
+            case 'word':
+                steps = `
+                    <div class="explanation-step">
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                            <strong>Read the problem carefully</strong><br>
+                            <span class="highlight">"${problem.text}"</span>
+                        </div>
+                    </div>
+                    <div class="explanation-step">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <strong>Find the important numbers</strong><br>
+                            Look for all the money amounts in the problem.
+                        </div>
+                    </div>
+                    <div class="explanation-step">
+                        <div class="step-number">3</div>
+                        <div class="step-content">
+                            <strong>Solve it!</strong><br>
+                            The answer is <span class="answer-highlight">${problem.yesNo ? (problem.answer >= 250 ? 'Yes' : 'No') : problem.answer + '¢'}</span>
+                        </div>
+                    </div>
+                `;
+                break;
+        }
+
+        return steps;
     }
 
     generateActivity() {
@@ -113,8 +283,8 @@ class TimeMoneyGame extends BaseGame {
         let html = `
             <div class="clock-face">
                 <div class="clock-center"></div>
-                <div class="hour-hand" style="transform: rotate(${hourAngle}deg)"></div>
-                <div class="minute-hand" style="transform: rotate(${minuteAngle}deg)"></div>
+                <div class="hour-hand" style="transform: translate(-50%, -100%) rotate(${hourAngle}deg)"></div>
+                <div class="minute-hand" style="transform: translate(-50%, -100%) rotate(${minuteAngle}deg)"></div>
                 <div class="clock-numbers">
                     <span class="clock-num" style="top: 5%; left: 50%; transform: translateX(-50%)">12</span>
                     <span class="clock-num" style="top: 50%; right: 5%; transform: translateY(-50%)">3</span>
@@ -131,6 +301,7 @@ class TimeMoneyGame extends BaseGame {
         const hour = this.randomNumber(1, 12);
         const minute = this.randomNumber(0, 59);
         const timeStr = this.formatTime(hour, minute);
+        const displayStr = this.formatDigitalDisplay(hour, minute);
         
         this.currentProblem = {
             type: 'digital',
@@ -142,38 +313,29 @@ class TimeMoneyGame extends BaseGame {
         const display = document.getElementById('activityDisplay');
         display.innerHTML = `
             <div class="time-money-game">
-                <h2 class="activity-title">⌚ Set the time!</h2>
-                <div class="activity-hint">Move the clock hands to show ${timeStr}</div>
-                <div class="clock-container">
-                    <div class="analog-clock interactive" id="interactiveClock">
-                        <div class="clock-face">
-                            <div class="clock-center"></div>
-                            <div class="hour-hand" id="userHourHand" style="transform: rotate(0deg)"></div>
-                            <div class="minute-hand" id="userMinuteHand" style="transform: rotate(0deg)"></div>
-                            <div class="clock-numbers">
-                                <span class="clock-num" style="top: 5%; left: 50%; transform: translateX(-50%)">12</span>
-                                <span class="clock-num" style="top: 50%; right: 5%; transform: translateY(-50%)">3</span>
-                                <span class="clock-num" style="bottom: 5%; left: 50%; transform: translateX(-50%)">6</span>
-                                <span class="clock-num" style="top: 50%; left: 5%; transform: translateY(-50%)">9</span>
-                            </div>
-                        </div>
+                <h2 class="activity-title">⌚ What time is shown?</h2>
+                <div class="activity-hint">Read the digital clock!</div>
+                <div class="digital-clock-container">
+                    <div class="digital-clock">
+                        <span class="digital-time">${displayStr}</span>
                     </div>
                 </div>
-                <div class="time-controls">
-                    <div class="hand-control">
-                        <label>Hour Hand:</label>
-                        <input type="range" id="hourSlider" min="0" max="360" value="0" step="30">
+                <div class="time-input-area">
+                    <div class="time-inputs">
+                        <input type="number" class="time-input" id="hourInput" min="1" max="12" placeholder="HH">
+                        <span class="time-separator">:</span>
+                        <input type="number" class="time-input" id="minuteInput" min="0" max="59" placeholder="MM">
                     </div>
-                    <div class="hand-control">
-                        <label>Minute Hand:</label>
-                        <input type="range" id="minuteSlider" min="0" max="360" value="0" step="6">
-                    </div>
+                    <button class="submit-btn" id="submitTime">Check! ✓</button>
                 </div>
-                <button class="submit-btn" id="submitClock">Check! ✓</button>
             </div>
         `;
 
-        this.setupInteractiveClock();
+        this.setupTimeHandlers();
+    }
+
+    formatDigitalDisplay(hour, minute) {
+        return `${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}`;
     }
 
     setupInteractiveClock() {

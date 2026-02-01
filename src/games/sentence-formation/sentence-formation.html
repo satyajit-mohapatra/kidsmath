@@ -7,20 +7,20 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="Kids Math">
     <meta name="mobile-web-app-capable" content="yes">
-    <meta name="theme-color" content="#ffd700">
-    <meta name="description" content="Time & Money Adventure! Learn to tell time and count money with fun activities.">
+    <meta name="theme-color" content="#4facfe">
+    <meta name="description" content="Sentence Builder! Learn to form sentences with high-frequency words.">
     <link rel="manifest" href="../../../manifest.json">
-    <link rel="apple-touch-icon" href="../../../icons/icon-192.svg">
-    <link rel="icon" type="image/svg+xml" href="../../../icons/icon-192.svg">
-    <title>Time & Money - Fun Math Adventure!</title>
-    <link rel="stylesheet" href="../../css/shared-styles.css">
-    <link rel="stylesheet" href="../../css/games/time-money-styles.css">
+    <link rel="apple-touch-icon" href="../../../icons/icon-192.png">
+    <link rel="icon" type="image/png" href="../../../icons/icon-192.png">
+    <link rel="stylesheet" href="../../../src/css/shared-styles.css">
+    <link rel="stylesheet" href="sentence-formation-styles.css">
+    <title>Sentence Builder - Fun Math Adventure!</title>
 </head>
 <body>
     <div class="container">
         <div class="loading-overlay" id="loadingOverlay">
             <div class="loading-spinner">
-                <span class="loading-emoji">💰</span>
+                <span class="loading-emoji">📝</span>
                 <div class="spinner"></div>
                 <div class="loading-text" id="loadingText">Loading...</div>
             </div>
@@ -35,7 +35,7 @@
             </div>
         </nav>
         <header class="header">
-            <h1 class="title">⏰ Time & Money!</h1>
+            <h1 class="title">📝 Sentence Builder!</h1>
             <div class="stats">
                 <div class="stat-item">
                     <span class="stat-label">Stars:</span>
@@ -48,36 +48,47 @@
             </div>
         </header>
 
-        <div class="activity-selector">
-            <button class="activity-btn active" data-activity="clock">🕐 Clock</button>
-            <button class="activity-btn" data-activity="digital">⌚ Digital</button>
-            <button class="activity-btn" data-activity="count">💰 Count</button>
-            <button class="activity-btn" data-activity="change">💵 Change</button>
-            <button class="activity-btn" data-activity="word">📝 Word</button>
+        <div class="quarter-selector">
+            <button class="quarter-btn active" data-quarter="1">Quarter 1</button>
+            <button class="quarter-btn" data-quarter="2">Quarter 2</button>
+            <button class="quarter-btn" data-quarter="3">Quarter 3</button>
+            <button class="quarter-btn" data-quarter="4">Quarter 4</button>
+        </div>
+
+        <div class="group-selector" id="groupSelector">
+            <button class="group-btn active" data-group="1">Level 1</button>
+            <button class="group-btn" data-group="2">Level 2</button>
+            <button class="group-btn" data-group="3">Level 3</button>
         </div>
 
         <div class="game-area">
-            <div id="activityDisplay"></div>
+            <div class="sentence-display" id="sentenceDisplay">
+                <div class="sentence-prompt">Make a sentence!</div>
+                <div class="sentence-blanks" id="sentenceBlanks"></div>
+                <div class="sentence-hint" id="sentenceHint">Click the words below</div>
+            </div>
+
+            <div class="simple-word-bank" id="wordBank"></div>
+
+            <div class="simple-controls">
+                <button class="simple-clear-btn" id="clearBtn">🗑️ Start Over</button>
+                <button class="simple-submit-btn" id="submitBtn">✓ Check!</button>
+            </div>
+
+            <div class="built-sentence hidden" id="builtSentence"></div>
+
             <div class="feedback-area" id="feedbackArea"></div>
 
             <div class="hint-area">
-                <div class="mascot" id="mascot">💰</div>
+                <div class="mascot" id="mascot">🦊</div>
                 <div class="hint-buttons">
                     <button class="hint-btn" id="hintBtn">
                         💡 Need a hint?
                         <span class="hint-counter" id="hintCounter">0/3</span>
                     </button>
-                    <button class="tutorial-btn" id="tutorialBtn">🎬 Show me how!</button>
+                    <button class="read-btn" id="readBtn">🔊 Read Sentence</button>
                 </div>
                 <div class="hint-content" id="hintContent"></div>
-            </div>
-
-            <div class="explanation-container" id="explanationContainer" style="display: none;">
-                <div class="explanation-header">
-                    <h3>📚 How to Solve This!</h3>
-                    <button class="close-explanation" id="closeExplanation">✕</button>
-                </div>
-                <div class="explanation-steps" id="explanationSteps"></div>
             </div>
         </div>
 
@@ -97,6 +108,10 @@
                     <span class="shortcut-keys"><span class="key">Space</span></span>
                 </div>
                 <div class="shortcut-item">
+                    <span class="shortcut-description">Clear Sentence</span>
+                    <span class="shortcut-keys"><span class="key">Escape</span></span>
+                </div>
+                <div class="shortcut-item">
                     <span class="shortcut-description">Toggle Sound</span>
                     <span class="shortcut-keys"><span class="key">Ctrl</span><span class="key">M</span></span>
                 </div>
@@ -113,10 +128,10 @@
         </div>
     </div>
 
-    <script src="../../js/core/base-game.js"></script>
-    <script src="../../js/core/achievements.js"></script>
-    <script src="../../js/core/daily-challenges.js"></script>
-    <script src="time-money.js"></script>
+    <script src="../../../src/js/core/base-game.js"></script>
+    <script src="../../../src/js/core/achievements.js"></script>
+    <script src="../../../src/js/core/daily-challenges.js"></script>
+    <script src="sentence-formation.js"></script>
     <script>
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
