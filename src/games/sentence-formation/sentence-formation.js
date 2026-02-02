@@ -81,105 +81,141 @@ class SentenceFormationGame extends BaseGame {
         return {
             1: {
                 1: {
-                    words: ['I', 'see', 'the', 'dog', 'cat'],
+                    words: ['I', 'see', 'the', 'dog', 'cat', 'a'],
                     sentences: [
                         { words: ['I', 'see', 'the', 'dog'], display: 'I see the dog.' },
                         { words: ['I', 'see', 'the', 'cat'], display: 'I see the cat.' },
-                        { words: ['the', 'dog', 'and', 'cat'], display: 'The dog and cat.' }
+                        { words: ['I', 'see', 'a', 'dog'], display: 'I see a dog.' },
+                        { words: ['I', 'see', 'a', 'cat'], display: 'I see a cat.' },
+                        { words: ['the', 'dog'], display: 'The dog.' },
+                        { words: ['the', 'cat'], display: 'The cat.' }
                     ]
                 },
                 2: {
-                    words: ['I', 'like', 'to', 'play', 'run', 'eat'],
+                    words: ['I', 'like', 'to', 'play', 'run', 'eat', 'go'],
                     sentences: [
                         { words: ['I', 'like', 'to', 'play'], display: 'I like to play.' },
                         { words: ['I', 'like', 'to', 'run'], display: 'I like to run.' },
-                        { words: ['I', 'like', 'to', 'eat'], display: 'I like to eat.' }
+                        { words: ['I', 'like', 'to', 'eat'], display: 'I like to eat.' },
+                        { words: ['I', 'like', 'to', 'go'], display: 'I like to go.' },
+                        { words: ['I', 'like', 'play'], display: 'I like play.' },
+                        { words: ['I', 'like', 'run'], display: 'I like run.' }
                     ]
                 },
                 3: {
-                    words: ['we', 'run', 'fast', 'go', 'play'],
+                    words: ['we', 'run', 'fast', 'go', 'play', 'jump'],
                     sentences: [
                         { words: ['we', 'run', 'fast'], display: 'We run fast.' },
                         { words: ['we', 'go', 'play'], display: 'We go play.' },
-                        { words: ['we', 'play', 'fast'], display: 'We play fast.' }
+                        { words: ['we', 'play', 'fast'], display: 'We play fast.' },
+                        { words: ['we', 'jump', 'fast'], display: 'We jump fast.' },
+                        { words: ['we', 'run'], display: 'We run.' },
+                        { words: ['we', 'play'], display: 'We play.' }
                     ]
                 }
             },
             2: {
                 1: {
-                    words: ['he', 'plays', 'with', 'the', 'ball', 'toy'],
+                    words: ['he', 'plays', 'with', 'the', 'ball', 'toy', 'dog'],
                     sentences: [
                         { words: ['he', 'plays', 'with', 'the', 'ball'], display: 'He plays with the ball.' },
                         { words: ['he', 'plays', 'with', 'the', 'toy'], display: 'He plays with the toy.' },
-                        { words: ['he', 'plays'], display: 'He plays.' }
+                        { words: ['he', 'plays', 'with', 'the', 'dog'], display: 'He plays with the dog.' },
+                        { words: ['he', 'plays'], display: 'He plays.' },
+                        { words: ['plays', 'with', 'ball'], display: 'Plays with ball.' },
+                        { words: ['plays', 'with', 'toy'], display: 'Plays with toy.' }
                     ]
                 },
                 2: {
-                    words: ['my', 'family', 'is', 'happy', 'big', 'good'],
+                    words: ['my', 'family', 'is', 'happy', 'big', 'good', 'nice'],
                     sentences: [
                         { words: ['my', 'family', 'is', 'happy'], display: 'My family is happy.' },
                         { words: ['my', 'family', 'is', 'big'], display: 'My family is big.' },
-                        { words: ['my', 'family', 'is', 'good'], display: 'My family is good.' }
+                        { words: ['my', 'family', 'is', 'good'], display: 'My family is good.' },
+                        { words: ['my', 'family', 'is', 'nice'], display: 'My family is nice.' },
+                        { words: ['my', 'happy', 'family'], display: 'My happy family.' },
+                        { words: ['my', 'big', 'family'], display: 'My big family.' }
                     ]
                 },
                 3: {
-                    words: ['you', 'are', 'very', 'good', 'big', 'my'],
+                    words: ['you', 'are', 'very', 'good', 'big', 'my', 'friend', 'nice'],
                     sentences: [
                         { words: ['you', 'are', 'very', 'good'], display: 'You are very good.' },
                         { words: ['you', 'are', 'my', 'friend'], display: 'You are my friend.' },
-                        { words: ['you', 'are', 'very', 'big'], display: 'You are very big.' }
+                        { words: ['you', 'are', 'very', 'big'], display: 'You are very big.' },
+                        { words: ['you', 'are', 'very', 'nice'], display: 'You are very nice.' },
+                        { words: ['you', 'are', 'good'], display: 'You are good.' },
+                        { words: ['you', 'are', 'nice'], display: 'You are nice.' }
                     ]
                 }
             },
             3: {
                 1: {
-                    words: ['the', 'girl', 'jumps', 'high', 'runs', 'fast'],
+                    words: ['the', 'girl', 'jumps', 'high', 'runs', 'fast', 'boy'],
                     sentences: [
                         { words: ['the', 'girl', 'jumps', 'high'], display: 'The girl jumps high.' },
                         { words: ['the', 'girl', 'runs', 'fast'], display: 'The girl runs fast.' },
-                        { words: ['she', 'jumps', 'high'], display: 'She jumps high.' }
+                        { words: ['the', 'boy', 'jumps', 'high'], display: 'The boy jumps high.' },
+                        { words: ['the', 'boy', 'runs', 'fast'], display: 'The boy runs fast.' },
+                        { words: ['she', 'jumps', 'high'], display: 'She jumps high.' },
+                        { words: ['she', 'runs', 'fast'], display: 'She runs fast.' }
                     ]
                 },
                 2: {
-                    words: ['look', 'at', 'me', 'the', 'sun', 'dog'],
+                    words: ['look', 'at', 'me', 'the', 'sun', 'dog', 'cat'],
                     sentences: [
                         { words: ['look', 'at', 'me'], display: 'Look at me.' },
                         { words: ['look', 'at', 'the', 'sun'], display: 'Look at the sun.' },
-                        { words: ['look', 'at', 'the', 'dog'], display: 'Look at the dog.' }
+                        { words: ['look', 'at', 'the', 'dog'], display: 'Look at the dog.' },
+                        { words: ['look', 'at', 'the', 'cat'], display: 'Look at the cat.' },
+                        { words: ['look', 'at', 'sun'], display: 'Look at sun.' },
+                        { words: ['look', 'at', 'dog'], display: 'Look at dog.' }
                     ]
                 },
                 3: {
-                    words: ['we', 'have', 'two', 'dogs', 'cats', 'toys'],
+                    words: ['we', 'have', 'two', 'dogs', 'cats', 'toys', 'balls'],
                     sentences: [
                         { words: ['we', 'have', 'two', 'dogs'], display: 'We have two dogs.' },
                         { words: ['we', 'have', 'two', 'cats'], display: 'We have two cats.' },
-                        { words: ['we', 'have', 'toys'], display: 'We have toys.' }
+                        { words: ['we', 'have', 'two', 'toys'], display: 'We have two toys.' },
+                        { words: ['we', 'have', 'two', 'balls'], display: 'We have two balls.' },
+                        { words: ['we', 'have', 'toys'], display: 'We have toys.' },
+                        { words: ['we', 'have', 'dogs'], display: 'We have dogs.' }
                     ]
                 }
             },
             4: {
                 1: {
-                    words: ['my', 'dog', 'and', 'cat', 'play', 'together', 'run'],
+                    words: ['my', 'dog', 'and', 'cat', 'play', 'together', 'run', 'jump'],
                     sentences: [
                         { words: ['my', 'dog', 'and', 'cat', 'play'], display: 'My dog and cat play.' },
                         { words: ['my', 'dog', 'and', 'cat', 'run'], display: 'My dog and cat run.' },
-                        { words: ['they', 'play', 'together'], display: 'They play together.' }
+                        { words: ['my', 'dog', 'and', 'cat', 'jump'], display: 'My dog and cat jump.' },
+                        { words: ['they', 'play', 'together'], display: 'They play together.' },
+                        { words: ['they', 'run', 'together'], display: 'They run together.' },
+                        { words: ['my', 'dog', 'plays'], display: 'My dog plays.' }
                     ]
                 },
                 2: {
-                    words: ['what', 'does', 'the', 'dog', 'want', 'cat', 'eat'],
+                    words: ['what', 'does', 'the', 'dog', 'want', 'cat', 'eat', 'like'],
                     sentences: [
                         { words: ['what', 'does', 'the', 'dog', 'want'], display: 'What does the dog want?' },
                         { words: ['what', 'does', 'the', 'cat', 'want'], display: 'What does the cat want?' },
-                        { words: ['what', 'does', 'the', 'dog', 'eat'], display: 'What does the dog eat?' }
+                        { words: ['what', 'does', 'the', 'dog', 'eat'], display: 'What does the dog eat?' },
+                        { words: ['what', 'does', 'the', 'cat', 'eat'], display: 'What does the cat eat?' },
+                        { words: ['what', 'does', 'the', 'dog', 'like'], display: 'What does the dog like?' },
+                        { words: ['what', 'does', 'dog', 'want'], display: 'What does dog want?' }
                     ]
                 },
                 3: {
-                    words: ['put', 'the', 'ball', 'over', 'there', 'toy'],
+                    words: ['put', 'the', 'ball', 'over', 'there', 'toy', 'here'],
                     sentences: [
                         { words: ['put', 'the', 'ball', 'over', 'there'], display: 'Put the ball over there.' },
                         { words: ['put', 'the', 'toy', 'over', 'there'], display: 'Put the toy over there.' },
-                        { words: ['put', 'the', 'ball', 'there'], display: 'Put the ball there.' }
+                        { words: ['put', 'the', 'ball', 'there'], display: 'Put the ball there.' },
+                        { words: ['put', 'the', 'toy', 'there'], display: 'Put the toy there.' },
+                        { words: ['put', 'the', 'ball', 'here'], display: 'Put the ball here.' },
+                        { words: ['put', 'ball', 'there'], display: 'Put ball there.' }
                     ]
                 }
             }

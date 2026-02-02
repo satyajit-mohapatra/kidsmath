@@ -96,7 +96,38 @@ body {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 25px;
+    margin-bottom: 20px;
+}
+
+.menu-grid.single-card {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 300px));
+    justify-content: center;
+}
+
+.menu-section {
     margin-bottom: 40px;
+}
+
+.section-title {
+    font-size: 1.8rem;
+    color: #2d3436;
+    margin-bottom: 20px;
+    padding: 15px 25px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border-radius: 50px;
+    display: inline-block;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+    text-align: center;
+}
+
+.progress-section {
+    text-align: center;
+}
+
+.progress-section .section-title {
+    background: linear-gradient(135deg, #00b894 0%, #00cec9 100%);
+    box-shadow: 0 4px 15px rgba(0, 184, 148, 0.4);
 }
 
 .menu-card {
@@ -225,6 +256,11 @@ body {
 .sentence-card {
     background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
     border: 3px solid #ff9f43;
+}
+
+.vocabulary-card {
+    background: linear-gradient(135deg, #e8daef 0%, #d7bde2 100%);
+    border: 3px solid #9b59b6;
 }
 
 .mascot-area {

@@ -48,6 +48,7 @@ class BaseGame {
             dailyMultiplicationProblems: 0,
             dailyDivisionProblems: 0,
             dailyGeneralKnowledgeProblems: 0,
+            dailyVocabularyProblems: 0,
             lastProblemTime: null
         };
         
@@ -221,6 +222,7 @@ class BaseGame {
             timeMoneyStars: 0,
             generalKnowledgeStars: 0,
             sentenceFormationStars: 0,
+            vocabularyStars: 0,
             additionBest: 0,
             subtractionBest: 0,
             multiplicationBest: 0,
@@ -232,6 +234,7 @@ class BaseGame {
             timeMoneyBest: 0,
             generalKnowledgeBest: 0,
             sentenceFormationBest: 0,
+            vocabularyBest: 0,
             additionLevel: 1,
             subtractionLevel: 1,
             multiplicationLevel: 1,
@@ -243,6 +246,7 @@ class BaseGame {
             timeMoneyLevel: 1,
             generalKnowledgeLevel: 1,
             sentenceFormationLevel: 1,
+            vocabularyLevel: 1,
             additionProblems: 0,
             subtractionProblems: 0,
             multiplicationProblems: 0,
@@ -254,6 +258,7 @@ class BaseGame {
             timeMoneyProblems: 0,
             generalKnowledgeProblems: 0,
             sentenceFormationProblems: 0,
+            vocabularyProblems: 0,
             lastPlayed: null,
             sessionHistory: [],
             achievements: [],

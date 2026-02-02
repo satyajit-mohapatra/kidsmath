@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Kids Math">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="theme-color" content="#9b59b6">
+    <meta name="description" content="Build your vocabulary! Name animals, fruits, colors, shapes, and more. Fun word games for kids!">
+    <link rel="manifest" href="../../../manifest.json">
+    <link rel="apple-touch-icon" href="../../../icons/icon-192.png">
+    <link rel="icon" type="image/png" href="../../../icons/icon-192.png">
+    <title>Vocabulary Builder - Learn New Words!</title>
+    <link rel="stylesheet" href="../../css/shared-styles.css">
+    <link rel="stylesheet" href="vocabulary-styles.css">
+</head>
+<body>
+    <div class="container">
+        <div class="loading-overlay" id="loadingOverlay">
+            <div class="loading-spinner">
+                <span class="loading-emoji">📚</span>
+                <div class="spinner"></div>
+                <div class="loading-text" id="loadingText">Loading...</div>
+            </div>
+        </div>
+        <nav class="nav-header">
+            <a href="../../../index.html" class="back-btn">← Back to Menu</a>
+            <div class="nav-controls">
+                <button class="sound-toggle-btn" id="soundToggleBtn" title="Toggle Sound">🔊</button>
+                <button class="help-btn" id="helpBtn" title="Keyboard Shortcuts">⌨️</button>
+                <button class="accessibility-btn" id="highContrastBtn" title="Toggle High Contrast">⬜</button>
+                <button class="accessibility-btn" id="reducedMotionBtn" title="Toggle Reduced Motion">▶️</button>
+            </div>
+        </nav>
+        <header class="header">
+            <h1 class="title">📚 Vocabulary Builder!</h1>
+            <div class="stats">
+                <div class="stat-item">
+                    <span class="stat-label">Stars:</span>
+                    <span class="stat-value" id="stars">⭐ 0</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Streak:</span>
+                    <span class="stat-value" id="streak">🔥 0</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Category Selection -->
+        <div class="category-selector">
+            <h2 class="selector-title">Choose a Topic:</h2>
+            
+            <!-- Main Groups -->
+            <div class="group-tabs">
+                <button class="group-tab active" data-group="animals">🦁 Animals</button>
+                <button class="group-tab" data-group="food">🍎 Food</button>
+                <button class="group-tab" data-group="basics">🎨 Basics</button>
+                <button class="group-tab" data-group="world">🌍 World</button>
+                <button class="group-tab" data-group="objects">🧸 Objects</button>
+                <button class="group-tab" data-group="nature">🌳 Nature</button>
+            </div>
+            
+            <!-- Sub Categories -->
+            <div class="category-groups">
+                <div class="category-group active" data-group="animals">
+                    <button class="category-btn active" data-category="animals">🦁 Animals</button>
+                    <button class="category-btn" data-category="birds">🦅 Birds</button>
+                    <button class="category-btn" data-category="insects">🐛 Insects</button>
+                    <button class="category-btn" data-category="sea-animals">🐠 Sea Animals</button>
+                    <button class="category-btn" data-category="farm-animals">🐄 Farm Animals</button>
+                </div>
+                <div class="category-group" data-group="food">
+                    <button class="category-btn" data-category="fruits">🍎 Fruits</button>
+                    <button class="category-btn" data-category="vegetables">🥕 Vegetables</button>
+                    <button class="category-btn" data-category="foods">🍔 Foods</button>
+                    <button class="category-btn" data-category="drinks">🥤 Drinks</button>
+                </div>
+                <div class="category-group" data-group="basics">
+                    <button class="category-btn" data-category="colors">🎨 Colors</button>
+                    <button class="category-btn" data-category="shapes">📐 Shapes</button>
+                    <button class="category-btn" data-category="body-parts">🧠 Body Parts</button>
+                    <button class="category-btn" data-category="emotions">😊 Emotions</button>
+                </div>
+                <div class="category-group" data-group="world">
+                    <button class="category-btn" data-category="vehicles">🚗 Vehicles</button>
+                    <button class="category-btn" data-category="jobs">👨‍⚕️ Jobs</button>
+                    <button class="category-btn" data-category="places">🏠 Places</button>
+                    <button class="category-btn" data-category="weather">🌤️ Weather</button>
+                </div>
+                <div class="category-group" data-group="objects">
+                    <button class="category-btn" data-category="toys">🧸 Toys</button>
+                    <button class="category-btn" data-category="clothes">👕 Clothes</button>
+                    <button class="category-btn" data-category="furniture">🪑 Furniture</button>
+                    <button class="category-btn" data-category="school-items">✏️ School Items</button>
+                </div>
+                <div class="category-group" data-group="nature">
+                    <button class="category-btn" data-category="flowers">🌸 Flowers</button>
+                    <button class="category-btn" data-category="trees">🌳 Trees</button>
+                    <button class="category-btn" data-category="planets">🪐 Planets</button>
+                    <button class="category-btn" data-category="seasons">🌸 Seasons</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Game Area -->
+        <div class="game-area">
+            <div class="challenge-display" id="challengeDisplay">
+                <div class="challenge-header">
+                    <h2 class="challenge-title" id="challengeTitle">🦁 Name 5 Animals!</h2>
+                    <p class="challenge-subtitle">Type as many as you know!</p>
+                </div>
+                
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                    <span class="progress-text" id="progressText">0 / 5 correct</span>
+                </div>
+                
+                <div class="input-area" id="inputArea">
+                    <!-- Input fields will be generated here -->
+                </div>
+                
+                <div class="action-buttons">
+                    <button class="submit-btn" id="submitBtn">✅ Check Answers</button>
+                    <button class="hint-btn" id="hintBtn">💡 Give me a hint</button>
+                    <button class="skip-btn" id="skipBtn">⏭️ Skip</button>
+                </div>
+            </div>
+
+            <div class="feedback-area" id="feedbackArea"></div>
+            
+            <!-- Results Display -->
+            <div class="results-display" id="resultsDisplay" style="display: none;">
+                <h3 class="results-title">🎉 Great Job!</h3>
+                <div class="results-stats" id="resultsStats"></div>
+                <div class="correct-answers" id="correctAnswers"></div>
+                <button class="next-btn" id="nextBtn">🎮 Play Again</button>
+            </div>
+
+            <div class="hint-area">
+                <div class="mascot" id="mascot">🦊</div>
+                <div class="hint-content" id="hintContent"></div>
+            </div>
+        </div>
+
+        <div class="celebration-container" id="celebration"></div>
+    </div>
+
+    <div class="modal keyboard-shortcuts-modal" id="shortcutsModal">
+        <div class="modal-content">
+            <h2>⌨️ Keyboard Shortcuts</h2>
+            <div class="keyboard-shortcuts-list">
+                <div class="shortcut-item">
+                    <span class="shortcut-description">Submit Answer</span>
+                    <span class="shortcut-keys"><span class="key">Enter</span></span>
+                </div>
+                <div class="shortcut-item">
+                    <span class="shortcut-description">Get a Hint</span>
+                    <span class="shortcut-keys"><span class="key">Space</span></span>
+                </div>
+                <div class="shortcut-item">
+                    <span class="shortcut-description">Next Input</span>
+                    <span class="shortcut-keys"><span class="key">Tab</span></span>
+                </div>
+                <div class="shortcut-item">
+                    <span class="shortcut-description">Toggle Sound</span>
+                    <span class="shortcut-keys"><span class="key">Ctrl</span><span class="key">M</span></span>
+                </div>
+                <div class="shortcut-item">
+                    <span class="shortcut-description">Toggle High Contrast</span>
+                    <span class="shortcut-keys"><span class="key">Ctrl</span><span class="key">H</span></span>
+                </div>
+            </div>
+            <button class="modal-btn save-btn" onclick="document.getElementById('shortcutsModal').style.display='none'">Got it!</button>
+        </div>
+    </div>
+
+    <script src="../../js/core/base-game.js"></script>
+    <script src="../../js/core/achievements.js"></script>
+    <script src="../../js/core/daily-challenges.js"></script>
+    <script src="vocabulary.js"></script>
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js').catch(() => {});
+            });
+        }
+    </script>
+</body>
+</html>
