@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Kids Math">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="theme-color" content="#e74c3c">
+    <meta name="description" content="Learn rhyming words! Match words that sound alike. Fun phonics game for kids!">
+    <link rel="manifest" href="../../../manifest.json">
+    <link rel="apple-touch-icon" href="../../../icons/icon-192.png">
+    <link rel="icon" type="image/png" href="../../../icons/icon-192.png">
+    <title>Rhyming Words - Find Words That Rhyme!</title>
+    <link rel="stylesheet" href="../../css/shared-styles.css">
+    <link rel="stylesheet" href="rhyming-words-styles.css">
+</head>
+<body>
+    <div class="container">
+        <div class="loading-overlay" id="loadingOverlay">
+            <div class="loading-spinner">
+                <span class="loading-emoji">🎵</span>
+                <div class="spinner"></div>
+                <div class="loading-text" id="loadingText">Loading...</div>
+            </div>
+        </div>
+        <nav class="nav-header">
+            <a href="../../../index.html" class="back-btn">← Back to Menu</a>
+            <div class="nav-controls">
+                <button class="sound-toggle-btn" id="soundToggleBtn" title="Toggle Sound">🔊</button>
+                <button class="help-btn" id="helpBtn" title="Keyboard Shortcuts">⌨️</button>
+                <button class="accessibility-btn" id="highContrastBtn" title="Toggle High Contrast">⬜</button>
+                <button class="accessibility-btn" id="reducedMotionBtn" title="Toggle Reduced Motion">▶️</button>
+            </div>
+        </nav>
+        <header class="header">
+            <h1 class="title">🎵 Rhyming Words!</h1>
+            <div class="stats">
+                <div class="stat-item">
+                    <span class="stat-label">Stars:</span>
+                    <span class="stat-value" id="stars">⭐ 0</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Streak:</span>
+                    <span class="stat-value" id="streak">🔥 0</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Level Selection -->
+        <div class="level-selector">
+            <h2 class="selector-title">Choose Difficulty:</h2>
+            <div class="level-buttons">
+                <button class="level-btn active" data-level="easy">🌟 Easy (3 letters)</button>
+                <button class="level-btn" data-level="medium">⭐ Medium (4 letters)</button>
+                <button class="level-btn" data-level="hard">🌟⭐ Hard (5+ letters)</button>
+                <button class="level-btn" data-level="mixed">🎲 Mixed</button>
+            </div>
+        </div>
+
+        <!-- Game Area -->
+        <div class="game-area">
+            <div class="challenge-display" id="challengeDisplay">
+                <div class="challenge-header">
+                    <h2 class="challenge-title">🎵 Which Word Rhymes?</h2>
+                    <p class="challenge-subtitle" id="rhymeInstructions">Find the word that sounds like the target word!</p>
+                </div>
+                
+                <!-- Target Word Display -->
+                <div class="target-word-section">
+                    <div class="target-word-label">Target Word:</div>
+                    <div class="target-word" id="targetWord">
+                        <span class="target-emoji" id="targetEmoji">🐱</span>
+                        <span class="target-text" id="targetText">CAT</span>
+                    </div>
+                    <button class="audio-btn" id="audioBtn" title="Hear the word">🔊</button>
+                </div>
+
+                <!-- Progress Bar -->
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                    <span class="progress-text" id="progressText">0 / 5 correct</span>
+                </div>
+                
+                <!-- Answer Options -->
+                <div class="options-grid" id="optionsGrid">
+                    <!-- Options will be generated here -->
+                </div>
+                
+                <div class="action-buttons">
+                    <button class="hint-btn" id="hintBtn">💡 Give me a hint</button>
+                    <button class="skip-btn" id="skipBtn">⏭️ Skip</button>
+                </div>
+            </div>
+
+            <div class="feedback-area" id="feedbackArea"></div>
+            
+            <!-- Results Display -->
+            <div class="results-display" id="resultsDisplay" style="display: none;">
+                <h3 class="results-title" id="resultsTitle">🎉 Great Job!</h3>
+                <div class="rhyme-celebration" id="rhymeCelebration">
+                    <div class="rhyme-pair-display">
+                        <span id="celebrationWord1">🐱 CAT</span>
+                        <span class="rhyme-arrow">🎵→</span>
+                        <span id="celebrationWord2">🦇 BAT</span>
+                    </div>
+                </div>
+                <div class="results-stats" id="resultsStats"></div>
+                <button class="next-btn" id="nextBtn">🎮 Play Again</button>
+            </div>
+
+            <div class="hint-area">
+                <div class="mascot" id="mascot">🦊</div>
+                <div class="hint-content" id="hintContent"></div>
+            </div>
+        </div>
+
+        <div class="celebration-container" id="celebration"></div>
+    </div>
+
+    <div class="modal keyboard-shortcuts-modal" id="shortcutsModal">
+        <div class="modal-content">
+            <h2>⌨️ Keyboard Shortcuts</h2>
+            <div class="keyboard-shortcuts-list">
+                <div class="shortcut-item">
+                    <span class="shortcut-description">Select Option 1</span>
+                    <span class="shortcut-keys"><span class="key">1</span></span>
+                </div>
+                <div class="shortcut-item">
+                    <span class="shortcut-description">Select Option 2</span>
+                    <span class="shortcut-keys"><span class="key">2</span></span>
+                </div>
+                <div class="shortcut-item">
+                    <span class="shortcut-description">Select Option 3</span>
+                    <span class="shortcut-keys"><span class="key">3</span></span>
+                </div>
+                <div class="shortcut-item">
+                    <span class="shortcut-description">Select Option 4</span>
+                    <span class="shortcut-keys"><span class="key">4</span></span>
+                </div>
+                <div class="shortcut-item">
+                    <span class="shortcut-description">Get a Hint</span>
+                    <span class="shortcut-keys"><span class="key">Space</span></span>
+                </div>
+                <div class="shortcut-item">
+                    <span class="shortcut-description">Skip Question</span>
+                    <span class="shortcut-keys"><span class="key">S</span></span>
+                </div>
+                <div class="shortcut-item">
+                    <span class="shortcut-description">Toggle Sound</span>
+                    <span class="shortcut-keys"><span class="key">Ctrl</span><span class="key">M</span></span>
+                </div>
+                <div class="shortcut-item">
+                    <span class="shortcut-description">Toggle High Contrast</span>
+                    <span class="shortcut-keys"><span class="key">Ctrl</span><span class="key">H</span></span>
+                </div>
+            </div>
+            <button class="modal-btn save-btn" onclick="document.getElementById('shortcutsModal').style.display='none'">Got it!</button>
+        </div>
+    </div>
+
+    <script src="../../js/core/base-game.js"></script>
+    <script src="../../js/core/achievements.js"></script>
+    <script src="../../js/core/daily-challenges.js"></script>
+    <script src="rhyming-words.js"></script>
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js').catch(() => {});
+            });
+        }
+    </script>
+</body>
+</html>

@@ -24,7 +24,13 @@ class MenuManager {
                 multiplication: true,
                 division: true,
                 advancedMath: true,
-                sentenceFormation: true
+                sentenceFormation: true,
+                vocabulary: true,
+                rhymingWords: true,
+                wordScramble: true,
+                fractions: true,
+                timeMoney: true,
+                generalKnowledge: true
             };
             this.saveProfile();
         }
@@ -44,6 +50,12 @@ class MenuManager {
             else if (href.includes('division')) gameKey = 'division';
             else if (href.includes('advanced-math')) gameKey = 'advancedMath';
             else if (href.includes('sentence-formation')) gameKey = 'sentenceFormation';
+            else if (href.includes('vocabulary')) gameKey = 'vocabulary';
+            else if (href.includes('rhyming-words')) gameKey = 'rhymingWords';
+            else if (href.includes('word-scramble')) gameKey = 'wordScramble';
+            else if (href.includes('fractions')) gameKey = 'fractions';
+            else if (href.includes('time-money')) gameKey = 'timeMoney';
+            else if (href.includes('general-knowledge')) gameKey = 'generalKnowledge';
 
             if (gameKey && this.profile.gameVisibility[gameKey] === false) {
                 card.style.display = 'none';
@@ -66,6 +78,12 @@ class MenuManager {
             socialSkillsStars: 0,
             advancedMathStars: 0,
             sentenceFormationStars: 0,
+            vocabularyStars: 0,
+            rhymingWordsStars: 0,
+            wordScrambleStars: 0,
+            fractionsStars: 0,
+            timeMoneyStars: 0,
+            generalKnowledgeStars: 0,
             achievements: []
         };
     }
@@ -84,7 +102,13 @@ class MenuManager {
                 multiplication: true,
                 division: true,
                 advancedMath: true,
-                sentenceFormation: true
+                sentenceFormation: true,
+                vocabulary: true,
+                rhymingWords: true,
+                wordScramble: true,
+                fractions: true,
+                timeMoney: true,
+                generalKnowledge: true
             }
         };
     }
@@ -190,6 +214,12 @@ class MenuManager {
         document.getElementById('socialSkillsStars').textContent = `⭐ ${this.stats.socialSkillsStars || 0}`;
         document.getElementById('advancedMathStars').textContent = `⭐ ${this.stats.advancedMathStars || 0}`;
         document.getElementById('sentenceFormationStars').textContent = `⭐ ${this.stats.sentenceFormationStars || 0}`;
+        document.getElementById('vocabularyStars').textContent = `⭐ ${this.stats.vocabularyStars || 0}`;
+        document.getElementById('rhymingWordsStars').textContent = `⭐ ${this.stats.rhymingWordsStars || 0}`;
+        document.getElementById('wordScrambleStars').textContent = `⭐ ${this.stats.wordScrambleStars || 0}`;
+        document.getElementById('fractionsStars').textContent = `⭐ ${this.stats.fractionsStars || 0}`;
+        document.getElementById('timeMoneyStars').textContent = `⭐ ${this.stats.timeMoneyStars || 0}`;
+        document.getElementById('generalKnowledgeStars').textContent = `⭐ ${this.stats.generalKnowledgeStars || 0}`;
         document.getElementById('progressStars').textContent = `🏆 ${this.stats.achievements.length}`;
     }
 
